@@ -7,8 +7,9 @@
  * Mintlify build, for the documentation site.
  *
  * Mintlify has no build step and cannot import from node_modules, so this
- * is vendored rather than imported: copy it to public/style.css in
- * siderolabs/docs and re-copy it on a version bump.
+ * is vendored rather than imported: copy it to public/talos-tokens.css in
+ * siderolabs/docs (alongside the hand-written style.css, which stays) and
+ * re-copy it on a version bump.
  *
  * Two things travel with it:
  *
