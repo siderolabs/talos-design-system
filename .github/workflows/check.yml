@@ -1,0 +1,38 @@
+# Two things can go wrong in a token repo, and both are quiet.
+#
+# A value can drop below its contrast threshold, which nobody notices until a
+# customer does. And dist/ can fall behind tokens/, which is worse: consumers
+# read the committed artifacts, so a forgotten rebuild ships a stylesheet that
+# disagrees with its own source and the repo starts lying about what it is.
+#
+# There is no install step because the build has no dependencies.
+
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build and audit contrast
+        run: npm run check
+
+      - name: dist/ matches tokens/
+        run: |
+          if ! git diff --quiet -- dist; then
+            echo "::error::dist/ does not match tokens/. Run 'npm run build' and commit the result."
+            git diff --stat -- dist
+            git diff -- dist
+            exit 1
+          fi
+          echo "dist/ is current."
