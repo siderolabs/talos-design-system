@@ -1,0 +1,6 @@
+node_modules/
+*.tgz
+.DS_Store
+
+# dist/ is deliberately committed. Consumers that cannot run a build (Mintlify,
+# anyone vendoring a stylesheet) need the artifacts to exist in the tree.

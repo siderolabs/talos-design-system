@@ -1,0 +1,93 @@
+{
+  "$description": "Semantic roles, light theme. Same role names as dark, warm cream values. Adding a role here without adding it to semantic.dark.json will fail the build.",
+
+  "surface": {
+    "$type": "color",
+    "$description": "The ladder inverts: the well behind cards is the most tinted plane and cards are pure white, so raised content still reads as lifted.",
+    "page":    { "$value": "{cream.0}", "$description": "Body, the content well behind cards" },
+    "chrome":  { "$value": "{cream.1}", "$description": "Topbar and sidenav" },
+    "card":    { "$value": "{cream.2}", "$description": "Cards, tables, panels" },
+    "inset":   { "$value": "{cream.3}", "$description": "Inputs, secondary buttons" },
+    "raised":  { "$value": "{cream.2}", "$description": "Modals, dropdowns, popovers" },
+    "hover":   { "$value": "{cream.4}", "$description": "Interactive hover and tertiary fills" },
+    "inert":   { "$value": "{cream.5}", "$description": "Chart grid, track fills, skeleton states" },
+    "subtle":  { "$value": "rgba(0, 0, 0, 0.04)", "$description": "Tint wash over an unknown surface: nav items, chips, zebra rows" },
+    "inverse": { "$value": "{cream.10}", "$description": "Inverted surfaces: tooltips" },
+    "paper":   { "$value": "{paper}", "$description": "Brand cream insert" }
+  },
+
+  "content": {
+    "$type": "color",
+    "$description": "Four AA-passing steps is a squeeze on a tinted well, so the light ramp sits darker than Director ships today. See the style guide for the three deliberate deviations.",
+    "emphasis":  { "$value": "{cream.10}", "$description": "Headings, active nav, key figures" },
+    "default":   { "$value": "{cream.9}",  "$description": "Body copy, table cells" },
+    "secondary": { "$value": "{cream.8}",  "$description": "Labels, eyebrows, column headers" },
+    "muted":     { "$value": "{cream.7}",  "$description": "Hints, placeholders, timestamps" },
+    "disabled":  { "$value": "{cream.6}",  "$description": "Disabled controls. Exempt from AA per WCAG 1.4.3, and never the only signal that a control is off." },
+    "inverse":   { "$value": "{cream.2}",  "$description": "Text on surface-inverse" },
+    "on-accent": { "$value": "{white}",    "$description": "Text on an accent fill" }
+  },
+
+  "border": {
+    "$type": "color",
+    "subtle":  { "$value": "rgba(0, 0, 0, 0.06)", "$description": "Internal dividers, table rows" },
+    "default": { "$value": "rgba(0, 0, 0, 0.08)", "$description": "Card and input edges, the default" },
+    "strong":  { "$value": "rgba(0, 0, 0, 0.16)", "$description": "Hover edges, emphasis" },
+    "accent":  { "$value": "{red.3}", "$description": "Active tab underline, focused input, selected row rail" }
+  },
+
+  "accent": {
+    "$type": "color",
+    "default":  { "$value": "{red.3}", "$description": "Accent icons, borders, active nav indicators" },
+    "hover":    { "$value": "{red.4}", "$description": "Hover for accent icons and links" },
+    "text":     { "$value": "{red.6}", "$description": "Accent-coloured text and links. Shaded because the brand red reaches only 3.9:1 on white." },
+    "fill":     { "$value": "{red.4}", "$description": "Primary button background" },
+    "fill-hover":  { "$value": "{red.5}", "$description": "Primary button hover" },
+    "fill-active": { "$value": "{red.7}", "$description": "Primary button pressed" },
+    "subtle":   { "$value": "rgba(224, 75, 69, 0.08)", "$description": "Tinted background: active nav item, selected row" },
+    "gradient":      { "$type": "gradient", "$value": "linear-gradient(90deg, {gradient.display.1} 0%, {gradient.display.2} 51%, {gradient.display.3} 100%)", "$description": "The logo gradient. Marks and rules only, nothing on top of it." },
+    "gradient-fill": { "$type": "gradient", "$value": "linear-gradient(90deg, {gradient.fill.1} 0%, {gradient.fill.2} 51%, {gradient.fill.3} 100%)", "$description": "The same arc at fill weight, for a gradient surface that carries text." }
+  },
+
+  "status": {
+    "$type": "color",
+    "$description": "Graphics and text darken in light mode; the fills stay the brand hues so a badge reads the same in both themes.",
+    "success": {
+      "default": { "$value": "{green.4}" },
+      "text":    { "$value": "{green.4}" },
+      "fill":    { "$value": "{green.2}" },
+      "on-fill": { "$value": "{ink.0}", "$description": "Dark label. White on brand green reaches only 2.4:1." },
+      "subtle":  { "$value": "rgba(87, 194, 138, 0.22)" }
+    },
+    "warning": {
+      "default": { "$value": "{amber.4}" },
+      "text":    { "$value": "{amber.4}" },
+      "fill":    { "$value": "{amber.2}" },
+      "on-fill": { "$value": "{ink.0}" },
+      "subtle":  { "$value": "rgba(240, 187, 103, 0.28)" }
+    },
+    "danger": {
+      "default": { "$value": "{red.6}" },
+      "text":    { "$value": "{red.6}" },
+      "fill":    { "$value": "{red.4}" },
+      "on-fill": { "$value": "{white}" },
+      "subtle":  { "$value": "rgba(224, 75, 69, 0.12)" }
+    },
+    "info": {
+      "default": { "$value": "{cream.8}", "$description": "Neutral grey. The brand has no blue." },
+      "text":    { "$value": "{cream.9}" },
+      "fill":    { "$value": "{cream.8}" },
+      "on-fill": { "$value": "{cream.2}" },
+      "subtle":  { "$value": "rgba(79, 79, 77, 0.12)" }
+    }
+  },
+
+  "shadow": {
+    "$type": "shadow",
+    "$description": "Whisper-quiet on cream. Elevation is carried by the surface ladder, not by drop shadows.",
+    "card":     { "$value": "0 1px 3px rgba(26, 26, 24, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02)" },
+    "dropdown": { "$value": "0 4px 16px rgba(26, 26, 24, 0.12)" },
+    "modal":    { "$value": "0 8px 32px rgba(26, 26, 24, 0.16)" },
+    "focus":    { "$value": "0 0 0 3px rgba(224, 75, 69, 0.30)", "$description": "Focus ring. Never removed without a replacement." }
+  }
+}

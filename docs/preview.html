@@ -1,0 +1,242 @@
+<!doctype html>
+<!-- Visual proof sheet for the token set. Open directly in a browser; it reads
+     ../dist/tokens.css, so it always shows what the build last produced. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Talos Design System — token preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../dist/tokens.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: var(--talos-font-sans);
+        font-size: var(--talos-text-base);
+        line-height: var(--talos-leading-base);
+      }
+      .theme {
+        background: var(--talos-surface-page);
+        color: var(--talos-content-default);
+        padding: var(--talos-space-section);
+      }
+      h1 {
+        font-size: var(--talos-text-lg);
+        color: var(--talos-content-emphasis);
+        margin: 0 0 var(--talos-space-tight);
+      }
+      h2 {
+        font-size: var(--talos-text-xs);
+        font-weight: var(--talos-weight-semibold);
+        letter-spacing: var(--talos-tracking-eyebrow);
+        text-transform: uppercase;
+        color: var(--talos-content-secondary);
+        margin: var(--talos-space-section) 0 var(--talos-space-snug);
+      }
+      .eyebrow {
+        font-family: var(--talos-font-mono);
+        font-size: var(--talos-text-2xs);
+        letter-spacing: var(--talos-tracking-machine);
+        text-transform: uppercase;
+        color: var(--talos-content-muted);
+      }
+      .card {
+        background: var(--talos-surface-card);
+        border: var(--talos-border-hairline) solid var(--talos-border-default);
+        border-radius: var(--talos-radius-base);
+        box-shadow: var(--talos-shadow-card);
+        padding: var(--talos-space-base);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--talos-space-snug);
+      }
+      .swatch {
+        border: var(--talos-border-hairline) solid var(--talos-border-default);
+        border-radius: var(--talos-radius-sm);
+        overflow: hidden;
+      }
+      .swatch .chip {
+        height: 48px;
+      }
+      .swatch .label {
+        padding: var(--talos-space-tight);
+        font-family: var(--talos-font-mono);
+        font-size: var(--talos-text-2xs);
+        color: var(--talos-content-muted);
+        background: var(--talos-surface-inset);
+      }
+      .row {
+        display: flex;
+        gap: var(--talos-space-snug);
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        font: inherit;
+        font-size: var(--talos-text-sm);
+        font-weight: var(--talos-weight-medium);
+        padding: var(--talos-space-tight) var(--talos-space-snug);
+        border-radius: var(--talos-radius-sm);
+        border: var(--talos-border-hairline) solid transparent;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--talos-accent-fill);
+        color: var(--talos-content-on-accent);
+      }
+      .btn-primary:hover {
+        background: var(--talos-accent-fill-hover);
+      }
+      .btn-ghost {
+        background: var(--talos-surface-inset);
+        border-color: var(--talos-border-default);
+        color: var(--talos-content-default);
+      }
+      .btn-ghost:hover {
+        background: var(--talos-surface-hover);
+        border-color: var(--talos-border-strong);
+      }
+      .btn:focus-visible {
+        outline: none;
+        box-shadow: var(--talos-shadow-focus);
+      }
+      .badge {
+        font-size: var(--talos-text-sm);
+        padding: 2px var(--talos-space-tight);
+        border-radius: var(--talos-radius-pill);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: var(--talos-text-base);
+      }
+      th {
+        text-align: left;
+        font-size: var(--talos-text-xs);
+        letter-spacing: var(--talos-tracking-eyebrow);
+        text-transform: uppercase;
+        color: var(--talos-content-secondary);
+        font-weight: var(--talos-weight-semibold);
+        padding: var(--talos-space-snug) var(--talos-space-compact);
+        border-bottom: var(--talos-border-hairline) solid var(--talos-border-default);
+      }
+      td {
+        padding: var(--talos-space-snug) var(--talos-space-compact);
+        border-bottom: var(--talos-border-hairline) solid var(--talos-border-subtle);
+      }
+      tbody tr:hover {
+        background: var(--talos-surface-subtle);
+      }
+      .mono {
+        font-family: var(--talos-font-mono);
+        color: var(--talos-content-muted);
+      }
+      .dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: var(--talos-space-tight);
+      }
+      a {
+        color: var(--talos-accent-text);
+      }
+      .stack > * + * {
+        margin-top: var(--talos-space-base);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="theme">
+      <div class="eyebrow">Dark theme — default</div>
+      <h1>Talos Design System</h1>
+      <div id="dark-body"></div>
+    </section>
+    <section class="theme" data-theme="light">
+      <div class="eyebrow">Light theme</div>
+      <h1>Talos Design System</h1>
+      <div id="light-body"></div>
+    </section>
+
+    <template id="body">
+      <h2>Surfaces</h2>
+      <div class="grid">
+        <div class="swatch"><div class="chip" style="background: var(--talos-surface-page)"></div><div class="label">surface-page</div></div>
+        <div class="swatch"><div class="chip" style="background: var(--talos-surface-chrome)"></div><div class="label">surface-chrome</div></div>
+        <div class="swatch"><div class="chip" style="background: var(--talos-surface-card)"></div><div class="label">surface-card</div></div>
+        <div class="swatch"><div class="chip" style="background: var(--talos-surface-inset)"></div><div class="label">surface-inset</div></div>
+        <div class="swatch"><div class="chip" style="background: var(--talos-surface-hover)"></div><div class="label">surface-hover</div></div>
+        <div class="swatch"><div class="chip" style="background: var(--talos-surface-paper)"></div><div class="label">surface-paper</div></div>
+      </div>
+
+      <h2>Text ladder</h2>
+      <div class="card stack">
+        <div style="color: var(--talos-content-emphasis); font-size: var(--talos-text-md); font-weight: var(--talos-weight-semibold)">content-emphasis — headings and key figures</div>
+        <div style="color: var(--talos-content-default)">content-default — body copy and table cells</div>
+        <div style="color: var(--talos-content-secondary)">content-secondary — labels, eyebrows, column headers</div>
+        <div style="color: var(--talos-content-muted)">content-muted — hints, placeholders, timestamps</div>
+        <div style="color: var(--talos-content-disabled)">content-disabled — inactive controls only, exempt from AA</div>
+        <div><a href="#">accent-text — links and accent-coloured text</a></div>
+      </div>
+
+      <h2>Actions and status</h2>
+      <div class="card stack">
+        <div class="row">
+          <button class="btn btn-primary">Create VM</button>
+          <button class="btn btn-ghost">Export CSV</button>
+          <button class="btn btn-ghost" disabled style="color: var(--talos-content-disabled)">Shutdown</button>
+        </div>
+        <div class="row">
+          <span class="badge" style="background: var(--talos-status-success-fill); color: var(--talos-status-success-on-fill)">Running</span>
+          <span class="badge" style="background: var(--talos-status-warning-fill); color: var(--talos-status-warning-on-fill)">Degraded</span>
+          <span class="badge" style="background: var(--talos-status-danger-fill); color: var(--talos-status-danger-on-fill)">Failed</span>
+          <span class="badge" style="background: var(--talos-status-info-subtle); color: var(--talos-status-info-text)">Unknown</span>
+        </div>
+        <div class="row">
+          <span><span class="dot" style="background: var(--talos-status-success-default)"></span><span style="color: var(--talos-status-success-text)">Healthy</span></span>
+          <span><span class="dot" style="background: var(--talos-status-warning-default)"></span><span style="color: var(--talos-status-warning-text)">Warning</span></span>
+          <span><span class="dot" style="background: var(--talos-status-danger-default)"></span><span style="color: var(--talos-status-danger-text)">Critical</span></span>
+        </div>
+      </div>
+
+      <h2>Table</h2>
+      <div class="card" style="padding: 0">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Host</th><th>Power state</th><th>Memory</th><th>IP address</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>lees-k8s-cluster-cp-8a2b4</td><td class="mono">demo-kvm1</td><td><span class="dot" style="background: var(--talos-status-success-default)"></span>PoweredOn</td><td>8.0 GB</td><td class="mono">192.168.122.102</td></tr>
+            <tr><td>lees-k8s-cluster-cp-a93e2</td><td class="mono">demo-kvm2</td><td><span class="dot" style="background: var(--talos-content-disabled)"></span>PoweredOff</td><td>8.0 GB</td><td class="mono">192.168.122.104</td></tr>
+            <tr><td>test-neil-default-31b17</td><td class="mono">demo-kvm3</td><td><span class="dot" style="background: var(--talos-status-warning-default)"></span>Degraded</td><td>4.0 GB</td><td class="mono">192.168.122.101</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Spacing menu</h2>
+      <div class="card stack">
+        <div class="row" style="align-items: flex-end">
+          <div><div style="width: var(--talos-space-tight); height: 32px; background: var(--talos-accent-default)"></div><div class="label mono" style="font-size: var(--talos-text-2xs); color: var(--talos-content-muted)">tight 8</div></div>
+          <div><div style="width: var(--talos-space-snug); height: 32px; background: var(--talos-accent-default)"></div><div class="mono" style="font-size: var(--talos-text-2xs)">snug 12</div></div>
+          <div><div style="width: var(--talos-space-compact); height: 32px; background: var(--talos-accent-default)"></div><div class="mono" style="font-size: var(--talos-text-2xs)">compact 16</div></div>
+          <div><div style="width: var(--talos-space-base); height: 32px; background: var(--talos-accent-default)"></div><div class="mono" style="font-size: var(--talos-text-2xs)">base 24</div></div>
+          <div><div style="width: var(--talos-space-section); height: 32px; background: var(--talos-accent-default)"></div><div class="mono" style="font-size: var(--talos-text-2xs)">section 32</div></div>
+          <div><div style="width: var(--talos-space-major); height: 32px; background: var(--talos-accent-default)"></div><div class="mono" style="font-size: var(--talos-text-2xs)">major 64</div></div>
+        </div>
+      </div>
+    </template>
+
+    <script>
+      const template = document.getElementById('body')
+      for (const id of ['dark-body', 'light-body']) {
+        document.getElementById(id).append(template.content.cloneNode(true))
+      }
+    </script>
+  </body>
+</html>

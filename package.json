@@ -1,0 +1,47 @@
+{
+  "name": "@siderolabs/talos-design-system",
+  "version": "0.1.0",
+  "description": "Design tokens and lint guardrails shared by Omni, Talos Director, Xenia and the Sidero portal.",
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siderolabs/talos-design-system.git"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "fonts",
+    "lint",
+    "tokens",
+    "docs"
+  ],
+  "exports": {
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.scss": "./dist/tokens.scss",
+    "./tailwind.css": "./dist/tailwind.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./mintlify.css": "./dist/mintlify.css",
+    "./fonts/*": "./fonts/*",
+    "./tokens.json": "./dist/tokens.json",
+    "./eslint": "./lint/eslint/index.js",
+    "./stylelint": "./lint/stylelint.js"
+  },
+  "scripts": {
+    "build": "node build/build.mjs",
+    "contrast": "node build/contrast.mjs",
+    "fonts": "node build/fetch-fonts.mjs",
+    "check": "npm run build && npm run contrast"
+  },
+  "keywords": [
+    "design-tokens",
+    "design-system",
+    "talos",
+    "sidero"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
