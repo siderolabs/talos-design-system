@@ -62,14 +62,14 @@ One saturated hue in the whole system. Sparing use is what makes it read as sign
 
 | Role | Use | Dark | Light |
 | --- | --- | --- | --- |
-| `accent-default` | Icons, borders, active nav indicators | `#E04B45` | `#E04B45` |
-| `accent-text` | Accent-coloured text and links | `#EB8A86` | `#9D3530` |
-| `accent-fill` | Primary button background | `#C44740` | `#C44740` |
-| `accent-fill-hover` | Primary button hover | `#AE3B36` | `#AE3B36` |
-| `accent-fill-active` | Primary button pressed | `#8E2A26` | `#8E2A26` |
+| `accent-default` | Icons, borders, active nav indicators | `#D24350` | `#D24350` |
+| `accent-text` | Accent-coloured text and links | `#E48E96` | `#B93B46` |
+| `accent-fill` | Primary button background | `#CF4250` | `#CF4250` |
+| `accent-fill-hover` | Primary button hover | `#B93B46` | `#B93B46` |
+| `accent-fill-active` | Primary button pressed | `#8F2D36` | `#8F2D36` |
 | `accent-subtle` | Active nav item, selected row | red 10% | red 8% |
 
-The brand red `#E04B45` is the accent everywhere it is decorative. It is not the button fill, because white text on it reaches 3.99:1 and AA needs 4.5:1. The fill is one step darker and the difference is hard to see side by side. Same reasoning for `accent-text`: the brand red as body text on a card reaches 4.3:1, so accent text is tinted on dark and shaded on light.
+The product red `#D24350`, sampled from the logo, is the accent everywhere it is decorative. It is not the button fill, because white text on it reaches 4.51:1 and AA needs 4.5:1 — passing with no headroom is not a place to stand. The fill is one step darker and the difference is hard to see side by side. Same reasoning for `accent-text`: the product red as body text reaches 3.98:1 on the light page well and 3.6:1 on a dark card, so accent text is tinted on dark and shaded on light.
 
 Budget: at most one accent fill per view. If a screen has two primary buttons, one of them is secondary.
 
@@ -80,7 +80,7 @@ Three stops, taken from the logo (`talos-by-sidero-labs-horiz-white.svg`): red i
 | Role | Use | Stops |
 | --- | --- | --- |
 | `accent-gradient` | Marks and rules. Nothing sits on top of it | `#E8312C` → `#E2335A` at 51% → `#F77216` |
-| `accent-gradient-fill` | Any surface carrying text | `#C44740` → `#B5305A` at 51% → `#C2560F` |
+| `accent-gradient-fill` | Any surface carrying text | `#CF4250` → `#B5305A` at 51% → `#C2560F` |
 
 The display gradient cannot hold text. Its orange stop is 2.85:1 against white, and the red and pink stops reach only 4.28:1 and 4.33:1, so a white label fails across the whole run and fails badly at the orange end. The fill gradient walks the same arc with every stop at or past AA, 4.53:1 at its worst point. Two of its three stops are existing brand values.
 
@@ -92,7 +92,7 @@ The stops live in the palette as `gradient-display-1..3` and `gradient-fill-1..3
 
 ### Our relationship to the marketing site
 
-The marketing site is the same system. Its stylesheet ships our exact values, `--red: #E04B45`, `--red-soft: #C44740`, `--red-deep: #8E2A26`, the four-step content ramp, the three-step surface ramp, `#57C28A`, `#E2D2A8`, Manrope and JetBrains Mono. When the two disagree on a colour, that is a bug in one of them.
+The marketing site is the same family with one deliberate divergence. It still carries the older red (`--red: #E04B45` and its derived steps); the product palette moved to the logo-sampled `#D24350`, and the proposal to bring the marketing site along is with marketing. Everything else matches: the four-step content ramp, the three-step surface ramp, `#57C28A`, `#E2D2A8`, Manrope and JetBrains Mono. Outside the red ramp, when the two disagree on a colour, that is a bug in one of them.
 
 Product surfaces should be recognisably the same family as the marketing site without copying its composition. Marketing rebuilds its site on a cadence product cannot follow, and it optimises for a first impression rather than for someone reading the same page every day. So we take the palette, the typefaces and the vocabulary, and we decide layout, density and how much saturated area a page carries on our own terms. "Marketing does it this way" is evidence, not an argument.
 
@@ -185,7 +185,7 @@ Three things are different there on purpose.
 Three, all for contrast, all verified by `npm run contrast`.
 
 1. **The text ramp shifts up.** The reference's dim `#8A8A88` and faint `#5A5A58` are below AA as body text on every surface in the ladder (2.2:1 to 2.9:1). The four visible steps move lighter in dark mode and darker in light mode, and `#5A5A58` becomes disabled-only.
-2. **The primary button fill darkens** from `#E04B45` to `#C44740`, so a white label reaches 4.86:1 instead of 3.99:1. The brand red is unchanged everywhere it is decorative.
+2. **The primary button fill darkens** from the decorative accent `#D24350` to `#CF4250`, so a white label reaches 4.62:1 instead of 4.51:1. The accent is unchanged everywhere it is decorative.
 3. **Light-mode status graphics darken.** A `#57C28A` dot on a white card is 2.2:1 and a `#F0BB67` one is 1.8:1, so in light mode the graphic and text roles use the deep variants while the fills stay the brand hues.
 
 The reference skin already carries a scoped contrast remediation for green fills. That remediation is good work and its conclusion is the one adopted here: solid status fills carry dark labels. These three changes extend the same logic to the cases it did not reach.
