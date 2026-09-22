@@ -98,12 +98,14 @@ The mixins exist so the light theme can be emitted inside whatever selector the 
 
 ### Documentation site (Mintlify)
 
-Mintlify has no build step and cannot import from `node_modules`, so this one is vendored rather than imported. Copy the stylesheet and the typefaces:
+Mintlify has no build step and cannot import from `node_modules`, so this one is vendored rather than imported. Mintlify applies every `.css` file in the content directory on every page, with no registration, so the generated sheet lands as its own file beside whatever hand-written CSS the site already has:
 
 ```
-cp dist/mintlify.css ../docs/public/style.css
+cp dist/mintlify.css ../docs/public/talos-tokens.css
 cp fonts/*.woff2 fonts/OFL-*.txt ../docs/public/fonts/
 ```
+
+Do not merge it into an existing stylesheet. This file is a build artifact and gets replaced wholesale on the next version bump, so anything hand-written that shares the file gets reverted silently. Keep site-specific rules (layout repairs, table treatments, per-page overrides) in their own file and have them reference `--talos-*` rather than raw values. Page-specific rules can be scoped with Mintlify's `html[data-current-path="..."]` selector so they do not apply site-wide.
 
 One setting moves with them, because Mintlify reads the accent from configuration rather than from CSS. The generated file carries the exact block to paste into `public/docs.json`:
 
