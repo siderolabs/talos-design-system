@@ -40,7 +40,7 @@
     "$type": "color",
     "default":  { "$value": "{red.3}", "$description": "Accent icons, borders, active nav indicators" },
     "hover":    { "$value": "{red.4}", "$description": "Hover for accent icons and links" },
-    "text":     { "$value": "{red.6}", "$description": "Accent-coloured text and links. Shaded because the brand red reaches only 3.9:1 on white." },
+    "text":     { "$value": "{red.5}", "$description": "Accent-coloured text and links. Shaded because the product red reaches only 3.98:1 on surface-chrome; step 5 is the brightest step that passes AA on every light surface." },
     "fill":     { "$value": "{red.4}", "$description": "Primary button background" },
     "fill-hover":  { "$value": "{red.5}", "$description": "Primary button hover" },
     "fill-active": { "$value": "{red.7}", "$description": "Primary button pressed" },

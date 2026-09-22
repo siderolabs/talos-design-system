@@ -33,19 +33,19 @@
   --talos-cream-10: #1A1A18;  /* Headings, emphasis */
 
   /* red */
-  --talos-red-1: #EB8A86;  /* Tinted. Accent text on dark surfaces. */
-  --talos-red-2: #E4615B;  /* Hover for accent-coloured text and icons on dark */
-  --talos-red-3: #E04B45;  /* Brand red. Icons, borders, active indicators. */
-  --talos-red-4: #C44740;  /* Solid fill under a white label */
-  --talos-red-5: #AE3B36;  /* Fill hover */
-  --talos-red-6: #9D3530;  /* Shaded. Accent text on light surfaces. */
-  --talos-red-7: #8E2A26;  /* Deep. Fill pressed, gradient origin. */
+  --talos-red-1: #E48E96;  /* Tinted. Accent text on dark surfaces. */
+  --talos-red-2: #DB6973;  /* Hover for accent-coloured text and icons on dark */
+  --talos-red-3: #D24350;  /* Product red. Icons, borders, active indicators. */
+  --talos-red-4: #CF4250;  /* Solid fill under a white label. 4.62:1. */
+  --talos-red-5: #B93B46;  /* Fill hover. Doubles as accent text on light surfaces: the brightest step that reaches AA on every light surface (4.60:1 on the page well). */
+  --talos-red-6: #A83640;  /* Shaded. Fill pressed / active. */
+  --talos-red-7: #8F2D36;  /* Deep. Gradient origin. */
 
   /* gradient */
   --talos-gradient-display-1: #E8312C;  /* Hot red. 4.28:1 under white, so display only. */
   --talos-gradient-display-2: #E2335A;  /* Pink. 4.33:1 under white. */
   --talos-gradient-display-3: #F77216;  /* Orange. 2.85:1 under white, the stop that makes this weight unusable behind text. */
-  --talos-gradient-fill-1: var(--talos-red-4);  /* The accent fill, reused. 4.86:1 under white. */
+  --talos-gradient-fill-1: var(--talos-red-4);  /* The accent fill, reused. 4.62:1 under white. */
   --talos-gradient-fill-2: #B5305A;  /* Deep pink. 5.94:1 under white. */
   --talos-gradient-fill-3: #C2560F;  /* Deep orange. 4.53:1 under white, the worst point on this weight. */
 
@@ -205,7 +205,7 @@
   --talos-border-accent: var(--talos-red-3);
   --talos-accent-default: var(--talos-red-3);
   --talos-accent-hover: var(--talos-red-4);
-  --talos-accent-text: var(--talos-red-6);
+  --talos-accent-text: var(--talos-red-5);
   --talos-accent-fill: var(--talos-red-4);
   --talos-accent-fill-hover: var(--talos-red-5);
   --talos-accent-fill-active: var(--talos-red-7);

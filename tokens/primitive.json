@@ -35,14 +35,14 @@
 
   "red": {
     "$type": "color",
-    "$description": "Brand accent, the only saturated hue in the core palette. Step 3 is the brand value and stays the accent everywhere it is decorative. Steps 4 to 7 exist so white labels on a red fill can reach AA, which the brand value does not (3.99:1).",
-    "1": { "$value": "#EB8A86", "$description": "Tinted. Accent text on dark surfaces." },
-    "2": { "$value": "#E4615B", "$description": "Hover for accent-coloured text and icons on dark" },
-    "3": { "$value": "#E04B45", "$description": "Brand red. Icons, borders, active indicators." },
-    "4": { "$value": "#C44740", "$description": "Solid fill under a white label" },
-    "5": { "$value": "#AE3B36", "$description": "Fill hover" },
-    "6": { "$value": "#9D3530", "$description": "Shaded. Accent text on light surfaces." },
-    "7": { "$value": "#8E2A26", "$description": "Deep. Fill pressed, gradient origin." }
+    "$description": "Brand accent, the only saturated hue in the core palette. Step 3 is the product accent, sampled from the logo, and stays the accent everywhere it is decorative. (The marketing site still carries #E04B45; the proposal to move it to this value is with marketing.) Steps 4 to 7 exist for fills and text: step 3 reaches 4.51:1 under a white label, which passes AA with no headroom, so fills use step 4 instead.",
+    "1": { "$value": "#E48E96", "$description": "Tinted. Accent text on dark surfaces." },
+    "2": { "$value": "#DB6973", "$description": "Hover for accent-coloured text and icons on dark" },
+    "3": { "$value": "#D24350", "$description": "Product red. Icons, borders, active indicators." },
+    "4": { "$value": "#CF4250", "$description": "Solid fill under a white label. 4.62:1." },
+    "5": { "$value": "#B93B46", "$description": "Fill hover. Doubles as accent text on light surfaces: the brightest step that reaches AA on every light surface (4.60:1 on the page well)." },
+    "6": { "$value": "#A83640", "$description": "Shaded. Fill pressed / active." },
+    "7": { "$value": "#8F2D36", "$description": "Deep. Gradient origin." }
   },
 
   "gradient": {
@@ -54,7 +54,7 @@
       "3": { "$value": "#F77216", "$description": "Orange. 2.85:1 under white, the stop that makes this weight unusable behind text." }
     },
     "fill": {
-      "1": { "$value": "{red.4}", "$description": "The accent fill, reused. 4.86:1 under white." },
+      "1": { "$value": "{red.4}", "$description": "The accent fill, reused. 4.62:1 under white." },
       "2": { "$value": "#B5305A", "$description": "Deep pink. 5.94:1 under white." },
       "3": { "$value": "#C2560F", "$description": "Deep orange. 4.53:1 under white, the worst point on this weight." }
     }

@@ -110,7 +110,7 @@ Do not merge it into an existing stylesheet. This file is a build artifact and g
 One setting moves with them, because Mintlify reads the accent from configuration rather than from CSS. The generated file carries the exact block to paste into `public/docs.json`:
 
 ```json
-"colors": { "primary": "#C44740", "light": "#EB8A86", "dark": "#9D3530" }
+"colors": { "primary": "#B93B46", "light": "#E48E96", "dark": "#CF4250" }
 ```
 
 Mintlify's `fonts` setting is deliberately left unset. It has no slot for a code face, and the `@font-face` rules in the stylesheet cover both faces without it.

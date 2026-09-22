@@ -42,7 +42,7 @@
     "$description": "One saturated hue in the whole system. Sparing use is what makes it read as signal. The fill is a darker step than the brand red so a white label reaches AA.",
     "default":  { "$value": "{red.3}", "$description": "Accent icons, borders, active nav indicators" },
     "hover":    { "$value": "{red.2}", "$description": "Hover for accent icons and links" },
-    "text":     { "$value": "{red.1}", "$description": "Accent-coloured text and links. Tinted because the brand red reaches only 4.3:1 on surface-card." },
+    "text":     { "$value": "{red.1}", "$description": "Accent-coloured text and links. Tinted because the product red reaches only 3.6:1 on surface-card." },
     "fill":     { "$value": "{red.4}", "$description": "Primary button background" },
     "fill-hover":  { "$value": "{red.5}", "$description": "Primary button hover" },
     "fill-active": { "$value": "{red.7}", "$description": "Primary button pressed" },
