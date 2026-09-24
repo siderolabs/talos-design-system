@@ -38,7 +38,7 @@
       "$description": "Supporting text about something else: timestamps, counts, the email under a name, helper text under a field, pagination summaries."
     },
     "badge": {
-      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.sm}", "fontWeight": "{weight.medium}", "lineHeight": "{leading.tight}", "letterSpacing": "{tracking.normal}" },
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.sm}", "fontWeight": "{weight.semibold}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
       "$description": "Text inside a chip, pill or status badge."
     },
     "overline": {

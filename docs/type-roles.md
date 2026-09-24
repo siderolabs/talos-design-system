@@ -18,7 +18,7 @@ Roles are defined in `tokens/type-roles.json`. Every field is a reference into t
 | `control` | 14 / 500 | Text a person clicks: buttons, tabs, nav items, menu items, segmented controls, standalone action links. |
 | `label` | 12 / 500 | Names a value next to it: form field labels, the key in a key/value pair. |
 | `meta` | 12 / 400 | Supporting text about something else: the email under a name, a timestamp under an event, helper text, counts, pagination summaries, footers. |
-| `badge` | 12 / 500 | Text inside a chip, pill or status badge. |
+| `badge` | 12 / 600 | Text inside a chip, pill or status badge. |
 | `overline` | 10 / 600, uppercase, tracked | Groups or captions other content: sidebar group names, stat captions, table column headers. |
 | `overline-mono` | 10 / 500 mono, uppercase, tracked | The machine voice as a label: environment badges, a resource kind above a name. |
 | `annotation` | 11 / 400 | Text drawn inside a chart or diagram: axis labels, legends, data labels. |
