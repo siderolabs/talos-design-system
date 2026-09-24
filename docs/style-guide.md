@@ -182,9 +182,11 @@ The scale is dense on purpose. Base is 14px, not 16px, because these are operato
 | `xl` | 24px | Page titles, list and detail pages alike; stat figures |
 | `2xl` | 30px | Display; not used in the consoles today |
 
-**Nothing a person reads goes below 11px.** 10px is only for uppercase text with tracking, where the capitals and spacing carry it. Chart libraries default their axis labels to 8 or 9px; set them to `xs`.
+**Nothing a person reads goes below 11px.** 10px is only for uppercase text with tracking, where the capitals and spacing carry it. Chart libraries default their axis labels to 8 or 9px; set them to the `annotation` role, 11px.
 
 Every size is on the scale. A 13px or 10.5px value is off the scale the same way an 18px padding is off the spacing menu.
+
+Application code picks a **type role** rather than a size. A role names what the text is (`body`, `meta`, `label`, `overline`, `annotation` and nine others) and resolves to one size, weight, line height and face. [Type roles](type-roles.md) has the full set, the decision order, and worked examples from the Portal.
 
 Weights are 400/500/600/700. Line height is `tight` 1.25 for headings, `base` 1.5 for body and tables, `relaxed` 1.65 for prose.
 

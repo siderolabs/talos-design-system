@@ -102,6 +102,6 @@
     "card":     { "$value": "0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04)" },
     "dropdown": { "$value": "0 4px 16px rgba(0, 0, 0, 0.5)" },
     "modal":    { "$value": "0 8px 32px rgba(0, 0, 0, 0.6)" },
-    "focus":    { "$value": "0 0 0 3px rgba(224, 75, 69, 0.35)", "$description": "Focus ring. Never removed without a replacement." }
+    "focus":    { "$value": "0 0 0 3px rgba(225, 45, 70, 0.35)", "$description": "Focus ring. Never removed without a replacement." }
   }
 }

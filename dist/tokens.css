@@ -140,6 +140,93 @@
   --talos-tracking-eyebrow: 0.10em;  /* Sans section labels */
   --talos-tracking-machine: 0.16em;  /* Mono uppercase labels */
 
+  /* Type roles. Theme-independent. Apply with type.css, the Tailwind
+     type-* utilities or the SCSS talos-type mixin. */
+  /* type-page-title: The one heading that names the page, list and detail pages alike. One per page. */
+  --talos-type-page-title-family: var(--talos-font-sans);
+  --talos-type-page-title-size: var(--talos-text-xl);
+  --talos-type-page-title-weight: var(--talos-weight-semibold);
+  --talos-type-page-title-leading: var(--talos-leading-tight);
+  --talos-type-page-title-tracking: var(--talos-tracking-normal);
+  /* type-section-title: Names a card, panel, modal or section within the page. */
+  --talos-type-section-title-family: var(--talos-font-sans);
+  --talos-type-section-title-size: var(--talos-text-md);
+  --talos-type-section-title-weight: var(--talos-weight-semibold);
+  --talos-type-section-title-leading: var(--talos-leading-tight);
+  --talos-type-section-title-tracking: var(--talos-tracking-normal);
+  /* type-stat: A headline number on a stat card or summary tile. Tabular figures. */
+  --talos-type-stat-family: var(--talos-font-sans);
+  --talos-type-stat-size: var(--talos-text-xl);
+  --talos-type-stat-weight: var(--talos-weight-semibold);
+  --talos-type-stat-leading: var(--talos-leading-tight);
+  --talos-type-stat-tracking: var(--talos-tracking-normal);
+  /* type-body: The content itself: table cells, form values, paragraphs, list items, page descriptions, empty states. */
+  --talos-type-body-family: var(--talos-font-sans);
+  --talos-type-body-size: var(--talos-text-base);
+  --talos-type-body-weight: var(--talos-weight-regular);
+  --talos-type-body-leading: var(--talos-leading-base);
+  --talos-type-body-tracking: var(--talos-tracking-normal);
+  /* type-body-strong: The body text that identifies a row or a record: the name in the first column, the value a key/value pair exists to show. */
+  --talos-type-body-strong-family: var(--talos-font-sans);
+  --talos-type-body-strong-size: var(--talos-text-base);
+  --talos-type-body-strong-weight: var(--talos-weight-semibold);
+  --talos-type-body-strong-leading: var(--talos-leading-base);
+  --talos-type-body-strong-tracking: var(--talos-tracking-normal);
+  /* type-control: Text a person clicks: buttons, tabs, nav items, menu items, segmented controls. */
+  --talos-type-control-family: var(--talos-font-sans);
+  --talos-type-control-size: var(--talos-text-base);
+  --talos-type-control-weight: var(--talos-weight-medium);
+  --talos-type-control-leading: var(--talos-leading-base);
+  --talos-type-control-tracking: var(--talos-tracking-normal);
+  /* type-label: Names a value that sits next to it: form field labels, the key in a key/value pair, filter names. */
+  --talos-type-label-family: var(--talos-font-sans);
+  --talos-type-label-size: var(--talos-text-sm);
+  --talos-type-label-weight: var(--talos-weight-medium);
+  --talos-type-label-leading: var(--talos-leading-base);
+  --talos-type-label-tracking: var(--talos-tracking-normal);
+  /* type-meta: Supporting text about something else: timestamps, counts, the email under a name, helper text under a field, pagination summaries. */
+  --talos-type-meta-family: var(--talos-font-sans);
+  --talos-type-meta-size: var(--talos-text-sm);
+  --talos-type-meta-weight: var(--talos-weight-regular);
+  --talos-type-meta-leading: var(--talos-leading-base);
+  --talos-type-meta-tracking: var(--talos-tracking-normal);
+  /* type-badge: Text inside a chip, pill or status badge. */
+  --talos-type-badge-family: var(--talos-font-sans);
+  --talos-type-badge-size: var(--talos-text-sm);
+  --talos-type-badge-weight: var(--talos-weight-semibold);
+  --talos-type-badge-leading: var(--talos-leading-base);
+  --talos-type-badge-tracking: var(--talos-tracking-normal);
+  /* type-overline: Uppercase, tracked. Groups or captions other content: sidebar group names, stat card captions, table column headers. */
+  --talos-type-overline-family: var(--talos-font-sans);
+  --talos-type-overline-size: var(--talos-text-2xs);
+  --talos-type-overline-weight: var(--talos-weight-semibold);
+  --talos-type-overline-leading: var(--talos-leading-tight);
+  --talos-type-overline-tracking: var(--talos-tracking-eyebrow);
+  /* type-overline-mono: Uppercase, tracked, mono. The machine voice as a label: environment badges, resource kinds above a name. */
+  --talos-type-overline-mono-family: var(--talos-font-mono);
+  --talos-type-overline-mono-size: var(--talos-text-2xs);
+  --talos-type-overline-mono-weight: var(--talos-weight-medium);
+  --talos-type-overline-mono-leading: var(--talos-leading-tight);
+  --talos-type-overline-mono-tracking: var(--talos-tracking-machine);
+  /* type-annotation: Text drawn inside a chart or diagram: axis labels, legends, data labels. Nothing outside a chart uses it. */
+  --talos-type-annotation-family: var(--talos-font-sans);
+  --talos-type-annotation-size: var(--talos-text-xs);
+  --talos-type-annotation-weight: var(--talos-weight-regular);
+  --talos-type-annotation-leading: var(--talos-leading-tight);
+  --talos-type-annotation-tracking: var(--talos-tracking-normal);
+  /* type-mono: An identifier standing on its own: IDs, versions, hashes, IPs, paths, node names. Inside a sentence, code keeps the sentence's size and only switches face. */
+  --talos-type-mono-family: var(--talos-font-mono);
+  --talos-type-mono-size: var(--talos-text-sm);
+  --talos-type-mono-weight: var(--talos-weight-regular);
+  --talos-type-mono-leading: var(--talos-leading-base);
+  --talos-type-mono-tracking: var(--talos-tracking-normal);
+  /* type-code-block: Multi-line code, config and log output. */
+  --talos-type-code-block-family: var(--talos-font-mono);
+  --talos-type-code-block-size: var(--talos-text-sm);
+  --talos-type-code-block-weight: var(--talos-weight-regular);
+  --talos-type-code-block-leading: var(--talos-leading-relaxed);
+  --talos-type-code-block-tracking: var(--talos-tracking-normal);
+
   /* Semantic roles. Dark is the default theme. */
   --talos-surface-page: var(--talos-ink-0);
   --talos-surface-chrome: var(--talos-ink-1);
@@ -206,7 +293,7 @@
   --talos-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
   --talos-shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.5);
   --talos-shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --talos-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.35);
+  --talos-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.35);
 }
 
 /*
@@ -281,5 +368,5 @@
   --talos-shadow-card: 0 1px 3px rgba(26, 26, 24, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
   --talos-shadow-dropdown: 0 4px 16px rgba(26, 26, 24, 0.12);
   --talos-shadow-modal: 0 8px 32px rgba(26, 26, 24, 0.16);
-  --talos-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.30);
+  --talos-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.30);
 }
