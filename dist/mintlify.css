@@ -8,7 +8,7 @@
  *
  * Mintlify has no build step and cannot import from node_modules, so this
  * is vendored rather than imported: copy it to public/talos-tokens.css in
- * siderolabs/docs (alongside the hand-written style.css, which stays) and
+ * the documentation repository (alongside its hand-written CSS, which stays) and
  * re-copy it on a version bump.
  *
  * Two things travel with it:
