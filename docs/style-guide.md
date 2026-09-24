@@ -186,6 +186,8 @@ The scale is dense on purpose. Base is 14px, not 16px, because these are operato
 
 Every size is on the scale. A 13px or 10.5px value is off the scale the same way an 18px padding is off the spacing menu.
 
+Application code picks a **type role** rather than a size. A role names what the text is (`body`, `meta`, `label`, `overline`, `annotation` and nine others) and resolves to one size, weight, line height and face. [Type roles](type-roles.md) has the full set, the decision order, and worked examples from the Portal and Director.
+
 Weights are 400/500/600/700. Line height is `tight` 1.25 for headings, `base` 1.5 for body and tables, `relaxed` 1.65 for prose.
 
 Both faces ship with the token package as woff2 and are served by the product, never fetched from Google at runtime. A product that loads its type from a CDN loses it in an air-gapped install, and loses it quietly: the page falls back to a system font and still works, so the report never comes.
