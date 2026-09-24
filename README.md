@@ -174,7 +174,7 @@ The lint reads source. `talos-audit` reads what the browser computed, which is t
 npm install --save-dev playwright && npx playwright install chromium
 npx talos-audit https://localhost:5173/clusters
 npx talos-audit --max 0 --json page-a.html page-b.html
-npx talos-audit --storage-state auth.json --proxy socks5://127.0.0.1:8888 https://demo.example.com/vms
+npx talos-audit --storage-state auth.json --proxy socks5://127.0.0.1:8888 https://demo.example.com/machines
 ```
 
 It reports, grouped by value with a count and example elements:
