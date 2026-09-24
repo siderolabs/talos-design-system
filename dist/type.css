@@ -1,0 +1,143 @@
+/*
+ * Talos Design System tokens. GENERATED FILE, DO NOT EDIT.
+ *
+ * Source: tokens/ in @siderolabs/talos-design-system. Change a value there, run
+ * `npm run build`, and every product picks it up on its next version bump.
+ */
+
+/*
+ * Type role classes, for consumers without Tailwind or Sass. Import
+ * tokens.css first; these read its custom properties.
+ *
+ * Choose the role from what the text is, not from the size you want.
+ * docs/type-roles.md is the decision guide.
+ */
+
+/* The one heading that names the page, list and detail pages alike. One per page. */
+.talos-type-page-title {
+  font-family: var(--talos-type-page-title-family);
+  font-size: var(--talos-type-page-title-size);
+  font-weight: var(--talos-type-page-title-weight);
+  line-height: var(--talos-type-page-title-leading);
+  letter-spacing: var(--talos-type-page-title-tracking);
+}
+
+/* Names a card, panel, modal or section within the page. */
+.talos-type-section-title {
+  font-family: var(--talos-type-section-title-family);
+  font-size: var(--talos-type-section-title-size);
+  font-weight: var(--talos-type-section-title-weight);
+  line-height: var(--talos-type-section-title-leading);
+  letter-spacing: var(--talos-type-section-title-tracking);
+}
+
+/* A headline number on a stat card or summary tile. Tabular figures. */
+.talos-type-stat {
+  font-family: var(--talos-type-stat-family);
+  font-size: var(--talos-type-stat-size);
+  font-weight: var(--talos-type-stat-weight);
+  line-height: var(--talos-type-stat-leading);
+  letter-spacing: var(--talos-type-stat-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The content itself: table cells, form values, paragraphs, list items, page descriptions, empty states. */
+.talos-type-body {
+  font-family: var(--talos-type-body-family);
+  font-size: var(--talos-type-body-size);
+  font-weight: var(--talos-type-body-weight);
+  line-height: var(--talos-type-body-leading);
+  letter-spacing: var(--talos-type-body-tracking);
+}
+
+/* The body text that identifies a row or a record: the name in the first column, the value a key/value pair exists to show. */
+.talos-type-body-strong {
+  font-family: var(--talos-type-body-strong-family);
+  font-size: var(--talos-type-body-strong-size);
+  font-weight: var(--talos-type-body-strong-weight);
+  line-height: var(--talos-type-body-strong-leading);
+  letter-spacing: var(--talos-type-body-strong-tracking);
+}
+
+/* Text a person clicks: buttons, tabs, nav items, menu items, segmented controls. */
+.talos-type-control {
+  font-family: var(--talos-type-control-family);
+  font-size: var(--talos-type-control-size);
+  font-weight: var(--talos-type-control-weight);
+  line-height: var(--talos-type-control-leading);
+  letter-spacing: var(--talos-type-control-tracking);
+}
+
+/* Names a value that sits next to it: form field labels, the key in a key/value pair, filter names. */
+.talos-type-label {
+  font-family: var(--talos-type-label-family);
+  font-size: var(--talos-type-label-size);
+  font-weight: var(--talos-type-label-weight);
+  line-height: var(--talos-type-label-leading);
+  letter-spacing: var(--talos-type-label-tracking);
+}
+
+/* Supporting text about something else: timestamps, counts, the email under a name, helper text under a field, pagination summaries. */
+.talos-type-meta {
+  font-family: var(--talos-type-meta-family);
+  font-size: var(--talos-type-meta-size);
+  font-weight: var(--talos-type-meta-weight);
+  line-height: var(--talos-type-meta-leading);
+  letter-spacing: var(--talos-type-meta-tracking);
+}
+
+/* Text inside a chip, pill or status badge. */
+.talos-type-badge {
+  font-family: var(--talos-type-badge-family);
+  font-size: var(--talos-type-badge-size);
+  font-weight: var(--talos-type-badge-weight);
+  line-height: var(--talos-type-badge-leading);
+  letter-spacing: var(--talos-type-badge-tracking);
+}
+
+/* Uppercase, tracked. Groups or captions other content: sidebar group names, stat card captions, table column headers. */
+.talos-type-overline {
+  font-family: var(--talos-type-overline-family);
+  font-size: var(--talos-type-overline-size);
+  font-weight: var(--talos-type-overline-weight);
+  line-height: var(--talos-type-overline-leading);
+  letter-spacing: var(--talos-type-overline-tracking);
+  text-transform: uppercase;
+}
+
+/* Uppercase, tracked, mono. The machine voice as a label: environment badges, resource kinds above a name. */
+.talos-type-overline-mono {
+  font-family: var(--talos-type-overline-mono-family);
+  font-size: var(--talos-type-overline-mono-size);
+  font-weight: var(--talos-type-overline-mono-weight);
+  line-height: var(--talos-type-overline-mono-leading);
+  letter-spacing: var(--talos-type-overline-mono-tracking);
+  text-transform: uppercase;
+}
+
+/* Text drawn inside a chart or diagram: axis labels, legends, data labels. Nothing outside a chart uses it. */
+.talos-type-annotation {
+  font-family: var(--talos-type-annotation-family);
+  font-size: var(--talos-type-annotation-size);
+  font-weight: var(--talos-type-annotation-weight);
+  line-height: var(--talos-type-annotation-leading);
+  letter-spacing: var(--talos-type-annotation-tracking);
+}
+
+/* An identifier standing on its own: IDs, versions, hashes, IPs, paths, node names. Inside a sentence, code keeps the sentence's size and only switches face. */
+.talos-type-mono {
+  font-family: var(--talos-type-mono-family);
+  font-size: var(--talos-type-mono-size);
+  font-weight: var(--talos-type-mono-weight);
+  line-height: var(--talos-type-mono-leading);
+  letter-spacing: var(--talos-type-mono-tracking);
+}
+
+/* Multi-line code, config and log output. */
+.talos-type-code-block {
+  font-family: var(--talos-type-code-block-family);
+  font-size: var(--talos-type-code-block-size);
+  font-weight: var(--talos-type-code-block-weight);
+  line-height: var(--talos-type-code-block-leading);
+  letter-spacing: var(--talos-type-code-block-tracking);
+}

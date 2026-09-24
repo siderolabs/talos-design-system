@@ -31,6 +31,7 @@ function flatten(tree, path = [], inherited = {}, out = new Map()) {
       value: tree.$value,
       type,
       description: tree.$description,
+      extensions: tree.$extensions,
       path,
     })
     return out
@@ -86,6 +87,48 @@ if (missing.length) {
   process.exit(1)
 }
 
+// ------------------------------------------------------------ type roles
+
+const roles = flatten(read('type-roles.json'))
+
+const ROLE_FIELDS = {
+  fontFamily: ['family', 'font-family'],
+  fontSize: ['size', 'font-size'],
+  fontWeight: ['weight', 'font-weight'],
+  lineHeight: ['leading', 'line-height'],
+  letterSpacing: ['tracking', 'letter-spacing'],
+}
+
+// A role is a name for a combination of existing steps. A role that brings its
+// own size is how an off-scale 13px gets back in with a respectable name, so
+// every field has to be a reference into the matching primitive group.
+const ROLE_GROUP = { fontFamily: 'font', fontSize: 'text', fontWeight: 'weight', lineHeight: 'leading', letterSpacing: 'tracking' }
+for (const [name, token] of roles) {
+  for (const [field, group] of Object.entries(ROLE_GROUP)) {
+    const value = token.value[field]
+    if (typeof value !== 'string' || !value.startsWith(`{${group}.`)) {
+      console.error(`${name}.${field} must reference a ${group}.* token, got ${JSON.stringify(value)}`)
+      process.exit(1)
+    }
+    resolve(value, primitives)
+  }
+}
+
+const roleExtras = (token) => token.extensions?.['com.siderolabs.talos'] ?? {}
+
+/** The role's custom properties, as [name, value] pairs referencing the scale. */
+const roleVars = (name, token) =>
+  Object.entries(ROLE_FIELDS).map(([field, [suffix]]) => [`${PREFIX}${name}-${suffix}`, toVarReference(token.value[field])])
+
+/** The declarations that apply a role, reading its custom properties. */
+function roleDeclarations(name, token) {
+  const declarations = Object.entries(ROLE_FIELDS).map(([, [suffix, property]]) => [property, `var(${PREFIX}${name}-${suffix})`])
+  const extras = roleExtras(token)
+  if (extras.transform) declarations.push(['text-transform', extras.transform])
+  if (extras.numeric) declarations.push(['font-variant-numeric', extras.numeric])
+  return declarations
+}
+
 const comment = (token) => (token.description ? `  /* ${token.description} */` : '')
 
 /** Groups tokens by their first path segment so output stays readable. */
@@ -122,6 +165,13 @@ function buildCss() {
     }
     lines.push('')
   }
+  lines.push('  /* Type roles. Theme-independent. Apply with type.css, the Tailwind')
+  lines.push('     type-* utilities or the SCSS talos-type mixin. */')
+  for (const [name, token] of roles) {
+    lines.push(`  /* ${name}: ${token.description} */`)
+    for (const [property, value] of roleVars(name, token)) lines.push(`  ${property}: ${value};`)
+  }
+  lines.push('')
   lines.push('  /* Semantic roles. Dark is the default theme. */')
   for (const [name, token] of dark) {
     lines.push(`  ${PREFIX}${name}: ${toVarReference(token.value)};`)
@@ -148,6 +198,8 @@ function buildCss() {
 function buildScss() {
   const lines = [
     SCSS_HEADER,
+    '',
+    "@use 'sass:list';",
     '',
     '// Sass variables carry resolved literals because Bootstrap needs',
     '// compile-time values ($primary, $body-bg). The mixins below emit the same',
@@ -192,8 +244,54 @@ function buildScss() {
   for (const [name, token] of primitives) {
     lines.push(`  ${PREFIX}${name}: ${toVarReference(token.value)};`)
   }
+  for (const [name, token] of roles) {
+    for (const [property, value] of roleVars(name, token)) lines.push(`  ${property}: ${value};`)
+  }
   lines.push('}', '')
 
+  lines.push('// Applies a type role: @include talos.talos-type(meta). Reads the role\'s')
+  lines.push('// custom properties, so talos-primitives must be emitted somewhere above.')
+  lines.push('@mixin talos-type($role) {')
+  const names = [...roles.keys()].map((name) => name.replace(/^type-/, ''))
+  lines.push(`  @if not list.index((${names.map((n) => `'${n}'`).join(', ')}), '#{$role}') {`)
+  lines.push('    @error "Unknown type role \'#{$role}\'. See docs/type-roles.md.";')
+  lines.push('  }')
+  for (const [property, suffix] of Object.values(ROLE_FIELDS).map(([s, p]) => [p, s])) {
+    lines.push(`  ${property}: var(${PREFIX}type-#{$role}-${suffix});`)
+  }
+  for (const [name, token] of roles) {
+    const extras = roleDeclarations(name, token).slice(Object.keys(ROLE_FIELDS).length)
+    if (!extras.length) continue
+    lines.push(`  @if '#{$role}' == '${name.replace(/^type-/, '')}' {`)
+    for (const [property, value] of extras) lines.push(`    ${property}: ${value};`)
+    lines.push('  }')
+  }
+  lines.push('}', '')
+
+  return lines.join('\n')
+}
+
+// ----------------------------------------------------------------- type.css
+
+function buildTypeCss() {
+  const lines = [
+    HEADER,
+    '',
+    '/*',
+    ' * Type role classes, for consumers without Tailwind or Sass. Import',
+    ' * tokens.css first; these read its custom properties.',
+    ' *',
+    ' * Choose the role from what the text is, not from the size you want.',
+    ' * docs/type-roles.md is the decision guide.',
+    ' */',
+    '',
+  ]
+  for (const [name, token] of roles) {
+    lines.push(`/* ${token.description} */`)
+    lines.push(`.talos-${name} {`)
+    for (const [property, value] of roleDeclarations(name, token)) lines.push(`  ${property}: ${value};`)
+    lines.push('}', '')
+  }
   return lines.join('\n')
 }
 
@@ -258,6 +356,17 @@ function buildTailwind() {
   lines.push(`  --color-content-strong: var(${PREFIX}content-emphasis);`)
   lines.push(`  --color-surface-inverse: var(${PREFIX}surface-inverse);`)
   lines.push('}', '')
+
+  lines.push('/*')
+  lines.push(' * Type roles as utilities: class="type-meta". Prefer these to text-* sizes')
+  lines.push(' * in application code. docs/type-roles.md is the decision guide.')
+  lines.push(' */')
+  for (const [name, token] of roles) {
+    lines.push(`@utility ${name} {`)
+    for (const [property, value] of roleDeclarations(name, token)) lines.push(`  ${property}: ${value};`)
+    lines.push('}')
+  }
+  lines.push('')
 
   return lines.join('\n')
 }
@@ -571,6 +680,17 @@ function buildJson() {
         dark: Object.fromEntries([...dark].map((t) => entry(t, darkLookup))),
         light: Object.fromEntries([...light].map((t) => entry(t, lightLookup))),
       },
+      typeRoles: Object.fromEntries(
+        [...roles].map(([name, token]) => [
+          name.replace(/^type-/, ''),
+          {
+            ...Object.fromEntries(Object.entries(token.value).map(([field, ref]) => [field, resolve(ref, primitives)])),
+            reference: token.value,
+            ...roleExtras(token),
+            description: token.description,
+          },
+        ]),
+      ),
     },
     null,
     2,
@@ -586,6 +706,7 @@ const artifacts = {
   'tokens.scss': buildScss(),
   'tailwind.css': buildTailwind(),
   'fonts.css': buildFontsCss(),
+  'type.css': buildTypeCss(),
   'mintlify.css': buildMintlify(),
   'tokens.json': buildJson() + '\n',
 }
