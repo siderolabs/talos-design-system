@@ -9,7 +9,7 @@ import { bareUtility, createClassStringRule } from './shared.js'
 const SPACING_UTILITY =
   /^-?(gap-x|gap-y|gap|space-x|space-y|px|py|pt|pb|pl|pr|ps|pe|p|mx|my|mt|mb|ml|mr|ms|me|m)-(.+)$/
 
-const MENU = new Set(['tight', 'snug', 'compact', 'base', 'section', 'major'])
+const MENU = new Set(['micro', 'tight', 'snug', 'compact', 'base', 'section', 'major'])
 
 /**
  * `0` and `auto` express intent that no named step can, `px` is a hairline
@@ -34,6 +34,6 @@ export default {
     const [, utility, value] = match
     if (MENU.has(value) || OFF_SCALE_BUT_ALLOWED.has(value)) return
 
-    return `Use a named spacing step instead of "${className}": ${utility}-tight (8px), -snug (12px), -compact (16px), -base (24px), -section (32px) or -major (64px). A value that is not on the menu is a design question.`
+    return `Use a named spacing step instead of "${className}": ${utility}-micro (4px), -tight (8px), -snug (12px), -compact (16px), -base (24px), -section (32px) or -major (64px). A value that is not on the menu is a design question.`
   }),
 }
