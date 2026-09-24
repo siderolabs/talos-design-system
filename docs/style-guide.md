@@ -69,7 +69,7 @@ One saturated hue in the whole system. Sparing use is what makes it read as sign
 | `accent-default` | Icons, borders, active indicators | `#E12D46` | `#E12D46` |
 | `accent-text` | Accent-coloured text and links, the active nav marker bar | `#E48E96` | `#D41A3B` |
 | `accent-fill` | Primary button background | `#E12D46` | `#E12D46` |
-| `accent-fill-hover` | Primary button hover | `#B93B46` | `#B93B46` |
+| `accent-fill-hover` | Primary button hover: the fill at 90% | `rgba(225, 45, 70, 0.9)` | `rgba(225, 45, 70, 0.9)` |
 | `accent-fill-active` | Primary button pressed | `#8F2D36` | `#8F2D36` |
 | `accent-subtle` | Active nav item pill, selected row | accent text 20% | accent text 8% |
 

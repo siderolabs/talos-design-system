@@ -89,6 +89,8 @@ const EXCEPTIONS = {
     'WCAG 1.4.3 exempts disabled controls. Disabled state must also be conveyed by something other than colour.',
   'content-muted on surface-hover':
     'The muted step is set by the text scale rule to pass on the page well, chrome, card and inset. Hover is a transient backdrop under a pointer, and muted text on it lands at about 4.3:1. Pending a decision on whether hover must carry muted text at AA.',
+  'primary button hover':
+    'Hover is the accent fill at 90%, as settled in the September design review, so the resting 4.50:1 drops to about 4.0:1 over light surfaces while the pointer is over the button. Over dark surfaces it rises to 5.2:1. The label is readable at rest and the change is transient.',
   'banner gradient ends':
     'The banner gradient ends in the logo colours, which do not carry white text. The text sits on the solid accent band from 30% to 70%, which is measured as accent-fill. Pending a decision on narrow viewports, where banner text can reach the ends.',
 }
@@ -134,8 +136,17 @@ function checks(theme) {
   // Every state of the primary button, not just the resting one. A label that
   // passes at rest and fails on hover is the failure mode the reference skin's
   // own success-contrast remediation was written to catch.
-  for (const state of ['fill', 'fill-hover', 'fill-active']) {
+  for (const state of ['fill', 'fill-active']) {
     add(`content-on-accent on accent-${state}`, t('content-on-accent'), t(`accent-${state}`), AA_TEXT)
+  }
+  for (const surface of ['card', 'chrome']) {
+    add(
+      `content-on-accent on accent-fill-hover over surface-${surface}`,
+      t('content-on-accent'),
+      flatten(t('accent-fill-hover'), t(`surface-${surface}`)),
+      AA_TEXT,
+      'primary button hover',
+    )
   }
 
   // A gradient is only as legible as its worst stop, and the worst stop is not

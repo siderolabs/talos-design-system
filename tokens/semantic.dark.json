@@ -44,7 +44,7 @@
     "hover":    { "$value": "{red.2}", "$description": "Hover for accent icons and links" },
     "text":     { "$value": "{red.1}", "$description": "Accent-coloured text and links, and the active nav marker bar. Tinted because the product accent reaches only 3.85:1 on surface-card." },
     "fill":     { "$value": "{red.3}", "$description": "Primary button background. White on it is 4.50:1." },
-    "fill-hover":  { "$value": "{red.5}", "$description": "Primary button hover" },
+    "fill-hover":  { "$value": "rgba(225, 45, 70, 0.9)", "$description": "Primary button hover: the fill at 90%, so it lightens slightly over its backdrop. White on it is 4.0:1 over light surfaces, a documented exception, and 5.2:1 over dark ones." },
     "fill-active": { "$value": "{red.7}", "$description": "Primary button pressed" },
     "subtle":   { "$value": "rgba(228, 142, 150, 0.20)", "$description": "Active nav item pill, selected row: accent text at 20%" },
     "gradient":      { "$type": "gradient", "$value": "linear-gradient(90deg, {gradient.display.1} 0%, {gradient.display.2} 51%, {gradient.display.3} 100%)", "$description": "The logo gradient. Marks and rules only, nothing on top of it." },
