@@ -4,7 +4,7 @@ Design tokens and lint guardrails shared by the Talos product interfaces: Omni, 
 
 The values implement the Sidero brand visual guide, with three contrast corrections documented in the style guide. One source of truth, five build outputs, one set of lint rules.
 
-**Read [`docs/style-guide.md`](docs/style-guide.md) first.** It carries the rules; this file only covers mechanics.
+**Read [`docs/style-guide.md`](docs/style-guide.md) first.** It carries the rules; this file only covers mechanics. Agents adopting the system in a product, or changing it, follow [`AGENTS.md`](AGENTS.md).
 
 To see the whole set rendered in both themes, open [`docs/preview.html`](docs/preview.html) in a browser. It reads `dist/tokens.css` directly, so it always shows what the build last produced.
 
@@ -162,10 +162,10 @@ export default { extends: [talos] }
 
 Adopt with a suppressions file rather than a rewrite: record existing violations once, and the count only goes down.
 
-`no-raw-font-size` flags a literal size anywhere in component code: `fontSize: 12` or `fontSize: '0.8rem'` in a style object, `font-size: 13px` in a style string or template, and Tailwind's `text-[13px]`. It allows `var(--talos-text-*)`, keywords such as `inherit`, and expressions. Chart options take the same `fontSize` key and cannot resolve `var()`, so read the token at runtime:
+`no-raw-font-size` flags a literal size anywhere in component code: `fontSize: 12` or `fontSize: '0.8rem'` in a style object, `font-size: 13px` in a style string or template, and Tailwind's `text-[13px]`. It allows `var(--talos-type-*)` and `var(--talos-text-*)`, keywords such as `inherit`, and expressions, and its message points at the type roles. Chart options take the same `fontSize` key and cannot resolve `var()`, so read the role's size at runtime:
 
 ```js
-const axisLabel = getComputedStyle(document.documentElement).getPropertyValue('--talos-text-xs')
+const axisLabel = getComputedStyle(document.documentElement).getPropertyValue('--talos-type-annotation-size')
 ```
 
 ### Verifying a page
