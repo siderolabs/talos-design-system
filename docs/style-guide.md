@@ -147,11 +147,12 @@ These are translucent and well below 3:1 by design. That is allowed: every compo
 
 ## Spacing
 
-Six named steps on an 8-point grid. Pick the role, never the number.
+Seven named steps, all multiples of 4. Pick the role, never the number.
 
 | Step | Value | Use |
 | --- | --- | --- |
-| `tight` | 8px | Inside a control: icon to label |
+| `micro` | 4px | Inside a control: icon to label, chip and badge padding |
+| `tight` | 8px | Button padding, between tightly related controls |
 | `snug` | 12px | Between related elements in a group |
 | `compact` | 16px | Dense content: table cells, list rows, toolbars |
 | `base` | 24px | The default gutter: card padding, grid gaps |
@@ -159,6 +160,8 @@ Six named steps on an 8-point grid. Pick the role, never the number.
 | `major` | 64px | Page-level separation |
 
 A value that is not on this menu is a design question, not a CSS decision. Bring it to the token repo as an issue rather than writing `padding: 18px`.
+
+2px is deliberately not a step. A component that needs it (a hairline gap in a segmented control, say) builds it in, and should first check whether it does. Values the products use today that the menu drops: 2 goes away, 6 moves to 4 or 8, 10 to 8 or 12, 14 to 12 or 16, 20 to 24.
 
 `compact` is new relative to the scale Omni shipped in August. Density is a feature in infrastructure tooling, screen real estate is not to be wasted, and a menu that jumps 12 to 24 forces dense tables into the wrong step.
 
@@ -168,7 +171,20 @@ Manrope for UI and headings. JetBrains Mono as the machine voice: code, identifi
 
 The scale is dense on purpose. Base is 14px, not 16px, because these are operator consoles where a table row matters more than reading comfort at arm's length.
 
-`2xs` 10px and `xs` 11px for labels and dense metadata, `sm` 12px for small buttons and badges, `base` 14px for body and tables and inputs and nav, `md` 16px for card titles, `lg` 20px for page titles, then `xl` 24px and `2xl` 30px for pages that carry marketing weight.
+| Step | Value | Use |
+| --- | --- | --- |
+| `2xs` | 10px | Tracked uppercase labels only: rail group headings, environment badges |
+| `xs` | 11px | The floor for everything else: dense metadata, stat labels, chart axis labels |
+| `sm` | 12px | Chips, badges, captions, timestamps |
+| `base` | 14px | Body, tables, inputs, nav, buttons |
+| `md` | 16px | Card titles |
+| `lg` | 20px | Between card titles and page titles; no fixed role yet |
+| `xl` | 24px | Page titles, list and detail pages alike; stat figures |
+| `2xl` | 30px | Display; not used in the consoles today |
+
+**Nothing a person reads goes below 11px.** 10px is only for uppercase text with tracking, where the capitals and spacing carry it. Chart libraries default their axis labels to 8 or 9px; set them to `xs`.
+
+Every size is on the scale. A 13px or 10.5px value is off the scale the same way an 18px padding is off the spacing menu.
 
 Weights are 400/500/600/700. Line height is `tight` 1.25 for headings, `base` 1.5 for body and tables, `relaxed` 1.65 for prose.
 

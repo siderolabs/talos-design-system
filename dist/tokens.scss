@@ -92,6 +92,7 @@ $talos-white: #FFFFFF;
 $talos-black: #000000;
 
 // space
+$talos-space-micro: 4px;
 $talos-space-tight: 8px;
 $talos-space-snug: 12px;
 $talos-space-compact: 16px;
@@ -482,6 +483,7 @@ $talos-light-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.30);
   --talos-paper: #E2D2A8;
   --talos-white: #FFFFFF;
   --talos-black: #000000;
+  --talos-space-micro: 4px;
   --talos-space-tight: 8px;
   --talos-space-snug: 12px;
   --talos-space-compact: 16px;
