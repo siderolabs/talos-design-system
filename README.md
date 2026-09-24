@@ -54,7 +54,7 @@ This repository is public to read and org-only to write. Consumers take it as a 
 
 ```json
 "dependencies": {
-  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.1.0"
+  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.2.0"
 }
 ```
 
@@ -110,7 +110,7 @@ Do not merge it into an existing stylesheet. This file is a build artifact and g
 One setting moves with them, because Mintlify reads the accent from configuration rather than from CSS. The generated file carries the exact block to paste into `public/docs.json`:
 
 ```json
-"colors": { "primary": "#B93B46", "light": "#E48E96", "dark": "#CF4250" }
+"colors": { "primary": "#D41A3B", "light": "#E48E96", "dark": "#E12D46" }
 ```
 
 Mintlify's `fonts` setting is deliberately left unset. It has no slot for a code face, and the `@font-face` rules in the stylesheet cover both faces without it.

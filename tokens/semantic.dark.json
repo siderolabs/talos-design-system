@@ -39,48 +39,60 @@
 
   "accent": {
     "$type": "color",
-    "$description": "One saturated hue in the whole system. Sparing use is what makes it read as signal. The fill is a darker step than the brand red so a white label reaches AA.",
+    "$description": "One saturated hue in the whole system. Sparing use is what makes it read as signal. The fill carries a white label at AA; text has its own tinted step because the fill reaches only 3.85:1 on surface-card.",
     "default":  { "$value": "{red.3}", "$description": "Accent icons, borders, active nav indicators" },
     "hover":    { "$value": "{red.2}", "$description": "Hover for accent icons and links" },
-    "text":     { "$value": "{red.1}", "$description": "Accent-coloured text and links. Tinted because the product red reaches only 3.6:1 on surface-card." },
-    "fill":     { "$value": "{red.4}", "$description": "Primary button background" },
+    "text":     { "$value": "{red.1}", "$description": "Accent-coloured text and links, and the active nav marker bar. Tinted because the product accent reaches only 3.85:1 on surface-card." },
+    "fill":     { "$value": "{red.3}", "$description": "Primary button background. White on it is 4.50:1." },
     "fill-hover":  { "$value": "{red.5}", "$description": "Primary button hover" },
     "fill-active": { "$value": "{red.7}", "$description": "Primary button pressed" },
-    "subtle":   { "$value": "rgba(224, 75, 69, 0.10)", "$description": "Tinted background: active nav item, selected row" },
+    "subtle":   { "$value": "rgba(228, 142, 150, 0.20)", "$description": "Active nav item pill, selected row: accent text at 20%" },
     "gradient":      { "$type": "gradient", "$value": "linear-gradient(90deg, {gradient.display.1} 0%, {gradient.display.2} 51%, {gradient.display.3} 100%)", "$description": "The logo gradient. Marks and rules only, nothing on top of it." },
-    "gradient-fill": { "$type": "gradient", "$value": "linear-gradient(90deg, {gradient.fill.1} 0%, {gradient.fill.2} 51%, {gradient.fill.3} 100%)", "$description": "The same arc at fill weight, for a gradient surface that carries text." }
+    "gradient-fill": { "$type": "gradient", "$value": "linear-gradient(270deg, {gradient.display.3} 0%, {red.3} 30%, {red.3} 70%, {gradient.display.1} 100%)", "$description": "Banner gradient: the logo's end colours with the accent fill held across the middle, where the text sits. White text only on the solid band." }
   },
 
   "status": {
     "$type": "color",
-    "$description": "Five roles per state. `default` is the hue as a graphic (dot, icon, chart series) and must reach 3:1 on a card. `text` is the label on a normal surface at 4.5:1. `fill` is a solid badge or button background with `on-fill` as its label. `subtle` is the tint behind a tonal chip, which carries `text` on top.",
+    "$description": "Eight roles per state. `default` is the hue as a graphic (dot, icon, chart series) and must reach 3:1 on a card. `text` is the label on a normal surface at 4.5:1. `fill` is a solid badge or button background with `on-fill` as its label, and on dark it is also the 3px edge on large status surfaces. `subtle` and `subtle-border` are a status chip: `text` on a pastel with a faint edge of the same hue. `surface` and `border` are a large status surface (callout, banner, tile). On dark those are neutral, and the state is carried by a 3px edge in `fill`, because a tinted dark surface cannot get light enough without costing the text on it contrast. Body text on a large surface stays content-default; only the icon and title take `text`.",
     "success": {
-      "default": { "$value": "{green.2}" },
-      "text":    { "$value": "{green.1}" },
-      "fill":    { "$value": "{green.2}" },
-      "on-fill": { "$value": "{ink.0}", "$description": "Dark label. White on brand green reaches only 2.4:1." },
-      "subtle":  { "$value": "rgba(87, 194, 138, 0.18)" }
+      "default": { "$value": "{green.4}" },
+      "text":    { "$value": "{green.4}" },
+      "fill":    { "$value": "{green.5}" },
+      "on-fill": { "$value": "{white}" },
+      "subtle":  { "$value": "{green.8}" },
+      "subtle-border": { "$value": "{green.7}" },
+      "surface": { "$value": "{surface.card}" },
+      "border":  { "$value": "{surface.inert}" }
     },
     "warning": {
-      "default": { "$value": "{amber.2}" },
-      "text":    { "$value": "{amber.1}" },
-      "fill":    { "$value": "{amber.2}" },
-      "on-fill": { "$value": "{ink.0}" },
-      "subtle":  { "$value": "rgba(240, 187, 103, 0.18)" }
+      "default": { "$value": "{amber.5}" },
+      "text":    { "$value": "{amber.5}" },
+      "fill":    { "$value": "{amber.4}" },
+      "on-fill": { "$value": "{cream.10}", "$description": "Dark label. The warning fill is too light for white." },
+      "subtle":  { "$value": "{amber.8}" },
+      "subtle-border": { "$value": "{amber.7}" },
+      "surface": { "$value": "{surface.card}" },
+      "border":  { "$value": "{surface.inert}" }
     },
     "danger": {
-      "default": { "$value": "{red.3}", "$description": "One red. Destructive and brand share a hue by design." },
-      "text":    { "$value": "{red.1}" },
-      "fill":    { "$value": "{red.4}" },
+      "default": { "$value": "{scarlet.4}", "$description": "A true red, separate from the crimson accent." },
+      "text":    { "$value": "{scarlet.4}" },
+      "fill":    { "$value": "{scarlet.5}" },
       "on-fill": { "$value": "{white}" },
-      "subtle":  { "$value": "rgba(224, 75, 69, 0.18)" }
+      "subtle":  { "$value": "{scarlet.8}" },
+      "subtle-border": { "$value": "{scarlet.7}" },
+      "surface": { "$value": "{surface.card}" },
+      "border":  { "$value": "{surface.inert}" }
     },
     "info": {
-      "default": { "$value": "{ink.8}", "$description": "Neutral grey. The brand has no blue." },
-      "text":    { "$value": "{ink.9}" },
-      "fill":    { "$value": "{ink.8}" },
-      "on-fill": { "$value": "{ink.0}" },
-      "subtle":  { "$value": "rgba(168, 168, 166, 0.16)" }
+      "default": { "$value": "{stone.1}", "$description": "Neutral grey. The brand has no blue." },
+      "text":    { "$value": "{stone.1}" },
+      "fill":    { "$value": "{stone.2}" },
+      "on-fill": { "$value": "{white}" },
+      "subtle":  { "$value": "{surface.hover}", "$description": "Neutral chips are the hover grey, with no edge." },
+      "subtle-border": { "$value": "rgba(0, 0, 0, 0)" },
+      "surface": { "$value": "{surface.card}", "$description": "Info is neutral in both themes and takes no edge." },
+      "border":  { "$value": "{surface.inert}" }
     }
   },
 

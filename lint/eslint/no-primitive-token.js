@@ -10,7 +10,7 @@ const COLOUR_UTILITY =
  * shared set, so a migration in progress is still guarded.
  */
 const PRIMITIVE =
-  /^(ink-\d+|cream-\d+|red-\d+|green-\d+|amber-\d+|paper|gradient-(?:display|fill)-\d+|naturals-n\d+|primary-p\d+|green-g\d+|red-r(?:\d+|logo)|yellow-y\d+|blue-b\d+)$/
+  /^(ink-\d+|cream-\d+|red-\d+|green-\d+|amber-\d+|scarlet-\d+|stone-\d+|paper|gradient-(?:display|fill)-\d+|naturals-n\d+|primary-p\d+|green-g\d+|red-r(?:\d+|logo)|yellow-y\d+|blue-b\d+)$/
 
 /**
  * Each ramp maps to the semantic roles that replace it. The hint is
@@ -22,10 +22,12 @@ const SUGGESTION = {
   ink: 'surface-* for backgrounds, content-* for text and icons, border-* for edges',
   cream: 'surface-* for backgrounds, content-* for text and icons, border-* for edges',
   naturals: 'surface-* for backgrounds, content-* for text and icons, border-* for edges',
-  red: 'accent-default, accent-text, accent-fill or status-danger-*',
+  red: 'accent-default, accent-text, accent-fill or accent-subtle',
   primary: 'accent-default, accent-text, accent-fill or accent-subtle',
-  green: 'status-success-default, status-success-text, status-success-fill or -subtle',
-  amber: 'status-warning-default, status-warning-text, status-warning-fill or -subtle',
+  green: 'status-success-*: default, text, fill, subtle for a chip, surface for a callout or tile',
+  scarlet: 'status-danger-*: default, text, fill, subtle for a chip, surface for a callout or tile',
+  stone: 'status-info-default, status-info-text or status-info-fill',
+  amber: 'status-warning-*: default, text, fill, subtle for a chip, surface for a callout or tile',
   yellow: 'status-warning-default, status-warning-text or status-warning-subtle',
   blue: 'status-info-default or status-info-text',
   paper: 'surface-paper',

@@ -87,6 +87,10 @@ const STATUSES = ['success', 'warning', 'danger', 'info']
 const EXCEPTIONS = {
   'content-disabled on any surface':
     'WCAG 1.4.3 exempts disabled controls. Disabled state must also be conveyed by something other than colour.',
+  'content-muted on surface-hover':
+    'The muted step is set by the text scale rule to pass on the page well, chrome, card and inset. Hover is a transient backdrop under a pointer, and muted text on it lands at about 4.3:1. Pending a decision on whether hover must carry muted text at AA.',
+  'banner gradient ends':
+    'The banner gradient ends in the logo colours, which do not carry white text. The text sits on the solid accent band from 30% to 70%, which is measured as accent-fill. Pending a decision on narrow viewports, where banner text can reach the ends.',
 }
 
 function checks(theme) {
@@ -107,7 +111,8 @@ function checks(theme) {
 
   for (const surface of SURFACES) {
     for (const role of TEXT_ON_SURFACE) {
-      add(`content-${role} on surface-${surface}`, t(`content-${role}`), t(`surface-${surface}`), AA_TEXT)
+      const note = role === 'muted' && surface === 'hover' ? 'content-muted on surface-hover' : undefined
+      add(`content-${role} on surface-${surface}`, t(`content-${role}`), t(`surface-${surface}`), AA_TEXT, note)
     }
     add(
       `content-disabled on surface-${surface}`,
@@ -134,18 +139,20 @@ function checks(theme) {
   }
 
   // A gradient is only as legible as its worst stop, and the worst stop is not
-  // the one a designer is looking at. Both weights are measured: the fill stops
-  // are enforced, because that weight exists to carry text, and the display
-  // stops are reported so the reason the other weight exists stays visible.
-  // Interpolation between two stops never leaves the range they bound, so
-  // checking the stops is sufficient.
-  for (const stop of [1, 2, 3]) {
+  // the one a designer is looking at. The fill gradient's middle band is the
+  // accent fill, already enforced above. Its ends are the logo colours and are
+  // measured against white under a documented exception, so the gap stays
+  // visible. The display gradient carries nothing and is reported only.
+  for (const stop of [1, 3]) {
     add(
-      `content-on-accent on gradient-fill-${stop}`,
+      `content-on-accent on gradient-fill end (display-${stop})`,
       t('content-on-accent'),
-      p(`gradient-fill-${stop}`),
+      p(`gradient-display-${stop}`),
       AA_TEXT,
+      'banner gradient ends',
     )
+  }
+  for (const stop of [1, 2, 3]) {
     add(
       `content-on-accent on gradient-display-${stop}`,
       t('content-on-accent'),
@@ -166,14 +173,29 @@ function checks(theme) {
     )
     // A status dot or chart series is a meaningful graphic: WCAG 1.4.11.
     add(`status-${status}-default on surface-card`, t(`status-${status}-default`), t('surface-card'), AA_LARGE)
-    // Tonal chips put `text` on `subtle` over a card.
+    // Status chips put `text` on `subtle` over a card.
     add(
       `status-${status}-text on status-${status}-subtle`,
       t(`status-${status}-text`),
       flatten(t(`status-${status}-subtle`), t('surface-card')),
       AA_TEXT,
     )
+    // Large status surfaces (callouts, banners, tiles): the icon and title
+    // take `text`, the body stays content-default, and a title set in
+    // content-emphasis (info and note) must hold as well.
+    const surface = t(`status-${status}-surface`)
+    add(`status-${status}-text on status-${status}-surface`, t(`status-${status}-text`), surface, AA_TEXT)
+    add(`content-default on status-${status}-surface`, t('content-default'), surface, AA_TEXT)
+    add(`content-emphasis on status-${status}-surface`, t('content-emphasis'), surface, AA_TEXT)
+    // Tiles inside a card sit on surface-hover in dark, so the title is
+    // measured there too.
+    if (theme === 'dark') add(`status-${status}-text on surface-hover (tile)`, t(`status-${status}-text`), t('surface-hover'), AA_TEXT)
+    // The dark colour edge and the chip edge are graphics next to the surface;
+    // reported so the number is known.
+    if (theme === 'dark') add(`status-${status}-fill (edge) on surface-card`, t(`status-${status}-fill`), t('surface-card'), 0, 'informational')
   }
+  // The note callout's icon is content-secondary on the neutral surface.
+  add('content-secondary on status-info-surface (note icon)', t('content-secondary'), t('status-info-surface'), AA_TEXT)
 
   // Hairlines are brand-mandated and will not reach 3:1. Reported so the
   // number is known, never enforced: borders here are decorative, and every

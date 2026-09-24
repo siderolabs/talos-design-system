@@ -1,6 +1,6 @@
 # Talos Design System
 
-**Status:** Draft v0.1 · September 20, 2026 · Owner: Sterling Koch
+**Status:** Draft v0.2 · September 24, 2026 · Owner: Sterling Koch
 
 This is the style guide for every Talos product interface: Omni, Xenia, the Sidero portal, and the documentation site. It carries the values, the rules for using them, and the enforcement. If you are making a UI suggestion (including with an AI tool), point it at this document and the token package rather than at a screenshot of an existing product.
 
@@ -30,7 +30,7 @@ A two-pole ladder. In dark, the well behind cards is the darkest plane and raise
 
 | Role | Use | Dark | Light |
 | --- | --- | --- | --- |
-| `surface-page` | Body, the well behind cards | `#060606` | `#EDE9E4` |
+| `surface-page` | Body, the well behind cards | `#060606` | `#F2EDE8` |
 | `surface-chrome` | Topbar, sidenav | `#0B0B0B` | `#F5F0EB` |
 | `surface-card` | Cards, tables, panels | `#1A1A1E` | `#FFFFFF` |
 | `surface-inset` | Inputs, secondary buttons | `#1E1E22` | `#F0EBE5` |
@@ -42,19 +42,23 @@ A two-pole ladder. In dark, the well behind cards is the darkest plane and raise
 
 `surface-subtle` is translucent on purpose: nav items, chips and zebra rows sit on backdrops that vary, and a translucent wash keeps the relationship right wherever it lands.
 
+The page well sits one barely visible step below the chrome, the same 1.03 luminance ratio in both themes. The reference skin's light well was `#EDE9E4`, which is too dark to carry accent text at AA.
+
 ### Text and icons
 
-Four steps plus disabled. Every step except disabled meets WCAG AA on every surface in the ladder, which is verified on each build.
+Four steps plus disabled. Every step except disabled meets WCAG AA on every surface in the ladder, which is verified on each build. The one open exception is `content-muted` on `surface-hover`, at 4.35:1 dark and 4.30:1 light; the audit lists it as pending a decision.
 
 | Role | Use | Dark | Light |
 | --- | --- | --- | --- |
 | `content-emphasis` | Headings, active nav, key figures | `#F5F5F4` | `#1A1A18` |
 | `content-default` | Body copy, table cells | `#C8C8C6` | `#3A3A38` |
 | `content-secondary` | Labels, eyebrows, column headers | `#A8A8A6` | `#4F4F4D` |
-| `content-muted` | Hints, placeholders, timestamps | `#919190` | `#636361` |
+| `content-muted` | Hints, placeholders, timestamps, subtitles, footers | `#8A8A88` | `#686866` |
 | `content-disabled` | Disabled controls only | `#5A5A58` | `#8A8A88` |
 
 Disabled is the one role allowed below AA, because WCAG 1.4.3 exempts inactive controls. It is never the only signal that something is off: pair it with a cursor change, a tooltip, or a helper line.
+
+The rule for choosing: anything a person needs to read, including subtitles, stat labels, field hints and footers, is `content-muted` or louder. The disabled grey is for disabled text and nothing else.
 
 ### Accent
 
@@ -62,58 +66,80 @@ One saturated hue in the whole system. Sparing use is what makes it read as sign
 
 | Role | Use | Dark | Light |
 | --- | --- | --- | --- |
-| `accent-default` | Icons, borders, active nav indicators | `#D24350` | `#D24350` |
-| `accent-text` | Accent-coloured text and links | `#E48E96` | `#B93B46` |
-| `accent-fill` | Primary button background | `#CF4250` | `#CF4250` |
+| `accent-default` | Icons, borders, active indicators | `#E12D46` | `#E12D46` |
+| `accent-text` | Accent-coloured text and links, the active nav marker bar | `#E48E96` | `#D41A3B` |
+| `accent-fill` | Primary button background | `#E12D46` | `#E12D46` |
 | `accent-fill-hover` | Primary button hover | `#B93B46` | `#B93B46` |
 | `accent-fill-active` | Primary button pressed | `#8F2D36` | `#8F2D36` |
-| `accent-subtle` | Active nav item, selected row | red 10% | red 8% |
+| `accent-subtle` | Active nav item pill, selected row | accent text 20% | accent text 8% |
 
-The product red `#D24350`, sampled from the logo, is the accent everywhere it is decorative. It is not the button fill, because white text on it reaches 4.51:1 and AA needs 4.5:1 — passing with no headroom is not a place to stand. The fill is one step darker and the difference is hard to see side by side. Same reasoning for `accent-text`: the product red as body text reaches 3.98:1 on the light page well and 3.6:1 on a dark card, so accent text is tinted on dark and shaded on light.
+The accent is a crimson, `#E12D46`, the centre of the banner gradient. It is both the decorative accent and the button fill: white on it is 4.50:1, which is AA with no headroom. That was a deliberate trade for a brighter accent, and the audit enforces it so a future edit cannot slip below.
+
+The vivid fill cannot be used as text on cream, so the accent is two tokens rather than one. Accent text is tinted on dark (`#E48E96`, 7.1:1 on a card) and shaded on light (`#D41A3B`, 4.50:1 on the page well, 4.62:1 on the chrome, 5.24:1 on white).
+
+The active nav item is the same in every product: emphasis text, a pill of `accent-subtle`, and a 3px bar in `accent-text` inset 6px from the left.
 
 Budget: at most one accent fill per view. If a screen has two primary buttons, one of them is secondary.
 
 ### The brand gradient
 
-Three stops, taken from the logo (`talos-by-sidero-labs-horiz-white.svg`): red into pink into orange. It comes in two weights for the same reason the accent does.
+The end colours come from the logo (`talos-by-sidero-labs-horiz-white.svg`), sampled in sRGB: hot red `#E8312C` and orange `#F77216`. There are two gradients.
 
 | Role | Use | Stops |
 | --- | --- | --- |
-| `accent-gradient` | Marks and rules. Nothing sits on top of it | `#E8312C` → `#E2335A` at 51% → `#F77216` |
-| `accent-gradient-fill` | Any surface carrying text | `#CF4250` → `#B5305A` at 51% → `#C2560F` |
+| `accent-gradient` | Marks and rules. Nothing sits on top of it | `#E8312C` → `#E2335A` at 51% → `#F77216`, 90° |
+| `accent-gradient-fill` | Banners carrying a line of text | `#F77216` 0% → `#E12D46` 30% to 70% → `#E8312C` 100%, 270° |
 
-The display gradient cannot hold text. Its orange stop is 2.85:1 against white, and the red and pink stops reach only 4.28:1 and 4.33:1, so a white label fails across the whole run and fails badly at the orange end. The fill gradient walks the same arc with every stop at or past AA, 4.53:1 at its worst point. Two of its three stops are existing brand values.
+The display gradient cannot hold text. Its orange stop is 2.85:1 against white, and the red and pink stops reach only 4.28:1 and 4.33:1.
 
-A gradient is more colour than a solid, not less, so it does not fix a surface that already feels over-coloured. Reach for it where the logo does: a mark, or a rule a few pixels tall. One gradient per view, and never behind long-form text.
+The fill gradient holds the accent fill flat across its middle 40%, where centred banner text sits, and white on that band is 4.50:1. Its ends are the logo colours and do not carry white text. That is a known gap on narrow viewports, where a banner line can run into the ends, and the audit lists it as pending a decision.
 
-The stops live in the palette as `gradient-display-1..3` and `gradient-fill-1..3`, which is the one place the palette carries a hue other than the brand red. They are there to be interpolated between and nothing else: a gradient stop is never a flat colour, and `no-primitive-token` will say so. `gradient-fill-1` is `red.4`, the accent fill reused rather than a new value.
+A gradient is more colour than a solid, not less, so it does not fix a surface that already feels over-coloured. Reach for it where the logo does: a mark, a rule a few pixels tall, or the docs banner. One gradient per view, and never behind long-form text.
 
-`npm run contrast` measures all six. The fill stops are enforced at AA and the display stops are reported without being enforced, so the reason the two weights exist stays visible in the output rather than living only here. Interpolating between two stops never leaves the range they bound, so checking the stops covers the whole run.
+The end stops live in the palette as `gradient-display-1..3`, the one place the palette carries a hue outside the accent and status ramps. They are there to be interpolated between and nothing else: a gradient stop is never a flat colour, and `no-primitive-token` will say so.
+
+`npm run contrast` measures every stop against white. The fill band is enforced as `accent-fill`, the fill gradient's ends are listed under a documented exception, and the display stops are reported without being enforced.
 
 ### Our relationship to the marketing site
 
-The marketing site is the same family with one deliberate divergence. It still carries the older red (`--red: #E04B45` and its derived steps); the product palette moved to the logo-sampled `#D24350`, and the proposal to bring the marketing site along is with marketing. Everything else matches: the four-step content ramp, the three-step surface ramp, `#57C28A`, `#E2D2A8`, Manrope and JetBrains Mono. Outside the red ramp, when the two disagree on a colour, that is a bug in one of them.
+The marketing site is the same family with two deliberate divergences. It still carries the older red (`--red: #E04B45` and its derived steps) where the product accent is the crimson `#E12D46`, and its status green `#57C28A` is 2.2:1 on a white card, so the product status palette is refitted for contrast (below). The proposal to bring the marketing site along is with marketing. Everything else matches: the four-step content ramp, the three-step surface ramp, `#E2D2A8`, Manrope and JetBrains Mono. Outside the accent and status ramps, when the two disagree on a colour, that is a bug in one of them.
 
 Product surfaces should be recognisably the same family as the marketing site without copying its composition. Marketing rebuilds its site on a cadence product cannot follow, and it optimises for a first impression rather than for someone reading the same page every day. So we take the palette, the typefaces and the vocabulary, and we decide layout, density and how much saturated area a page carries on our own terms. "Marketing does it this way" is evidence, not an argument.
 
 ### Status
 
-Five roles per state, because a status hue does different jobs at different contrasts.
+Eight roles per state, because a status hue does different jobs at different contrasts.
 
 - `status-<state>-default` is the hue as a **graphic**: a dot, an icon, a chart series. It meets 3:1 on a card (WCAG 1.4.11).
 - `status-<state>-text` is a **label on a normal surface** at 4.5:1.
-- `status-<state>-fill` is a **solid** badge or button background, with `status-<state>-on-fill` as its label.
-- `status-<state>-subtle` is the **tint** behind a tonal chip, which carries `-text` on top.
+- `status-<state>-fill` is a **solid** badge or button background, with `status-<state>-on-fill` as its label. On dark it is also the colour edge on large surfaces.
+- `status-<state>-subtle` and `-subtle-border` are a **status chip**: `-text` on a pastel with a faint edge of the same hue.
+- `status-<state>-surface` and `-border` are a **large status surface**: a callout, banner, or tile.
 
-States are success (green `#57C28A`), warning (golden `#F0BB67`), danger (the brand red), and info (neutral grey). There is no blue: the brand palette does not have one, and info is a grey chip.
+| State | Text, light | Text, dark | Fill | Label on fill |
+| --- | --- | --- | --- | --- |
+| success | `#046E31` | `#6FD087` | `#1B8641` | white |
+| warning | `#7E5905` | `#E6AC3D` | `#F5AE39` | `#1A1A18` |
+| danger | `#BB081F` | `#FF5B5B` | `#DE2F2E` | white |
+| info | `#5D5B58` | `#BAB7B3` | `#75726F` | white |
 
-Solid green and golden fills carry a **dark** label, not white. White on brand green is 2.4:1.
+Each colour keeps its hue and chroma, with lightness fitted so text passes on every warm surface and on its own chip. There is no blue: the brand palette does not have one, and info is a warm grey.
+
+**Danger is a true red, separate from the accent.** The accent stays crimson for links and primary buttons; danger shifts toward scarlet so a destructive state never reads as a link. Light reds drift toward coral on dark, so dark danger text sits at the most neutral red that still passes on its chip.
+
+**Large surfaces are two treatments, one per theme.** On light, the surface is a pastel mixed in OKLab from the fill into white (success 12%, warning 22%, danger 10%) with a border at 45%. On dark, a tinted surface cannot get light enough without costing the text on it contrast, so the surface is neutral (the card for callouts, `surface-hover` for tiles inside a card), the border is the inert hairline, and the state is carried by a 3px edge in the fill: on the left for callouts, on top for tiles. Info is neutral in both themes and takes no edge. In every case, body text stays `content-default` and only the icon and bold title take `-text`.
+
+**Chips match the surfaces.** A status chip is the light pastel with an edge at 30% of the fill on light, and a pastel at the dark mix (success 26%, warning 20%, danger 20% into the card) with an edge at 40% on dark. Neutral chips are the hover grey with no edge. Worst chip ratio: 5.21:1 light (info), 4.69:1 dark (danger).
+
+Categorical label colours, for labels with no good or bad meaning, are not tokens yet.
 
 Colour is never the only carrier of state. A status needs a word, an icon, or a position as well, and the status vocabulary itself is a separate open piece of work ([ux#15](https://github.com/siderolabs/ux/issues/15)).
 
 ### Borders
 
 Hairlines, not weight. One width, `1px`, and separation comes from the surface ladder rather than from heavy rules.
+
+`border-edge` (3px) is a colour bar, not a border: the status edge on dark callouts and tiles, and the active nav marker. It is never a neutral separator.
 
 `border-subtle` (6%) for internal dividers and table rows, `border-default` (8%) for card and input edges, `border-strong` (14% dark / 16% light) for hover and emphasis, `border-accent` for an active tab underline or a focused input.
 
@@ -180,15 +206,17 @@ Three things are different there on purpose.
 
 **The neutral ramp is re-pointed, not just the accent.** Mintlify derives its greys from the primary colour, which is how the docs site ended up with a pink-tinted grey. Changing the accent alone leaves the chrome cold. The generated stylesheet maps `--gray-50` through `--gray-950` onto the cream and ink ramps, which is what actually makes the page read as the same product as the rest of the family.
 
+The generated stylesheet also colours Mintlify's own components from the roles: the banner (`accent-gradient-fill`), the topbar button (`accent-fill`), the active sidebar item (the marker style above), the footer's "Powered by" line (`content-muted`, where Mintlify used the disabled grey at 3.05:1 light and 3.27:1 dark), and callouts. Callouts map onto the status states: Danger is danger, Warning is warning, Tip and Check are success, Info is info, and Note is neutral like Info with a `content-secondary` icon. Layout stays in the docs repo.
+
 ## Deliberate deviations from the reference skin
 
 Three, all for contrast, all verified by `npm run contrast`.
 
-1. **The text ramp shifts up.** The reference's dim `#8A8A88` and faint `#5A5A58` are below AA as body text on every surface in the ladder (2.2:1 to 2.9:1). The four visible steps move lighter in dark mode and darker in light mode, and `#5A5A58` becomes disabled-only.
-2. **The primary button fill darkens** from the decorative accent `#D24350` to `#CF4250`, so a white label reaches 4.62:1 instead of 4.51:1. The accent is unchanged everywhere it is decorative.
-3. **Light-mode status graphics darken.** A `#57C28A` dot on a white card is 2.2:1 and a `#F0BB67` one is 1.8:1, so in light mode the graphic and text roles use the deep variants while the fills stay the brand hues.
+1. **The faint grey becomes disabled-only.** The reference uses `#5A5A58` (dark) and `#8A8A88` (light) for readable secondary text, which is below AA on the surfaces it sits on. Here they are disabled-only, readable secondary text moves up one step to `content-muted`, and the light ramp sits darker than the reference.
+2. **The light page well lightens** from `#EDE9E4` to `#F2EDE8`, so accent text passes AA on it.
+3. **The status palette is refitted.** The reference's `#57C28A` dot on a white card is 2.2:1 and its `#F0BB67` is 1.8:1. Every status colour keeps its hue and has its lightness fitted to pass on warm surfaces, with deep variants for text and graphics on light.
 
-The reference skin already carries a scoped contrast remediation for green fills. That remediation is good work and its conclusion is the one adopted here: solid status fills carry dark labels. These three changes extend the same logic to the cases it did not reach.
+Of the solid status fills, only warning carries a dark label. The refitted green and red fills are dark enough for white.
 
 ## Enforcement
 
