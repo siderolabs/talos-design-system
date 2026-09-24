@@ -209,7 +209,7 @@ $talos-dark-status-info-border: #2E2E33;
 $talos-dark-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
 $talos-dark-shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.5);
 $talos-dark-shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.6);
-$talos-dark-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.35);
+$talos-dark-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.35);
 
 // Semantic roles, light theme
 $talos-light-surface-page: #F2EDE8;
@@ -277,7 +277,7 @@ $talos-light-status-info-border: #D8D2CB;
 $talos-light-shadow-card: 0 1px 3px rgba(26, 26, 24, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
 $talos-light-shadow-dropdown: 0 4px 16px rgba(26, 26, 24, 0.12);
 $talos-light-shadow-modal: 0 8px 32px rgba(26, 26, 24, 0.16);
-$talos-light-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.30);
+$talos-light-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.30);
 
 // Emits the dark semantic roles as custom properties. Include inside
 // whatever selector the host app uses for its dark theme.
@@ -347,7 +347,7 @@ $talos-light-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.30);
   --talos-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
   --talos-shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.5);
   --talos-shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --talos-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.35);
+  --talos-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.35);
 }
 
 // Emits the light semantic roles as custom properties. Include inside
@@ -418,7 +418,7 @@ $talos-light-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.30);
   --talos-shadow-card: 0 1px 3px rgba(26, 26, 24, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
   --talos-shadow-dropdown: 0 4px 16px rgba(26, 26, 24, 0.12);
   --talos-shadow-modal: 0 8px 32px rgba(26, 26, 24, 0.16);
-  --talos-shadow-focus: 0 0 0 3px rgba(224, 75, 69, 0.30);
+  --talos-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.30);
 }
 
 // Primitives never change with the theme, so they can be emitted once.
