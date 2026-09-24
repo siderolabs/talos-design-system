@@ -133,6 +133,28 @@ Each colour keeps its hue and chroma, with lightness fitted so text passes on ev
 
 Categorical label colours, for labels with no good or bad meaning, are not tokens yet.
 
+### What colour means
+
+Colour and the pastel pill mean status. Anything that isn't a status loses both. Classify each coloured or chip-shaped element by what it means, not by how it's drawn today, then draw it one way:
+
+| Role | Treatment | Clickable |
+| --- | --- | --- |
+| Status | Chip: `-subtle` background, `-subtle-border` edge, `-text` label, and a 6px dot in `-text` before the word | Never |
+| Status count | The number in `content-emphasis`, with the status dot moved onto its label (`content-secondary`) | No |
+| Value | Plain text in `content-default`, no chip. A coloured word that isn't a state, such as a capacity figure or an ID | No |
+| Filterable label | Outlined neutral chip: transparent, `border-strong` edge, `content-default` text, key in `content-secondary` | Yes, filters |
+| Applied filter | Filled neutral chip (`surface-hover`) with × | Yes, removes |
+| Count badge | Small neutral badge: `surface-hover`, `content-default` | No |
+| Callout, banner, tile | The large status surface above | No |
+| Destructive action | `status-danger-fill`, `status-danger-on-fill` label | Yes |
+| Action | Neutral button: `surface-card`, `border-default` edge, `content-default` | Yes |
+| Selected toggle | `accent-fill`, `content-on-accent` label | Yes |
+| Inline code | `content-emphasis` on `surface-inset` | No |
+
+A status count is a number whose meaning is a state: "5 need a look", "12 running", "2 firing". Colouring the number itself makes a dashboard of stat cards read as a wall of alerts, and a green or amber figure at display size fails contrast on light. The dot on the label carries the state; the number stays readable. A number that is a quantity rather than a state (free capacity, allocated cores) is a value.
+
+A status is never a button. If an element changes something when clicked, it's an action or a toggle and takes that treatment, whatever colour it wore before.
+
 Colour is never the only carrier of state. A status needs a word, an icon, or a position as well, and the status vocabulary itself is a separate open piece of work ([ux#15](https://github.com/siderolabs/ux/issues/15)).
 
 ### Borders
