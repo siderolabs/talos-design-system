@@ -1,6 +1,6 @@
 {
   "name": "@siderolabs/talos-design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Design tokens and lint guardrails shared by the Talos product interfaces: Omni, Xenia, the Sidero portal, and the documentation site.",
   "license": "MPL-2.0",
   "repository": {
