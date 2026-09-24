@@ -39,46 +39,58 @@
   "accent": {
     "$type": "color",
     "default":  { "$value": "{red.3}", "$description": "Accent icons, borders, active nav indicators" },
-    "hover":    { "$value": "{red.4}", "$description": "Hover for accent icons and links" },
-    "text":     { "$value": "{red.5}", "$description": "Accent-coloured text and links. Shaded because the product red reaches only 3.98:1 on surface-chrome; step 5 is the brightest step that passes AA on every light surface." },
-    "fill":     { "$value": "{red.4}", "$description": "Primary button background" },
-    "fill-hover":  { "$value": "{red.5}", "$description": "Primary button hover" },
+    "hover":    { "$value": "{red.5}", "$description": "Hover for accent icons and links" },
+    "text":     { "$value": "{red.4}", "$description": "Accent-coloured text and links, and the active nav marker bar. Shaded because the vivid fill cannot be used as text on cream: step 4 passes AA on the page well, the chrome and white." },
+    "fill":     { "$value": "{red.3}", "$description": "Primary button background. White on it is 4.50:1." },
+    "fill-hover":  { "$value": "rgba(225, 45, 70, 0.9)", "$description": "Primary button hover: the fill at 90%, so it lightens slightly over its backdrop. White on it is 4.0:1 over light surfaces, a documented exception, and 5.2:1 over dark ones." },
     "fill-active": { "$value": "{red.7}", "$description": "Primary button pressed" },
-    "subtle":   { "$value": "rgba(224, 75, 69, 0.08)", "$description": "Tinted background: active nav item, selected row" },
+    "subtle":   { "$value": "rgba(212, 26, 59, 0.08)", "$description": "Active nav item pill, selected row: accent text at 8%" },
     "gradient":      { "$type": "gradient", "$value": "linear-gradient(90deg, {gradient.display.1} 0%, {gradient.display.2} 51%, {gradient.display.3} 100%)", "$description": "The logo gradient. Marks and rules only, nothing on top of it." },
-    "gradient-fill": { "$type": "gradient", "$value": "linear-gradient(90deg, {gradient.fill.1} 0%, {gradient.fill.2} 51%, {gradient.fill.3} 100%)", "$description": "The same arc at fill weight, for a gradient surface that carries text." }
+    "gradient-fill": { "$type": "gradient", "$value": "linear-gradient(270deg, {gradient.display.3} 0%, {red.3} 30%, {red.3} 70%, {gradient.display.1} 100%)", "$description": "Banner gradient: the logo's end colours with the accent fill held across the middle, where the text sits. White text only on the solid band." }
   },
 
   "status": {
     "$type": "color",
-    "$description": "Graphics and text darken in light mode; the fills stay the brand hues so a badge reads the same in both themes.",
+    "$description": "Graphics and text darken in light mode; the fills are shared by both themes so a badge reads the same in either. Large status surfaces on light are a pastel mixed from the fill, with a deeper pastel border.",
     "success": {
-      "default": { "$value": "{green.4}" },
-      "text":    { "$value": "{green.4}" },
-      "fill":    { "$value": "{green.2}" },
-      "on-fill": { "$value": "{ink.0}", "$description": "Dark label. White on brand green reaches only 2.4:1." },
-      "subtle":  { "$value": "rgba(87, 194, 138, 0.22)" }
+      "default": { "$value": "{green.6}" },
+      "text":    { "$value": "{green.6}" },
+      "fill":    { "$value": "{green.5}" },
+      "on-fill": { "$value": "{white}" },
+      "subtle":  { "$value": "{green.1}" },
+      "subtle-border": { "$value": "{green.2}" },
+      "surface": { "$value": "{green.1}" },
+      "border":  { "$value": "{green.3}" }
     },
     "warning": {
-      "default": { "$value": "{amber.4}" },
-      "text":    { "$value": "{amber.4}" },
-      "fill":    { "$value": "{amber.2}" },
-      "on-fill": { "$value": "{ink.0}" },
-      "subtle":  { "$value": "rgba(240, 187, 103, 0.28)" }
+      "default": { "$value": "{amber.6}" },
+      "text":    { "$value": "{amber.6}" },
+      "fill":    { "$value": "{amber.4}" },
+      "on-fill": { "$value": "{cream.10}", "$description": "Dark label. The warning fill is too light for white." },
+      "subtle":  { "$value": "{amber.1}" },
+      "subtle-border": { "$value": "{amber.2}" },
+      "surface": { "$value": "{amber.1}" },
+      "border":  { "$value": "{amber.3}" }
     },
     "danger": {
-      "default": { "$value": "{red.6}" },
-      "text":    { "$value": "{red.6}" },
-      "fill":    { "$value": "{red.4}" },
+      "default": { "$value": "{scarlet.6}", "$description": "A true red, separate from the crimson accent." },
+      "text":    { "$value": "{scarlet.6}" },
+      "fill":    { "$value": "{scarlet.5}" },
       "on-fill": { "$value": "{white}" },
-      "subtle":  { "$value": "rgba(224, 75, 69, 0.12)" }
+      "subtle":  { "$value": "{scarlet.1}" },
+      "subtle-border": { "$value": "{scarlet.2}" },
+      "surface": { "$value": "{scarlet.1}" },
+      "border":  { "$value": "{scarlet.3}" }
     },
     "info": {
-      "default": { "$value": "{cream.8}", "$description": "Neutral grey. The brand has no blue." },
-      "text":    { "$value": "{cream.9}" },
-      "fill":    { "$value": "{cream.8}" },
-      "on-fill": { "$value": "{cream.2}" },
-      "subtle":  { "$value": "rgba(79, 79, 77, 0.12)" }
+      "default": { "$value": "{stone.3}", "$description": "Neutral grey. The brand has no blue." },
+      "text":    { "$value": "{stone.3}" },
+      "fill":    { "$value": "{stone.2}" },
+      "on-fill": { "$value": "{white}" },
+      "subtle":  { "$value": "{surface.hover}", "$description": "Neutral chips are the hover grey, with no edge." },
+      "subtle-border": { "$value": "rgba(0, 0, 0, 0)" },
+      "surface": { "$value": "{surface.card}", "$description": "Info is neutral in both themes." },
+      "border":  { "$value": "{surface.inert}" }
     }
   },
 
