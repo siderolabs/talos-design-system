@@ -2,7 +2,7 @@
 
 **Status:** Draft v0.2 · September 24, 2026 · Owner: Sterling Koch
 
-This is the style guide for every Talos product interface: Omni, Xenia, the Sidero portal, and the documentation site. It carries the values, the rules for using them, and the enforcement. If you are making a UI suggestion (including with an AI tool), point it at this document and the token package rather than at a screenshot of an existing product.
+This is the style guide for every Talos product interface and the documentation site. It carries the values, the rules for using them, and the enforcement. If you are making a UI suggestion (including with an AI tool), point it at this document and the token package rather than at a screenshot of an existing product.
 
 The values are a faithful implementation of the Sidero brand visual guide, as first realised in a reference skin that predates this package. Where this guide departs from that reference, it says so and says why.
 
@@ -163,7 +163,7 @@ A value that is not on this menu is a design question, not a CSS decision. Bring
 
 2px is deliberately not a step. A component that needs it (a hairline gap in a segmented control, say) builds it in, and should first check whether it does. Values the products use today that the menu drops: 2 goes away, 6 moves to 4 or 8, 10 to 8 or 12, 14 to 12 or 16, 20 to 24.
 
-`compact` is new relative to the scale Omni shipped in August. Density is a feature in infrastructure tooling, screen real estate is not to be wasted, and a menu that jumps 12 to 24 forces dense tables into the wrong step.
+`compact` is new relative to the scales the products shipped before this package. Density is a feature in infrastructure tooling, screen real estate is not to be wasted, and a menu that jumps 12 to 24 forces dense tables into the wrong step.
 
 ## Typography
 
@@ -186,7 +186,7 @@ The scale is dense on purpose. Base is 14px, not 16px, because these are operato
 
 Every size is on the scale. A 13px or 10.5px value is off the scale the same way an 18px padding is off the spacing menu.
 
-Application code picks a **type role** rather than a size. A role names what the text is (`body`, `meta`, `label`, `overline`, `annotation` and nine others) and resolves to one size, weight, line height and face. [Type roles](type-roles.md) has the full set, the decision order, and worked examples from the Portal.
+Application code picks a **type role** rather than a size. A role names what the text is (`body`, `meta`, `label`, `overline`, `annotation` and nine others) and resolves to one size, weight, line height and face. [Type roles](type-roles.md) has the full set, the decision order, and worked examples.
 
 Weights are 400/500/600/700. Line height is `tight` 1.25 for headings, `base` 1.5 for body and tables, `relaxed` 1.65 for prose.
 
@@ -248,10 +248,10 @@ Rules that live only in a document decay. Each product runs the lint preset from
 - `npm run contrast` in the token repo fails the build when a role pair drops below its threshold. Exceptions are listed in the script with a reason, not silently skipped.
 - `talos-audit` checks a rendered page: type below the floor or off the scale, spacing off the menu, typefaces that are not ours or not self-hosted, and colours outside the active theme. Run it on a migrated page before calling the migration done.
 
-Adopt with a suppressions file rather than a rewrite. Existing violations are recorded once and the count only goes down, so new code is constrained from day one without blocking on a cleanup. Omni's August branch has 1,672 lines of recorded suppressions and that is the intended shape.
+Adopt with a suppressions file rather than a rewrite. Existing violations are recorded once and the count only goes down, so new code is constrained from day one without blocking on a cleanup. A first baseline of well over a thousand lines is normal and is the intended shape.
 
 ## Changing a token
 
 A value you cannot find a role for is a token request, not a local override. Open an issue on the token repo. Changes land as a version bump, and each product picks them up when it updates the dependency, so you can see which product is on which version.
 
-Cross-product visual decisions (a new role, a palette change, a new spacing step) go through Sterling. Product-local anatomy (how Omni lays out its cluster card) does not.
+Cross-product visual decisions (a new role, a palette change, a new spacing step) go through Sterling. Product-local anatomy (how one product lays out one of its cards) does not.

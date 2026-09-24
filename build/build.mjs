@@ -317,12 +317,12 @@ function buildTailwind() {
     HEADER,
     '',
     '/*',
-    ' * Tailwind v4 theme for consumers on Tailwind (Omni today).',
+    ' * Tailwind v4 theme for consumers on Tailwind.',
     ' *',
     ' * Import tokens.css before this file. It deliberately does not import it',
     ' * itself: nothing in dist/ should assume a package path, so that every',
     ' * file here can also be vendored into a product that cannot take a',
-    ' * dependency on this repository. Omni is that product.',
+    ' * dependency on this repository.',
     ' *',
     ' * `@theme inline` is deliberate: it makes the generated utilities',
     ' * reference the custom property rather than copy its value, which is what',
@@ -349,7 +349,7 @@ function buildTailwind() {
 
   lines.push('}', '')
   lines.push('/*')
-  lines.push(' * Aliases for role names Omni already ships, so adopting the shared set is')
+  lines.push(' * Aliases for older role names some products already use, so adopting the shared set is')
   lines.push(' * a re-point rather than a rename across every component.')
   lines.push(' */')
   lines.push('@theme inline {')
@@ -568,7 +568,7 @@ function buildMintlify() {
     ' *',
     ' * Mintlify has no build step and cannot import from node_modules, so this',
     ' * is vendored rather than imported: copy it to public/talos-tokens.css in',
-    ' * siderolabs/docs (alongside the hand-written style.css, which stays) and',
+    ' * the documentation repository (alongside its hand-written CSS, which stays) and',
     ' * re-copy it on a version bump.',
     ' *',
     ' * Two things travel with it:',

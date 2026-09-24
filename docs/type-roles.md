@@ -44,9 +44,9 @@ Ask these in order and stop at the first yes. The order matters: a number inside
 
 ## Worked examples
 
-From the Sidero Portal as it shipped in September 2026, and from infrastructure console patterns in general.
+Drawn from real operator consoles, with the data changed.
 
-**Portal overview**
+**A dashboard**
 
 | Text | Role | Why |
 | --- | --- | --- |
@@ -68,7 +68,7 @@ From the Sidero Portal as it shipped in September 2026, and from infrastructure 
 | "DEVELOPMENT" environment marker | `overline-mono` | The machine voice as a label. |
 | "© 2026 Sidero Labs, Inc." | `meta` | Footer. |
 
-**Portal account detail**
+**A detail page**
 
 | Text | Role | Why |
 | --- | --- | --- |
@@ -116,7 +116,7 @@ Don't pick a size. Pick the closest role, and raise the gap as a design question
 
 The shipped size is evidence, not the answer. Classify the text, apply the role, and let the size move. The moves that surprise people:
 
-- **13px body goes up to 14, not down to 12.** Most off-scale 13px text in the Portal is content.
+- **13px body goes up to 14, not down to 12.** Most off-scale 13px text in existing consoles is content.
 - **10.5px uppercase sidebar headings become `overline`,** which is 10px with tracking.
 - **11px badges become `badge` at 12.**
 - **8 and 9px chart labels become `annotation` at 11.** Set it in the chart library's options from `--talos-type-annotation-size`, read at runtime, rather than as a literal.
@@ -125,7 +125,7 @@ The shipped size is evidence, not the answer. Classify the text, apply the role,
 
 | Stack | Apply a role |
 | --- | --- |
-| Tailwind v4 (Omni) | `class="type-meta"`, from `dist/tailwind.css` |
+| Tailwind v4 | `class="type-meta"`, from `dist/tailwind.css` |
 | Sass (Bootstrap hosts) | `@include talos.talos-type(meta);`, from `dist/tokens.scss` |
 | Plain CSS | `class="talos-type-meta"`, from `dist/type.css` |
 | Chart options and other JS | Read `--talos-type-annotation-size` and friends with `getComputedStyle` |

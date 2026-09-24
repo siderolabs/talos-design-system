@@ -6,8 +6,8 @@ const COLOUR_UTILITY =
   /^(bg|text|border-[trblxyse]|border|ring-offset|ring|fill|stroke|from|to|via|divide|outline|shadow|decoration|accent|caret|placeholder)-(.+)$/
 
 /**
- * The shared palette ramps, plus the ramps Omni shipped before adopting the
- * shared set, so a migration in progress is still guarded.
+ * The shared palette ramps, plus older product ramps that predate the shared
+ * set, so a migration in progress is still guarded.
  */
 const PRIMITIVE =
   /^(ink-\d+|cream-\d+|red-\d+|green-\d+|amber-\d+|scarlet-\d+|stone-\d+|paper|gradient-(?:display|fill)-\d+|naturals-n\d+|primary-p\d+|green-g\d+|red-r(?:\d+|logo)|yellow-y\d+|blue-b\d+)$/
