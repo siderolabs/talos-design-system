@@ -1,6 +1,6 @@
 # @siderolabs/talos-design-system
 
-Design tokens and lint guardrails shared by the Talos product interfaces: Omni, Xenia, the Sidero portal, and the documentation site.
+Design tokens and lint guardrails shared by every Talos product interface and the documentation site.
 
 The values implement the Sidero brand visual guide, with three contrast corrections documented in the style guide. One source of truth, five build outputs, one set of lint rules.
 
@@ -46,7 +46,7 @@ The build has no dependencies. The tests do (ESLint, the Vue parser and Playwrig
 | --- | --- | --- |
 | `dist/tokens.css` | Any web product | `--talos-*` custom properties; dark under `:root`, light under `[data-theme="light"]` |
 | `dist/tokens.scss` | Sass consumers (Bootstrap-based UIs) | `$talos-*` compile-time variables, `talos-tokens-dark` / `talos-tokens-light` mixins, and `talos-type($role)` |
-| `dist/tailwind.css` | Tailwind v4 consumers (Omni) | `@theme inline` block mapping utility names onto the custom properties, plus `type-*` role utilities |
+| `dist/tailwind.css` | Tailwind v4 consumers | `@theme inline` block mapping utility names onto the custom properties, plus `type-*` role utilities |
 | `dist/type.css` | Consumers without Tailwind or Sass | `.talos-type-*` classes, one per type role |
 | `dist/fonts.css` | Any web product | `@font-face` rules for the two typefaces, pointing at `./fonts/` beside the stylesheet |
 | `dist/mintlify.css` | The documentation site | Tokens, Mintlify's own theme variables re-pointed at them, `@font-face` rules at `/fonts/`, and the site's existing CSS with the colours tokenised |
@@ -70,7 +70,7 @@ The documentation site is the one exception. Mintlify offers no build step, so i
 
 Publishing to npm would add provenance attestation and a smaller install, and nothing else. It can happen later or never without changing how consumers import anything.
 
-### Omni (Vue, Tailwind v4)
+### Tailwind v4 consumers
 
 Import the two stylesheets in order, in place of the locally declared theme. Utility names are unchanged, so components do not move:
 
@@ -81,9 +81,9 @@ Import the two stylesheets in order, in place of the locally declared theme. Uti
 
 Neither file imports the other, and nothing in `dist/` assumes a package path, so the same two files also work vendored as plain copies if a consumer ever needs that.
 
-`@theme inline` makes the generated utilities reference the custom property rather than copy its value, which is what lets the theme switch at runtime. Omni's existing `content-strong` and `surface-inverse` names are aliased in the same file so adoption is a re-point, not a rename.
+`@theme inline` makes the generated utilities reference the custom property rather than copy its value, which is what lets the theme switch at runtime. Two older role names, `content-strong` and `surface-inverse`, are aliased in the same file so products already using them adopt by re-pointing rather than renaming.
 
-### Bootstrap consumers (React, Bootstrap 5.3, SCSS)
+### Bootstrap and Sass consumers
 
 Bootstrap needs compile-time Sass variables for `$primary` and friends, so the SCSS build ships both forms. Replace the local token sheet and keep the host's existing custom-property names as aliases during migration:
 
@@ -104,13 +104,13 @@ The mixins exist so the light theme can be emitted inside whatever selector the 
 
 Vite resolves `@siderolabs/talos-design-system/tokens.scss` through the package's exports. The Sass command line does not; there, write `@use 'pkg:@siderolabs/talos-design-system/tokens.scss'` and pass `--pkg-importer=node`.
 
-### Documentation site (Mintlify)
+### Documentation sites on Mintlify
 
 Mintlify has no build step and cannot import from `node_modules`, so this one is vendored rather than imported. Mintlify applies every `.css` file in the content directory on every page, with no registration, so the generated sheet lands as its own file beside whatever hand-written CSS the site already has:
 
 ```
-cp dist/mintlify.css ../docs/public/talos-tokens.css
-cp fonts/*.woff2 fonts/OFL-*.txt ../docs/public/fonts/
+cp dist/mintlify.css <docs-repo>/public/talos-tokens.css
+cp fonts/*.woff2 fonts/OFL-*.txt <docs-repo>/public/fonts/
 ```
 
 Do not merge it into an existing stylesheet. This file is a build artifact and gets replaced wholesale on the next version bump, so anything hand-written that shares the file gets reverted silently. Keep site-specific rules (layout repairs, table treatments, per-page overrides) in their own file and have them reference `--talos-*` rather than raw values. Page-specific rules can be scoped with Mintlify's `html[data-current-path="..."]` selector so they do not apply site-wide.
@@ -125,19 +125,15 @@ Mintlify's `fonts` setting is deliberately left unset. It has no slot for a code
 
 ### Typefaces
 
-The faces are vendored here rather than loaded from Google Fonts, because an air-gapped install, a self-hosted Omni, or a docs mirror inside a customer network cannot reach `fonts.gstatic.com`. The failure mode is silent: the type falls back to a system font and the product stops looking like itself, and nobody files that as a bug.
+The faces are vendored here rather than loaded from Google Fonts, because an air-gapped install, a self-hosted product, or a docs mirror inside a customer network cannot reach `fonts.gstatic.com`. The failure mode is silent: the type falls back to a system font and the product stops looking like itself, and nobody files that as a bug.
 
 Each consumer serves the four `woff2` files from somewhere and points the `@font-face` rules at it. `dist/fonts.css` assumes `./fonts/` beside the stylesheet; `dist/mintlify.css` uses `/fonts/` because Mintlify inlines custom CSS into the document, where a relative path resolves against the page URL and would break on nested routes.
 
 Variable weight 400 to 700, latin and latin-ext, 81 kB for all four files. Both families are OFL 1.1, which permits redistribution, and the licences sit beside them.
 
-### Portal
+### Anything else
 
-`dist/tokens.css` works regardless of framework.
-
-### Xenia
-
-TBD. How Xenia will be built is not settled, so how it consumes this is open. The token set applies either way; only the mechanism is undecided.
+`dist/tokens.css` and `dist/type.css` work regardless of framework. Import them, serve the fonts, and use the `--talos-*` custom properties and `talos-type-*` classes directly.
 
 ## Enforcement
 
