@@ -113,8 +113,9 @@
 
   "space": {
     "$type": "dimension",
-    "$description": "Six named steps on an 8-point grid. Pick the role, never the number. A value that is not on this menu is a design question, not a CSS decision.",
-    "tight":   { "$value": "8px",  "$description": "Inside a control: icon to label" },
+    "$description": "Seven named steps, all multiples of 4. Pick the role, never the number. A value that is not on this menu is a design question, not a CSS decision. 2px is not a step: a component that needs it builds it in, after checking that it does.",
+    "micro":   { "$value": "4px",  "$description": "Inside a control: icon to label, chip and badge padding" },
+    "tight":   { "$value": "8px",  "$description": "Button padding, between tightly related controls" },
     "snug":    { "$value": "12px", "$description": "Between related elements in a group" },
     "compact": { "$value": "16px", "$description": "Dense content padding: table cells, list rows, toolbars" },
     "base":    { "$value": "24px", "$description": "Default gutter: card padding, grid gaps" },
@@ -145,15 +146,15 @@
 
   "text": {
     "$type": "dimension",
-    "$description": "Type scale. Dense by design: base is 14px, not 16px, because these are operator consoles.",
-    "2xs":  { "$value": "10px", "$description": "Mono eyebrow labels" },
-    "xs":   { "$value": "11px", "$description": "Section labels, dense metadata" },
-    "sm":   { "$value": "12px", "$description": "Small buttons, badges, captions" },
+    "$description": "Type scale. Dense by design: base is 14px, not 16px, because these are operator consoles. Nothing a person reads goes below 11px; 10px is for tracked uppercase labels only.",
+    "2xs":  { "$value": "10px", "$description": "Tracked uppercase labels only, mono or sans. Never other text." },
+    "xs":   { "$value": "11px", "$description": "The floor for all other text: dense metadata, stat labels, chart axis labels" },
+    "sm":   { "$value": "12px", "$description": "Chips, badges, captions, timestamps" },
     "base": { "$value": "14px", "$description": "Body, table cells, inputs, nav" },
     "md":   { "$value": "16px", "$description": "Card titles" },
-    "lg":   { "$value": "20px", "$description": "Page titles" },
-    "xl":   { "$value": "24px", "$description": "Section headings on marketing-weight pages" },
-    "2xl":  { "$value": "30px", "$description": "Display" }
+    "lg":   { "$value": "20px", "$description": "Between card titles and page titles; no fixed role yet" },
+    "xl":   { "$value": "24px", "$description": "Page titles, list and detail pages alike. Stat figures" },
+    "2xl":  { "$value": "30px", "$description": "Display. Not used in the consoles today" }
   },
 
   "weight": {
