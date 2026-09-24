@@ -102,6 +102,8 @@ html[data-bs-theme='light'] { @include talos.talos-tokens-light; }
 
 The mixins exist so the light theme can be emitted inside whatever selector the host already uses, rather than forcing every product onto `[data-theme]`.
 
+Vite resolves `@siderolabs/talos-design-system/tokens.scss` through the package's exports. The Sass command line does not; there, write `@use 'pkg:@siderolabs/talos-design-system/tokens.scss'` and pass `--pkg-importer=node`.
+
 ### Documentation site (Mintlify)
 
 Mintlify has no build step and cannot import from `node_modules`, so this one is vendored rather than imported. Mintlify applies every `.css` file in the content directory on every page, with no registration, so the generated sheet lands as its own file beside whatever hand-written CSS the site already has:
