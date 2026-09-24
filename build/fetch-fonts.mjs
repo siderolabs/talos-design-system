@@ -4,7 +4,7 @@
 // main build turns into @font-face rules.
 //
 // The faces are vendored rather than pulled from Google Fonts at runtime
-// because an air-gapped install, a self-hosted Omni, or a docs mirror inside a
+// because an air-gapped install, a self-hosted product, or a docs mirror inside a
 // customer network cannot reach fonts.gstatic.com, and the failure is silent:
 // the type falls back to a system font and the product stops looking like
 // itself. Nobody files that as a bug.
