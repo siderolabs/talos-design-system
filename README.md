@@ -19,6 +19,9 @@ build/          Compiler, the contrast audit, and the font fetcher.
 fonts/          The two typefaces as woff2, with their OFL licences. 81 kB.
 dist/           Generated. Committed so consumers can use a file without building.
 lint/           ESLint rules and a stylelint config, shipped with the package.
+audit/          The rendered-page audit, run in a browser.
+bin/            talos-audit, the command-line runner for the audit.
+test/           Tests for the lint rules and the audit.
 docs/           The style guide.
 ```
 
@@ -30,10 +33,11 @@ Edit `tokens/`, run `npm run check`, commit `dist/`. Nothing else is hand-mainta
 npm run build      Compile tokens/ into dist/
 npm run contrast   WCAG audit over every semantic pair; exits non-zero on a failure
 npm run check      Both
+npm test           Lint rule and audit tests. Needs `npm install` first.
 npm run fonts      Re-download the typefaces. Rarely; the files are committed.
 ```
 
-The build has no dependencies. The source is valid DTCG, so Style Dictionary can replace the compiler later without touching the tokens, but publishing a token package should not depend on a toolchain being healthy first.
+The build has no dependencies. The tests do (ESLint, the Vue parser and Playwright, all dev dependencies), which is why they sit outside `npm run check`. The source is valid DTCG, so Style Dictionary can replace the compiler later without touching the tokens, but publishing a token package should not depend on a toolchain being healthy first.
 
 ## Outputs
 
@@ -141,6 +145,7 @@ export default [
   { plugins: { 'design-system': designSystem },
     rules: {
       'design-system/no-raw-color': 'error',
+      'design-system/no-raw-font-size': 'error',
       'design-system/no-off-menu-spacing': 'error',   // Tailwind consumers
       'design-system/no-primitive-token': 'error',    // Tailwind consumers
     } },
@@ -154,6 +159,36 @@ export default { extends: [talos] }
 ```
 
 Adopt with a suppressions file rather than a rewrite: record existing violations once, and the count only goes down.
+
+`no-raw-font-size` flags a literal size anywhere in component code: `fontSize: 12` or `fontSize: '0.8rem'` in a style object, `font-size: 13px` in a style string or template, and Tailwind's `text-[13px]`. It allows `var(--talos-text-*)`, keywords such as `inherit`, and expressions. Chart options take the same `fontSize` key and cannot resolve `var()`, so read the token at runtime:
+
+```js
+const axisLabel = getComputedStyle(document.documentElement).getPropertyValue('--talos-text-xs')
+```
+
+### Verifying a page
+
+The lint reads source. `talos-audit` reads what the browser computed, which is the only place a framework default, a chart library's 8px axis label or a Google Fonts link shows up. Run it on a migrated page to prove the page is on the system.
+
+```
+npm install --save-dev playwright && npx playwright install chromium
+npx talos-audit https://localhost:5173/clusters
+npx talos-audit --max 0 --json page-a.html page-b.html
+npx talos-audit --storage-state auth.json --proxy socks5://127.0.0.1:8888 https://demo.example.com/machines
+```
+
+It reports, grouped by value with a count and example elements:
+
+- Text below the 11px floor. 10px passes only on uppercase text with letter-spacing.
+- Font sizes off the scale.
+- Padding, margin and gap off the spacing menu. `0`, `auto`, percentages and 1px hairlines pass.
+- Typefaces outside the Manrope and JetBrains Mono stacks, and our faces requested but not served by the page, with the face that renders instead.
+- Fonts loaded from another origin.
+- Colours that match no role in the active theme. Skipped, with a note, on a page that defines no `--talos-*` properties.
+
+The scale, menu and stacks come from `dist/tokens.json`. `--max <n>` exits 1 when any page has more than `n` violations, so the same command gates CI or an agent's migration loop. `--checks type,spacing` narrows the run, `--theme light` sets `data-theme` and `data-bs-theme` first. Playwright is an optional peer dependency and the command says so if it is missing.
+
+The browser half is `@siderolabs/talos-design-system/audit`, a plain module with no dependencies, for anyone driving a browser some other way.
 
 ## Contributing a change
 
