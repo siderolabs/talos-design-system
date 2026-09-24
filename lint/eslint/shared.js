@@ -1,5 +1,18 @@
 // Copyright (c) 2026 Sidero Labs, Inc.
 
+import { readFileSync } from 'node:fs'
+
+const TOKENS = JSON.parse(readFileSync(new URL('../../dist/tokens.json', import.meta.url), 'utf8'))
+
+/**
+ * The type scale as `{ step, px }`, smallest first, read from the built
+ * tokens so a change to the scale reaches the lint on the next build.
+ */
+export const TYPE_SCALE = Object.entries(TOKENS.primitive)
+  .filter(([name]) => name.startsWith('text-'))
+  .map(([name, token]) => ({ step: name.slice('text-'.length), px: parseFloat(token.value) }))
+  .sort((a, b) => a.px - b.px)
+
 /**
  * Utility classes reach the DOM from several places: a static `class` or
  * `className` attribute, a string or template literal inside a binding, and
