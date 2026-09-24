@@ -20,6 +20,7 @@
 
 @theme inline {
   /* Scales. Theme-independent. */
+  --spacing-micro: var(--talos-space-micro);
   --spacing-tight: var(--talos-space-tight);
   --spacing-snug: var(--talos-space-snug);
   --spacing-compact: var(--talos-space-compact);

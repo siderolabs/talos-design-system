@@ -91,7 +91,8 @@
   --talos-black: #000000;
 
   /* space */
-  --talos-space-tight: 8px;  /* Inside a control: icon to label */
+  --talos-space-micro: 4px;  /* Inside a control: icon to label, chip and badge padding */
+  --talos-space-tight: 8px;  /* Button padding, between tightly related controls */
   --talos-space-snug: 12px;  /* Between related elements in a group */
   --talos-space-compact: 16px;  /* Dense content padding: table cells, list rows, toolbars */
   --talos-space-base: 24px;  /* Default gutter: card padding, grid gaps */
@@ -114,14 +115,14 @@
   --talos-font-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;  /* The machine voice: code, identifiers, versions, tracked labels */
 
   /* text */
-  --talos-text-2xs: 10px;  /* Mono eyebrow labels */
-  --talos-text-xs: 11px;  /* Section labels, dense metadata */
-  --talos-text-sm: 12px;  /* Small buttons, badges, captions */
+  --talos-text-2xs: 10px;  /* Tracked uppercase labels only, mono or sans. Never other text. */
+  --talos-text-xs: 11px;  /* The floor for all other text: dense metadata, stat labels, chart axis labels */
+  --talos-text-sm: 12px;  /* Chips, badges, captions, timestamps */
   --talos-text-base: 14px;  /* Body, table cells, inputs, nav */
   --talos-text-md: 16px;  /* Card titles */
-  --talos-text-lg: 20px;  /* Page titles */
-  --talos-text-xl: 24px;  /* Section headings on marketing-weight pages */
-  --talos-text-2xl: 30px;  /* Display */
+  --talos-text-lg: 20px;  /* Between card titles and page titles; no fixed role yet */
+  --talos-text-xl: 24px;  /* Page titles, list and detail pages alike. Stat figures */
+  --talos-text-2xl: 30px;  /* Display. Not used in the consoles today */
 
   /* weight */
   --talos-weight-regular: 400;
