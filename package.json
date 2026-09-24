@@ -8,10 +8,15 @@
     "url": "git+https://github.com/siderolabs/talos-design-system.git"
   },
   "type": "module",
+  "bin": {
+    "talos-audit": "./bin/talos-audit.mjs"
+  },
   "sideEffects": [
     "*.css"
   ],
   "files": [
+    "audit",
+    "bin",
     "dist",
     "fonts",
     "lint",
@@ -27,13 +32,28 @@
     "./fonts/*": "./fonts/*",
     "./tokens.json": "./dist/tokens.json",
     "./eslint": "./lint/eslint/index.js",
-    "./stylelint": "./lint/stylelint.js"
+    "./stylelint": "./lint/stylelint.js",
+    "./audit": "./audit/page-audit.js"
   },
   "scripts": {
     "build": "node build/build.mjs",
     "contrast": "node build/contrast.mjs",
     "fonts": "node build/fetch-fonts.mjs",
-    "check": "npm run build && npm run contrast"
+    "check": "npm run build && npm run contrast",
+    "test": "node --test test/"
+  },
+  "peerDependencies": {
+    "playwright": ">=1.40"
+  },
+  "peerDependenciesMeta": {
+    "playwright": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "playwright": "^1.63.0",
+    "vue-eslint-parser": "^10.4.1"
   },
   "keywords": [
     "design-tokens",
