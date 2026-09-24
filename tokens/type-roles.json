@@ -1,5 +1,5 @@
 {
-  "$description": "Type roles. A role names what a piece of text is, and each role resolves to exactly one size, weight, line height and face from the scale. Pick the role from what the text does on the page; the size follows. docs/type-roles.md is the decision guide.",
+  "$description": "Type roles. A role names what a piece of text is, and each role resolves to one size, weight, line height and face from the scale. Pick the role from what the text does on the page; the size follows. docs/type-roles.md is the decision guide.",
 
   "type": {
     "$type": "typography",

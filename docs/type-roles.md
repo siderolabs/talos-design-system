@@ -1,6 +1,6 @@
 # Type roles
 
-A type role names what a piece of text is. Each role resolves to exactly one size, weight, line height and face from the scale, so choosing the role chooses the size.
+A type role names what a piece of text is. Each role resolves to one size, weight, line height and face from the scale, so choosing the role chooses the size.
 
 The question "should this be 12px or 14px?" has no answer you can check. The question "is this a timestamp under a name, or the content of a table cell?" does, and anyone looking at the screen will answer it the same way. That is the whole point of roles: they turn a taste call into a classification, which a reviewer, a new engineer or an agent can make consistently from what is visible on the page.
 
@@ -44,7 +44,7 @@ Ask these in order and stop at the first yes. The order matters: a number inside
 
 ## Worked examples
 
-From the Sidero Portal and Talos Director as they shipped in September 2026.
+From the Sidero Portal as it shipped in September 2026, and from infrastructure console patterns in general.
 
 **Portal overview**
 
@@ -84,13 +84,13 @@ From the Sidero Portal and Talos Director as they shipped in September 2026.
 | "2 members · page 1 of 1" | `meta` | Pagination summary. |
 | "Search members" placeholder | `body` | An input's text is body whether it is a value or a placeholder. |
 
-**Talos Director**
+**Infrastructure consoles**
 
 | Text | Role | Why |
 | --- | --- | --- |
-| Chart axis labels and legends on Health | `annotation` | Inside a chart. Shipped at 8 and 9px; the floor is 11. |
+| Chart axis labels and legends | `annotation` | Inside a chart. Chart libraries default to 8 or 9px; the floor is 11. |
 | "CPU", "Memory" captions over utilisation bars | `overline` if uppercase, otherwise `label` | Captions or names the value beside it. |
-| Host and VM names in list tables | `body-strong` | Identify the row. |
+| Machine and cluster names in list tables | `body-strong` | Identify the row. |
 | IP addresses, Talos versions, MAC addresses | `mono` | Identifiers standing on their own. |
 | Form field labels in create dialogs | `label` | Name the input below. |
 
@@ -116,7 +116,7 @@ Don't pick a size. Pick the closest role, and raise the gap as a design question
 
 The shipped size is evidence, not the answer. Classify the text, apply the role, and let the size move. The moves that surprise people:
 
-- **13px body goes up to 14, not down to 12.** Most off-scale 13px text in the Portal and Director is content.
+- **13px body goes up to 14, not down to 12.** Most off-scale 13px text in the Portal is content.
 - **10.5px uppercase sidebar headings become `overline`,** which is 10px with tracking.
 - **11px badges become `badge` at 12.**
 - **8 and 9px chart labels become `annotation` at 11.** Set it in the chart library's options from `--talos-type-annotation-size`, read at runtime, rather than as a literal.
