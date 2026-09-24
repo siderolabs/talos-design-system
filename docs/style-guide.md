@@ -239,10 +239,12 @@ Of the solid status fills, only warning carries a dark label. The refitted green
 Rules that live only in a document decay. Each product runs the lint preset from the token package in CI.
 
 - `no-raw-color` catches hex and rgb literals anywhere in a file. Applies to every codebase.
+- `no-raw-font-size` catches literal font sizes in component code: style objects, chart options, inline style strings and `text-[13px]`. Applies to every codebase.
 - `no-off-menu-spacing` requires the named steps instead of numeric spacing.
 - `no-primitive-token` catches application code reaching past the semantic layer into a palette ramp.
 - The stylelint config covers the same ground for SCSS.
 - `npm run contrast` in the token repo fails the build when a role pair drops below its threshold. Exceptions are listed in the script with a reason, not silently skipped.
+- `talos-audit` checks a rendered page: type below the floor or off the scale, spacing off the menu, typefaces that are not ours or not self-hosted, and colours outside the active theme. Run it on a migrated page before calling the migration done.
 
 Adopt with a suppressions file rather than a rewrite. Existing violations are recorded once and the count only goes down, so new code is constrained from day one without blocking on a cleanup. Omni's August branch has 1,672 lines of recorded suppressions and that is the intended shape.
 
