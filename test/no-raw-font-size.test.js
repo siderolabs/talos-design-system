@@ -28,6 +28,7 @@ jsx.run('no-raw-font-size (JS and JSX)', rule, {
     `const a = <span className="text-sm text-[var(--x)]" />`,
     'const css = `font-size: ${size}px;`',
     `const css = 'font-size: var(--talos-text-xs)'`,
+    `const a = <span style={{ fontSize: 'var(--talos-type-meta-size)' }} />`,
   ],
   invalid: [
     { code: `const a = <span style={{ fontSize: 9 }} />`, errors: [error('below the 11px floor')] },
@@ -37,11 +38,11 @@ jsx.run('no-raw-font-size (JS and JSX)', rule, {
     { code: `const a = <span style={{ fontSize: '10px' }} />`, errors: [error('tracked uppercase labels only')] },
     {
       code: `const options = { xaxis: { labels: { style: { fontSize: '8px' } } } }`,
-      errors: [error("getPropertyValue\\('--talos-text-xs'\\)")],
+      errors: [error("getPropertyValue\\('--talos-type-annotation-size'\\)")],
     },
     { code: `const a = <div style="font-size: 13px" />`, errors: [error('sits between text-sm \\(12px\\) and text-base \\(14px\\)')] },
     { code: 'const css = `color: red; font-size: 13px !important;`', errors: 1 },
-    { code: `const a = <span className="text-[13px] font-medium" />`, errors: [error('Use a type token instead of "text-\\[13px\\]"')] },
+    { code: `const a = <span className="text-[13px] font-medium" />`, errors: [error('"text-\\[13px\\]" is a literal font size\\. Classify the text')] },
     { code: `const a = cn('md:text-[0.8rem]')`, errors: 1 },
     { code: `const a = <span style={{ fontSize: 40 }} />`, errors: [error('above the scale')] },
   ],

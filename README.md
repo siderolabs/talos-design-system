@@ -4,7 +4,7 @@ Design tokens and lint guardrails shared by the Talos product interfaces: Omni, 
 
 The values implement the Sidero brand visual guide, with three contrast corrections documented in the style guide. One source of truth, five build outputs, one set of lint rules.
 
-**Read [`docs/style-guide.md`](docs/style-guide.md) first.** It carries the rules; this file only covers mechanics.
+**Read [`docs/style-guide.md`](docs/style-guide.md) first.** It carries the rules; this file only covers mechanics. Agents adopting the system in a product, or changing it, follow [`AGENTS.md`](AGENTS.md).
 
 To see the whole set rendered in both themes, open [`docs/preview.html`](docs/preview.html) in a browser. It reads `dist/tokens.css` directly, so it always shows what the build last produced.
 
@@ -15,6 +15,7 @@ tokens/         Source of truth. DTCG (W3C Design Tokens) JSON, hand-edited.
   primitive.json      Palette ramps and scales. Never referenced by app code.
   semantic.dark.json  Role definitions, dark theme (the default).
   semantic.light.json Role definitions, light theme.
+  type-roles.json     Type roles: what a piece of text is, resolved onto the scale.
 build/          Compiler, the contrast audit, and the font fetcher.
 fonts/          The two typefaces as woff2, with their OFL licences. 81 kB.
 dist/           Generated. Committed so consumers can use a file without building.
@@ -22,7 +23,7 @@ lint/           ESLint rules and a stylelint config, shipped with the package.
 audit/          The rendered-page audit, run in a browser.
 bin/            talos-audit, the command-line runner for the audit.
 test/           Tests for the lint rules and the audit.
-docs/           The style guide.
+docs/           The style guide and the type role guide.
 ```
 
 Edit `tokens/`, run `npm run check`, commit `dist/`. Nothing else is hand-maintained.
@@ -44,8 +45,9 @@ The build has no dependencies. The tests do (ESLint, the Vue parser and Playwrig
 | File | For | Contains |
 | --- | --- | --- |
 | `dist/tokens.css` | Any web product | `--talos-*` custom properties; dark under `:root`, light under `[data-theme="light"]` |
-| `dist/tokens.scss` | Sass consumers (Bootstrap-based UIs) | `$talos-*` compile-time variables plus `talos-tokens-dark` / `talos-tokens-light` mixins |
-| `dist/tailwind.css` | Tailwind v4 consumers (Omni) | `@theme inline` block mapping utility names onto the custom properties |
+| `dist/tokens.scss` | Sass consumers (Bootstrap-based UIs) | `$talos-*` compile-time variables, `talos-tokens-dark` / `talos-tokens-light` mixins, and `talos-type($role)` |
+| `dist/tailwind.css` | Tailwind v4 consumers (Omni) | `@theme inline` block mapping utility names onto the custom properties, plus `type-*` role utilities |
+| `dist/type.css` | Consumers without Tailwind or Sass | `.talos-type-*` classes, one per type role |
 | `dist/fonts.css` | Any web product | `@font-face` rules for the two typefaces, pointing at `./fonts/` beside the stylesheet |
 | `dist/mintlify.css` | The documentation site | Tokens, Mintlify's own theme variables re-pointed at them, `@font-face` rules at `/fonts/`, and the site's existing CSS with the colours tokenised |
 | `dist/tokens.json` | Figma, docs, tooling | Resolved values with references and descriptions preserved |
@@ -160,10 +162,10 @@ export default { extends: [talos] }
 
 Adopt with a suppressions file rather than a rewrite: record existing violations once, and the count only goes down.
 
-`no-raw-font-size` flags a literal size anywhere in component code: `fontSize: 12` or `fontSize: '0.8rem'` in a style object, `font-size: 13px` in a style string or template, and Tailwind's `text-[13px]`. It allows `var(--talos-text-*)`, keywords such as `inherit`, and expressions. Chart options take the same `fontSize` key and cannot resolve `var()`, so read the token at runtime:
+`no-raw-font-size` flags a literal size anywhere in component code: `fontSize: 12` or `fontSize: '0.8rem'` in a style object, `font-size: 13px` in a style string or template, and Tailwind's `text-[13px]`. It allows `var(--talos-type-*)` and `var(--talos-text-*)`, keywords such as `inherit`, and expressions, and its message points at the type roles. Chart options take the same `fontSize` key and cannot resolve `var()`, so read the role's size at runtime:
 
 ```js
-const axisLabel = getComputedStyle(document.documentElement).getPropertyValue('--talos-text-xs')
+const axisLabel = getComputedStyle(document.documentElement).getPropertyValue('--talos-type-annotation-size')
 ```
 
 ### Verifying a page

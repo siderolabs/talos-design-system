@@ -1,0 +1,67 @@
+{
+  "$description": "Type roles. A role names what a piece of text is, and each role resolves to one size, weight, line height and face from the scale. Pick the role from what the text does on the page; the size follows. docs/type-roles.md is the decision guide.",
+
+  "type": {
+    "$type": "typography",
+
+    "page-title": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.xl}", "fontWeight": "{weight.semibold}", "lineHeight": "{leading.tight}", "letterSpacing": "{tracking.normal}" },
+      "$description": "The one heading that names the page, list and detail pages alike. One per page."
+    },
+    "section-title": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.md}", "fontWeight": "{weight.semibold}", "lineHeight": "{leading.tight}", "letterSpacing": "{tracking.normal}" },
+      "$description": "Names a card, panel, modal or section within the page."
+    },
+    "stat": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.xl}", "fontWeight": "{weight.semibold}", "lineHeight": "{leading.tight}", "letterSpacing": "{tracking.normal}" },
+      "$description": "A headline number on a stat card or summary tile. Tabular figures.",
+      "$extensions": { "com.siderolabs.talos": { "numeric": "tabular-nums" } }
+    },
+    "body": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.base}", "fontWeight": "{weight.regular}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
+      "$description": "The content itself: table cells, form values, paragraphs, list items, page descriptions, empty states."
+    },
+    "body-strong": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.base}", "fontWeight": "{weight.semibold}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
+      "$description": "The body text that identifies a row or a record: the name in the first column, the value a key/value pair exists to show."
+    },
+    "control": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.base}", "fontWeight": "{weight.medium}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
+      "$description": "Text a person clicks: buttons, tabs, nav items, menu items, segmented controls."
+    },
+    "label": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.sm}", "fontWeight": "{weight.medium}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
+      "$description": "Names a value that sits next to it: form field labels, the key in a key/value pair, filter names."
+    },
+    "meta": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.sm}", "fontWeight": "{weight.regular}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
+      "$description": "Supporting text about something else: timestamps, counts, the email under a name, helper text under a field, pagination summaries."
+    },
+    "badge": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.sm}", "fontWeight": "{weight.semibold}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
+      "$description": "Text inside a chip, pill or status badge."
+    },
+    "overline": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.2xs}", "fontWeight": "{weight.semibold}", "lineHeight": "{leading.tight}", "letterSpacing": "{tracking.eyebrow}" },
+      "$description": "Uppercase, tracked. Groups or captions other content: sidebar group names, stat card captions, table column headers.",
+      "$extensions": { "com.siderolabs.talos": { "transform": "uppercase" } }
+    },
+    "overline-mono": {
+      "$value": { "fontFamily": "{font.mono}", "fontSize": "{text.2xs}", "fontWeight": "{weight.medium}", "lineHeight": "{leading.tight}", "letterSpacing": "{tracking.machine}" },
+      "$description": "Uppercase, tracked, mono. The machine voice as a label: environment badges, resource kinds above a name.",
+      "$extensions": { "com.siderolabs.talos": { "transform": "uppercase" } }
+    },
+    "annotation": {
+      "$value": { "fontFamily": "{font.sans}", "fontSize": "{text.xs}", "fontWeight": "{weight.regular}", "lineHeight": "{leading.tight}", "letterSpacing": "{tracking.normal}" },
+      "$description": "Text drawn inside a chart or diagram: axis labels, legends, data labels. Nothing outside a chart uses it."
+    },
+    "mono": {
+      "$value": { "fontFamily": "{font.mono}", "fontSize": "{text.sm}", "fontWeight": "{weight.regular}", "lineHeight": "{leading.base}", "letterSpacing": "{tracking.normal}" },
+      "$description": "An identifier standing on its own: IDs, versions, hashes, IPs, paths, node names. Inside a sentence, code keeps the sentence's size and only switches face."
+    },
+    "code-block": {
+      "$value": { "fontFamily": "{font.mono}", "fontSize": "{text.sm}", "fontWeight": "{weight.regular}", "lineHeight": "{leading.relaxed}", "letterSpacing": "{tracking.normal}" },
+      "$description": "Multi-line code, config and log output."
+    }
+  }
+}

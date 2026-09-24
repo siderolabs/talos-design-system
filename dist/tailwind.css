@@ -131,3 +131,109 @@
   --color-content-strong: var(--talos-content-emphasis);
   --color-surface-inverse: var(--talos-surface-inverse);
 }
+
+/*
+ * Type roles as utilities: class="type-meta". Prefer these to text-* sizes
+ * in application code. docs/type-roles.md is the decision guide.
+ */
+@utility type-page-title {
+  font-family: var(--talos-type-page-title-family);
+  font-size: var(--talos-type-page-title-size);
+  font-weight: var(--talos-type-page-title-weight);
+  line-height: var(--talos-type-page-title-leading);
+  letter-spacing: var(--talos-type-page-title-tracking);
+}
+@utility type-section-title {
+  font-family: var(--talos-type-section-title-family);
+  font-size: var(--talos-type-section-title-size);
+  font-weight: var(--talos-type-section-title-weight);
+  line-height: var(--talos-type-section-title-leading);
+  letter-spacing: var(--talos-type-section-title-tracking);
+}
+@utility type-stat {
+  font-family: var(--talos-type-stat-family);
+  font-size: var(--talos-type-stat-size);
+  font-weight: var(--talos-type-stat-weight);
+  line-height: var(--talos-type-stat-leading);
+  letter-spacing: var(--talos-type-stat-tracking);
+  font-variant-numeric: tabular-nums;
+}
+@utility type-body {
+  font-family: var(--talos-type-body-family);
+  font-size: var(--talos-type-body-size);
+  font-weight: var(--talos-type-body-weight);
+  line-height: var(--talos-type-body-leading);
+  letter-spacing: var(--talos-type-body-tracking);
+}
+@utility type-body-strong {
+  font-family: var(--talos-type-body-strong-family);
+  font-size: var(--talos-type-body-strong-size);
+  font-weight: var(--talos-type-body-strong-weight);
+  line-height: var(--talos-type-body-strong-leading);
+  letter-spacing: var(--talos-type-body-strong-tracking);
+}
+@utility type-control {
+  font-family: var(--talos-type-control-family);
+  font-size: var(--talos-type-control-size);
+  font-weight: var(--talos-type-control-weight);
+  line-height: var(--talos-type-control-leading);
+  letter-spacing: var(--talos-type-control-tracking);
+}
+@utility type-label {
+  font-family: var(--talos-type-label-family);
+  font-size: var(--talos-type-label-size);
+  font-weight: var(--talos-type-label-weight);
+  line-height: var(--talos-type-label-leading);
+  letter-spacing: var(--talos-type-label-tracking);
+}
+@utility type-meta {
+  font-family: var(--talos-type-meta-family);
+  font-size: var(--talos-type-meta-size);
+  font-weight: var(--talos-type-meta-weight);
+  line-height: var(--talos-type-meta-leading);
+  letter-spacing: var(--talos-type-meta-tracking);
+}
+@utility type-badge {
+  font-family: var(--talos-type-badge-family);
+  font-size: var(--talos-type-badge-size);
+  font-weight: var(--talos-type-badge-weight);
+  line-height: var(--talos-type-badge-leading);
+  letter-spacing: var(--talos-type-badge-tracking);
+}
+@utility type-overline {
+  font-family: var(--talos-type-overline-family);
+  font-size: var(--talos-type-overline-size);
+  font-weight: var(--talos-type-overline-weight);
+  line-height: var(--talos-type-overline-leading);
+  letter-spacing: var(--talos-type-overline-tracking);
+  text-transform: uppercase;
+}
+@utility type-overline-mono {
+  font-family: var(--talos-type-overline-mono-family);
+  font-size: var(--talos-type-overline-mono-size);
+  font-weight: var(--talos-type-overline-mono-weight);
+  line-height: var(--talos-type-overline-mono-leading);
+  letter-spacing: var(--talos-type-overline-mono-tracking);
+  text-transform: uppercase;
+}
+@utility type-annotation {
+  font-family: var(--talos-type-annotation-family);
+  font-size: var(--talos-type-annotation-size);
+  font-weight: var(--talos-type-annotation-weight);
+  line-height: var(--talos-type-annotation-leading);
+  letter-spacing: var(--talos-type-annotation-tracking);
+}
+@utility type-mono {
+  font-family: var(--talos-type-mono-family);
+  font-size: var(--talos-type-mono-size);
+  font-weight: var(--talos-type-mono-weight);
+  line-height: var(--talos-type-mono-leading);
+  letter-spacing: var(--talos-type-mono-tracking);
+}
+@utility type-code-block {
+  font-family: var(--talos-type-code-block-family);
+  font-size: var(--talos-type-code-block-size);
+  font-weight: var(--talos-type-code-block-weight);
+  line-height: var(--talos-type-code-block-leading);
+  letter-spacing: var(--talos-type-code-block-tracking);
+}

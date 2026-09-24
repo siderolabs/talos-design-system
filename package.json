@@ -28,6 +28,7 @@
     "./tokens.scss": "./dist/tokens.scss",
     "./tailwind.css": "./dist/tailwind.css",
     "./fonts.css": "./dist/fonts.css",
+    "./type.css": "./dist/type.css",
     "./mintlify.css": "./dist/mintlify.css",
     "./fonts/*": "./fonts/*",
     "./tokens.json": "./dist/tokens.json",

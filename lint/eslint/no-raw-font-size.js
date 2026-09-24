@@ -54,13 +54,17 @@ function nearest(number, unit) {
 
 const DESIGN_QUESTION = 'A size that is not on the scale is a design question.'
 
+/** Sizes follow from what the text is, so the first advice is a role, not a step. */
+const ROLE =
+  'Classify the text and apply its type role (docs/type-roles.md): the type-* utility, the talos-type-* class or the talos-type() mixin.'
+
 const classRule = createClassStringRule((className) => {
   const match = ARBITRARY_SIZE.exec(bareUtility(className))
   if (!match) return
 
   const [, number, unit] = match
 
-  return `Use a type token instead of "${className}": ${SCALE}.${nearest(+number, unit)} ${DESIGN_QUESTION}`
+  return `"${className}" is a literal font size. ${ROLE} The scale: ${SCALE}.${nearest(+number, unit)} ${DESIGN_QUESTION}`
 })
 
 /** @type {import('eslint').Rule.RuleModule} */
@@ -69,7 +73,7 @@ export default {
     type: 'problem',
     docs: {
       description:
-        'Disallow literal font sizes in component code, so every size comes from the type scale.',
+        'Disallow literal font sizes in component code, so every size comes from a type role.',
     },
     schema: [],
   },
@@ -87,8 +91,8 @@ export default {
           // and those render outside CSS where var() does not resolve.
           const fix =
             key === 'fontSize'
-              ? `Use 'var(--talos-text-*)': ${SCALE}.${nearest(+number, unit)} Chart and canvas options cannot resolve var(), so read the token at runtime with getComputedStyle(document.documentElement).getPropertyValue('--talos-text-${FLOOR.step}').`
-              : `Use var(--talos-text-*) or a text-* utility: ${SCALE}.${nearest(+number, unit)}`
+              ? `${ROLE} In a style prop use the role's size, 'var(--talos-type-<role>-size)'. Chart and canvas options cannot resolve var(), so read it at runtime: getComputedStyle(document.documentElement).getPropertyValue('--talos-type-annotation-size'). The scale: ${SCALE}.${nearest(+number, unit)}`
+              : `${ROLE} Or var(--talos-type-<role>-size) where only the size can change. The scale: ${SCALE}.${nearest(+number, unit)}`
 
           context.report({
             loc: {
