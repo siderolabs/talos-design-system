@@ -355,8 +355,101 @@ const MINTLIFY_GRAY = {
   950: '{ink.1}',
 }
 
+// Mintlify's callout types, mapped onto status states. Note has no status
+// counterpart: it is neutral like info and differs from it by icon only.
+const CALLOUTS = {
+  danger: 'danger',
+  warning: 'warning',
+  tip: 'success',
+  check: 'success',
+  info: 'info',
+  note: 'info',
+}
+
+// The footer's "Powered by" line and the Mintlify wordmark beside it (drawn in
+// currentColor). Hover is left to Mintlify, which darkens it further.
+const MINTLIFY_FOOTER = ['#footer a[href*="mintlify.com"]:not(:hover)']
+
+// States whose large surfaces carry a colour edge on dark. Info is neutral.
+const EDGED = new Set(['success', 'warning', 'danger'])
+
+/**
+ * Colour treatments for Mintlify's own components. Everything here is a
+ * colour, a colour bar, or the text colour on a coloured surface; layout
+ * stays in the docs repo. Rules are written once against the roles and pick
+ * up the theme from the `.dark` block above. `html:root` and `html.dark`
+ * match the specificity Mintlify's own dark-variant utilities need to lose to.
+ */
+function mintlifyComponents() {
+  const v = (name) => `var(${PREFIX}${name})`
+  const lines = [
+    '/* ------------------------------------------------ Mintlify component colours */',
+    '',
+    '/* Announcement banner. White text sits on the solid accent band in the middle',
+    '   of the gradient. The link underline is the dark-theme accent text in both',
+    '   themes, because the banner is the same colour in both. */',
+    `html #banner { background: ${v('accent-gradient-fill')}; }`,
+    `html #banner, html #banner * { color: ${v('content-on-accent')} !important; }`,
+    `html #banner a { text-decoration-color: ${v('red-1')} !important; }`,
+    '',
+    '/* Topbar call to action: the primary button. */',
+    `html #topbar-cta-button a > span:first-child { background: ${v('accent-fill')}; }`,
+    'html #topbar-cta-button a:hover > span:first-child { opacity: 0.9; }',
+    `html #topbar-cta-button a, html #topbar-cta-button a * { color: ${v('content-on-accent')} !important; }`,
+    '',
+    '/* Active sidebar item, marker style: emphasis text, an accent-tinted pill,',
+    '   and a bar in accent text inset from the left. Mintlify marks the item',
+    '   with a different utility class per theme. */',
+  ]
+
+  for (const item of [
+    'html:not(.dark) a[aria-current="page"].bg-primary\\/10',
+    'html.dark a[aria-current="page"].dark\\:bg-primary-light\\/10',
+  ]) {
+    lines.push(
+      `${item} { background-color: ${v('accent-subtle')} !important; color: ${v('content-emphasis')} !important; position: relative; }`,
+      `${item}::before { content: ""; position: absolute; left: 6px; top: 25%; bottom: 25%; width: ${v('border-edge')}; border-radius: 2px; background: ${v('accent-text')}; }`,
+    )
+  }
+
+  lines.push(
+    '',
+    '/* Callouts. Body text stays content-default; only the icon and bold title',
+    '   take the status colour. Light surfaces are a pastel of the fill; dark',
+    '   surfaces are neutral with a colour edge on the left. */',
+  )
+  for (const [type, state] of Object.entries(CALLOUTS)) {
+    const sel = `[data-callout-type="${type}"]`
+    const icon = type === 'note' ? 'content-secondary' : `status-${state}-text`
+    const title = state === 'info' ? 'content-emphasis' : `status-${state}-text`
+    lines.push(
+      `html:root ${sel} { background-color: ${v(`status-${state}-surface`)}; border-color: ${v(`status-${state}-border`)}; }`,
+      `html:root ${sel} svg { color: ${v(icon)} !important; }`,
+      `html:root ${sel} [class*="prose"] { color: ${v('content-default')} !important; }`,
+      `html:root ${sel} [class*="prose"] strong { color: ${v(title)} !important; }`,
+    )
+    if (EDGED.has(state)) {
+      lines.push(`html.dark ${sel} { border-left: ${v('border-edge')} solid ${v(`status-${state}-fill`)}; }`)
+    }
+  }
+
+  lines.push(
+    '',
+    '/* Footer. The "Powered by" line is read, so it takes content-muted rather',
+    '   than the disabled grey Mintlify gives it (3.05:1 light, 3.27:1 dark). */',
+    ...MINTLIFY_FOOTER.map((sel) => `html ${sel} { color: ${v('content-muted')} !important; }`),
+    '',
+  )
+
+  return lines
+}
+
 function buildMintlify() {
   const rgb = (ref) => triplet(ref, primitives)
+  const lightRgb = (ref) => triplet(ref, lightLookup)
+  const darkRgb = (ref) => triplet(ref, darkLookup)
+  const lightHex = (ref) => resolve(ref, lightLookup)
+  const darkHex = (ref) => resolve(ref, darkLookup)
 
   const lines = [
     '/*',
@@ -382,9 +475,9 @@ function buildMintlify() {
     ' *    in dark mode, dark is buttons and hover states in both modes.',
     ' *',
     ' *      "colors": {',
-    ` *        "primary": "${resolve('{red.5}', primitives)}",`,
-    ` *        "light": "${resolve('{red.1}', primitives)}",`,
-    ` *        "dark": "${resolve('{red.4}', primitives)}"`,
+    ` *        "primary": "${lightHex('{accent.text}')}",`,
+    ` *        "light": "${darkHex('{accent.text}')}",`,
+    ` *        "dark": "${lightHex('{accent.fill}')}"`,
     ' *      }',
     ' *',
     " *    Mintlify's fonts setting is deliberately left alone. It has no slot for",
@@ -423,9 +516,9 @@ function buildMintlify() {
     '   and will not follow a runtime theme switch. That is fine: Mintlify picks',
     '   the light or dark member of each pair itself. */',
     ':root {',
-    `  --primary: ${rgb('{red.5}')};         /* light-mode emphasis text: accent.text (light) */`,
-    `  --primary-light: ${rgb('{red.1}')};   /* dark-mode emphasis text: accent.text (dark) */`,
-    `  --primary-dark: ${rgb('{red.4}')};    /* buttons and hover states, both modes: accent.fill */`,
+    `  --primary: ${lightRgb('{accent.text}')};         /* light-mode emphasis text: accent.text (light) */`,
+    `  --primary-light: ${darkRgb('{accent.text}')};   /* dark-mode emphasis text: accent.text (dark) */`,
+    `  --primary-dark: ${lightRgb('{accent.fill}')};    /* buttons and hover states, both modes: accent.fill */`,
     '',
     '  /* surface.chrome rather than surface.page: Mintlify draws the sidebar, the',
     '     topbar and the content on one plane, so the docs site is all chrome and',
@@ -445,12 +538,13 @@ function buildMintlify() {
     `  --font-paper-mono: var(${PREFIX}font-mono);`,
     '}',
     '',
+    ...mintlifyComponents(),
   )
 
   // Site-specific layout rules (tables, nav logo sizing, content width) stay
   // hand-written in the docs repo's style.css. Only tokens, theme variables,
-  // and @font-face rules belong here: a docs layout tweak must not require a
-  // design-system release.
+  // @font-face rules, and colour treatments of Mintlify's own components
+  // belong here: a docs layout tweak must not require a design-system release.
 
   return lines.join('\n')
 }
