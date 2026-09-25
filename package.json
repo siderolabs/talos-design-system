@@ -1,6 +1,6 @@
 {
   "name": "@siderolabs/talos-design-system",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Design tokens and lint guardrails shared by every Talos product interface and the documentation site.",
   "license": "MPL-2.0",
   "repository": {
@@ -28,6 +28,7 @@
     "./tokens.css": "./dist/tokens.css",
     "./tokens.scss": "./dist/tokens.scss",
     "./tailwind.css": "./dist/tailwind.css",
+    "./tailwind-colour.css": "./dist/tailwind-colour.css",
     "./fonts.css": "./dist/fonts.css",
     "./type.css": "./dist/type.css",
     "./mintlify.css": "./dist/mintlify.css",
@@ -42,7 +43,7 @@
     "contrast": "node build/contrast.mjs",
     "fonts": "node build/fetch-fonts.mjs",
     "check": "npm run build && npm run contrast",
-    "test": "node --test test/"
+    "test": "node --test test/*.test.js"
   },
   "peerDependencies": {
     "playwright": ">=1.40"

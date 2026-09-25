@@ -312,13 +312,16 @@ function tailwindNamespace(token) {
   return undefined
 }
 
-function buildTailwind() {
+function buildTailwind({ colourOnly = false } = {}) {
   const lines = [
     HEADER,
     '',
     '/*',
-    ' * Tailwind v4 theme for consumers on Tailwind.',
-    ' *',
+    colourOnly
+      ? ' * Colour and elevation only, for a product adopting colour before type and spacing.'
+      : ' * Tailwind v4 theme for consumers on Tailwind.',
+    colourOnly ? ' * It leaves the host\'s fonts, text sizes, spacing and radii alone.' : ' *',
+    ...(colourOnly ? [' *'] : []),
     ' * Import tokens.css before this file. It deliberately does not import it',
     ' * itself: nothing in dist/ should assume a package path, so that every',
     ' * file here can also be vendored into a product that cannot take a',
@@ -343,7 +346,7 @@ function buildTailwind() {
     lines.push('')
   }
 
-  emit('Scales. Theme-independent.', [...primitives].filter(([, t]) => t.type !== 'color'))
+  if (!colourOnly) emit('Scales. Theme-independent.', [...primitives].filter(([, t]) => t.type !== 'color'))
   emit('Semantic colour roles. These are what application code uses.', [...dark].filter(([, t]) => t.type === 'color'))
   emit('Elevation.', [...dark].filter(([, t]) => t.type === 'shadow'))
 
@@ -356,6 +359,7 @@ function buildTailwind() {
   lines.push(`  --color-content-strong: var(${PREFIX}content-emphasis);`)
   lines.push(`  --color-surface-inverse: var(${PREFIX}surface-inverse);`)
   lines.push('}', '')
+  if (colourOnly) return lines.join('\n')
 
   lines.push('/*')
   lines.push(' * Type roles as utilities: class="type-meta". Prefer these to text-* sizes')
@@ -705,6 +709,7 @@ const artifacts = {
   'tokens.css': buildCss(),
   'tokens.scss': buildScss(),
   'tailwind.css': buildTailwind(),
+  'tailwind-colour.css': buildTailwind({ colourOnly: true }),
   'fonts.css': buildFontsCss(),
   'type.css': buildTypeCss(),
   'mintlify.css': buildMintlify(),
