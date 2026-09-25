@@ -47,6 +47,7 @@ The build has no dependencies. The tests do (ESLint, the Vue parser and Playwrig
 | `dist/tokens.css` | Any web product | `--talos-*` custom properties; dark under `:root`, light under `[data-theme="light"]` |
 | `dist/tokens.scss` | Sass consumers (Bootstrap-based UIs) | `$talos-*` compile-time variables, `talos-tokens-dark` / `talos-tokens-light` mixins, and `talos-type($role)` |
 | `dist/tailwind.css` | Tailwind v4 consumers | `@theme inline` block mapping utility names onto the custom properties, plus `type-*` role utilities |
+| `dist/tailwind-colour.css` | Tailwind v4 consumers adopting colour first | The colour and elevation part of `tailwind.css` only, leaving the host's fonts, sizes and spacing alone |
 | `dist/type.css` | Consumers without Tailwind or Sass | `.talos-type-*` classes, one per type role |
 | `dist/fonts.css` | Any web product | `@font-face` rules for the two typefaces, pointing at `./fonts/` beside the stylesheet |
 | `dist/mintlify.css` | The documentation site | Tokens, Mintlify's own theme variables re-pointed at them, `@font-face` rules at `/fonts/`, and the site's existing CSS with the colours tokenised |
