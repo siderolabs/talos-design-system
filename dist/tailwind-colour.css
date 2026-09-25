@@ -1,0 +1,100 @@
+/*
+ * Talos Design System tokens. GENERATED FILE, DO NOT EDIT.
+ *
+ * Source: tokens/ in @siderolabs/talos-design-system. Change a value there, run
+ * `npm run build`, and every product picks it up on its next version bump.
+ */
+
+/*
+ * Colour and elevation only, for a product adopting colour before type and spacing.
+ * It leaves the host's fonts, text sizes, spacing and radii alone.
+ *
+ * Import tokens.css before this file. It deliberately does not import it
+ * itself: nothing in dist/ should assume a package path, so that every
+ * file here can also be vendored into a product that cannot take a
+ * dependency on this repository.
+ *
+ * `@theme inline` is deliberate: it makes the generated utilities
+ * reference the custom property rather than copy its value, which is what
+ * lets the theme switch at runtime.
+ */
+
+@theme inline {
+  /* Semantic colour roles. These are what application code uses. */
+  --color-surface-page: var(--talos-surface-page);
+  --color-surface-chrome: var(--talos-surface-chrome);
+  --color-surface-card: var(--talos-surface-card);
+  --color-surface-inset: var(--talos-surface-inset);
+  --color-surface-raised: var(--talos-surface-raised);
+  --color-surface-hover: var(--talos-surface-hover);
+  --color-surface-inert: var(--talos-surface-inert);
+  --color-surface-subtle: var(--talos-surface-subtle);
+  --color-surface-inverse: var(--talos-surface-inverse);
+  --color-surface-paper: var(--talos-surface-paper);
+  --color-content-emphasis: var(--talos-content-emphasis);
+  --color-content-default: var(--talos-content-default);
+  --color-content-secondary: var(--talos-content-secondary);
+  --color-content-muted: var(--talos-content-muted);
+  --color-content-disabled: var(--talos-content-disabled);
+  --color-content-inverse: var(--talos-content-inverse);
+  --color-content-on-accent: var(--talos-content-on-accent);
+  --color-border-subtle: var(--talos-border-subtle);
+  --color-border-default: var(--talos-border-default);
+  --color-border-strong: var(--talos-border-strong);
+  --color-border-accent: var(--talos-border-accent);
+  --color-accent-default: var(--talos-accent-default);
+  --color-accent-hover: var(--talos-accent-hover);
+  --color-accent-text: var(--talos-accent-text);
+  --color-accent-fill: var(--talos-accent-fill);
+  --color-accent-fill-hover: var(--talos-accent-fill-hover);
+  --color-accent-fill-active: var(--talos-accent-fill-active);
+  --color-accent-subtle: var(--talos-accent-subtle);
+  --color-status-success-default: var(--talos-status-success-default);
+  --color-status-success-text: var(--talos-status-success-text);
+  --color-status-success-fill: var(--talos-status-success-fill);
+  --color-status-success-on-fill: var(--talos-status-success-on-fill);
+  --color-status-success-subtle: var(--talos-status-success-subtle);
+  --color-status-success-subtle-border: var(--talos-status-success-subtle-border);
+  --color-status-success-surface: var(--talos-status-success-surface);
+  --color-status-success-border: var(--talos-status-success-border);
+  --color-status-warning-default: var(--talos-status-warning-default);
+  --color-status-warning-text: var(--talos-status-warning-text);
+  --color-status-warning-fill: var(--talos-status-warning-fill);
+  --color-status-warning-on-fill: var(--talos-status-warning-on-fill);
+  --color-status-warning-subtle: var(--talos-status-warning-subtle);
+  --color-status-warning-subtle-border: var(--talos-status-warning-subtle-border);
+  --color-status-warning-surface: var(--talos-status-warning-surface);
+  --color-status-warning-border: var(--talos-status-warning-border);
+  --color-status-danger-default: var(--talos-status-danger-default);
+  --color-status-danger-text: var(--talos-status-danger-text);
+  --color-status-danger-fill: var(--talos-status-danger-fill);
+  --color-status-danger-on-fill: var(--talos-status-danger-on-fill);
+  --color-status-danger-subtle: var(--talos-status-danger-subtle);
+  --color-status-danger-subtle-border: var(--talos-status-danger-subtle-border);
+  --color-status-danger-surface: var(--talos-status-danger-surface);
+  --color-status-danger-border: var(--talos-status-danger-border);
+  --color-status-info-default: var(--talos-status-info-default);
+  --color-status-info-text: var(--talos-status-info-text);
+  --color-status-info-fill: var(--talos-status-info-fill);
+  --color-status-info-on-fill: var(--talos-status-info-on-fill);
+  --color-status-info-subtle: var(--talos-status-info-subtle);
+  --color-status-info-subtle-border: var(--talos-status-info-subtle-border);
+  --color-status-info-surface: var(--talos-status-info-surface);
+  --color-status-info-border: var(--talos-status-info-border);
+
+  /* Elevation. */
+  --shadow-card: var(--talos-shadow-card);
+  --shadow-dropdown: var(--talos-shadow-dropdown);
+  --shadow-modal: var(--talos-shadow-modal);
+  --shadow-focus: var(--talos-shadow-focus);
+
+}
+
+/*
+ * Aliases for older role names some products already use, so adopting the shared set is
+ * a re-point rather than a rename across every component.
+ */
+@theme inline {
+  --color-content-strong: var(--talos-content-emphasis);
+  --color-surface-inverse: var(--talos-surface-inverse);
+}
