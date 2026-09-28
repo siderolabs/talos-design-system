@@ -150,6 +150,23 @@
       .stack > * + * {
         margin-top: var(--talos-space-base);
       }
+      .diff-line {
+        padding: 0 var(--talos-space-snug);
+        white-space: pre;
+      }
+      .diff-line:first-child {
+        padding-top: var(--talos-space-snug);
+      }
+      .diff-line:last-child {
+        padding-bottom: var(--talos-space-snug);
+      }
+      .diff-gutter {
+        display: inline-block;
+        width: 4ch;
+        margin-right: var(--talos-space-tight);
+        color: var(--talos-content-muted);
+        user-select: none;
+      }
     </style>
   </head>
   <body>
@@ -202,6 +219,103 @@
           <span><span class="dot" style="background: var(--talos-status-success-default)"></span><span style="color: var(--talos-status-success-text)">Healthy</span></span>
           <span><span class="dot" style="background: var(--talos-status-warning-default)"></span><span style="color: var(--talos-status-warning-text)">Warning</span></span>
           <span><span class="dot" style="background: var(--talos-status-danger-default)"></span><span style="color: var(--talos-status-danger-text)">Critical</span></span>
+        </div>
+      </div>
+
+      <h2>Series and categories</h2>
+      <div class="card stack">
+        <div style="display: flex; height: 16px; border-radius: var(--talos-radius-sm); overflow: hidden; background: var(--talos-surface-inert)">
+          <div style="flex: 18; background: var(--talos-series-1)"></div>
+          <div style="flex: 15; background: var(--talos-series-2)"></div>
+          <div style="flex: 13; background: var(--talos-series-3)"></div>
+          <div style="flex: 11; background: var(--talos-series-4)"></div>
+          <div style="flex: 10; background: var(--talos-series-5)"></div>
+          <div style="flex: 9; background: var(--talos-series-6)"></div>
+          <div style="flex: 8; background: var(--talos-series-7)"></div>
+          <div style="flex: 6; background: var(--talos-series-8)"></div>
+          <div style="flex: 10"></div>
+        </div>
+        <div class="row" style="font-size: var(--talos-text-sm); color: var(--talos-content-secondary)">
+          <span><span class="dot" style="background: var(--talos-series-1)"></span>series-1</span>
+          <span><span class="dot" style="background: var(--talos-series-2)"></span>series-2</span>
+          <span><span class="dot" style="background: var(--talos-series-3)"></span>series-3</span>
+          <span><span class="dot" style="background: var(--talos-series-4)"></span>series-4</span>
+          <span><span class="dot" style="background: var(--talos-series-5)"></span>series-5</span>
+          <span><span class="dot" style="background: var(--talos-series-6)"></span>series-6</span>
+          <span><span class="dot" style="background: var(--talos-series-7)"></span>series-7</span>
+          <span><span class="dot" style="background: var(--talos-series-8)"></span>series-8 (other)</span>
+        </div>
+        <div class="row">
+          <svg width="96" height="96" viewBox="0 0 96 96" aria-label="Ring chart, three series">
+            <circle cx="48" cy="48" r="40" fill="none" stroke="var(--talos-border-control)" stroke-width="10" />
+            <circle cx="48" cy="48" r="40" fill="none" stroke="var(--talos-surface-inert)" stroke-width="8" />
+            <circle cx="48" cy="48" r="40" fill="none" stroke="var(--talos-series-1)" stroke-width="8" stroke-dasharray="113 139" transform="rotate(-90 48 48)" />
+            <circle cx="48" cy="48" r="28" fill="none" stroke="var(--talos-border-control)" stroke-width="10" />
+            <circle cx="48" cy="48" r="28" fill="none" stroke="var(--talos-surface-inert)" stroke-width="8" />
+            <circle cx="48" cy="48" r="28" fill="none" stroke="var(--talos-series-2)" stroke-width="8" stroke-dasharray="53 123" transform="rotate(-90 48 48)" />
+            <circle cx="48" cy="48" r="16" fill="none" stroke="var(--talos-border-control)" stroke-width="10" />
+            <circle cx="48" cy="48" r="16" fill="none" stroke="var(--talos-surface-inert)" stroke-width="8" />
+            <circle cx="48" cy="48" r="16" fill="none" stroke="var(--talos-series-3)" stroke-width="8" stroke-dasharray="70 101" transform="rotate(-90 48 48)" />
+          </svg>
+          <span class="badge" style="border: 1px solid var(--talos-border-strong); color: var(--talos-content-default); border-radius: var(--talos-radius-sm)"><span class="dot" style="width: 6px; height: 6px; margin-right: var(--talos-space-micro); background: var(--talos-series-1)"></span><span style="color: var(--talos-content-secondary)">pool:</span> east</span>
+          <span class="badge" style="border: 1px solid var(--talos-border-strong); color: var(--talos-content-default); border-radius: var(--talos-radius-sm)"><span class="dot" style="width: 6px; height: 6px; margin-right: var(--talos-space-micro); background: var(--talos-series-2)"></span><span style="color: var(--talos-content-secondary)">pool:</span> west</span>
+        </div>
+      </div>
+
+      <h2>Syntax</h2>
+      <div class="card">
+        <pre style="margin: 0; padding: var(--talos-space-snug); border-radius: var(--talos-radius-sm); background: var(--talos-surface-raised); font-family: var(--talos-font-mono); font-size: var(--talos-text-sm); line-height: 1.6; color: var(--talos-syntax-plain); overflow-x: auto"><span style="color: var(--talos-syntax-comment); font-style: italic"># Pin the install disk and add a node label</span>
+<span style="color: var(--talos-syntax-key)">machine</span><span style="color: var(--talos-syntax-punctuation)">:</span>
+  <span style="color: var(--talos-syntax-key)">install</span><span style="color: var(--talos-syntax-punctuation)">:</span>
+    <span style="color: var(--talos-syntax-key)">disk</span><span style="color: var(--talos-syntax-punctuation)">:</span> /dev/<span style="background: var(--talos-highlight-match); box-shadow: 0 0 0 1px var(--talos-highlight-match-border); border-radius: 2px">nvme</span>0n1
+    <span style="color: var(--talos-syntax-key)">wipe</span><span style="color: var(--talos-syntax-punctuation)">:</span> <span style="color: var(--talos-syntax-constant)">false</span>
+  <span style="color: var(--talos-syntax-key)">nodeLabels</span><span style="color: var(--talos-syntax-punctuation)">:</span> <span style="color: var(--talos-syntax-keyword)">&amp;labels</span>
+    <span style="color: var(--talos-syntax-key)">rack</span><span style="color: var(--talos-syntax-punctuation)">:</span> <span style="color: var(--talos-syntax-string)">"r12"</span>
+    <span style="color: var(--talos-syntax-key)">zone</span><span style="color: var(--talos-syntax-punctuation)">:</span> <span style="color: var(--talos-syntax-string)">"us-east-1b"</span>
+  <span style="color: var(--talos-syntax-key)">kubelet</span><span style="color: var(--talos-syntax-punctuation)">:</span>
+    <span style="color: var(--talos-syntax-key)">extraArgs</span><span style="color: var(--talos-syntax-punctuation)">:</span>
+      <span style="color: var(--talos-syntax-key)">max-pods</span><span style="color: var(--talos-syntax-punctuation)">:</span> <span style="color: var(--talos-syntax-constant)">250</span></pre>
+      </div>
+
+      <h2>Diff</h2>
+      <div class="card">
+        <pre class="diff" style="margin: 0; border-radius: var(--talos-radius-sm); background: var(--talos-surface-raised); font-family: var(--talos-font-mono); font-size: var(--talos-text-sm); line-height: 1.6; color: var(--talos-syntax-plain); overflow-x: auto"><div class="diff-line"><span class="diff-gutter">24</span>  <span style="color: var(--talos-syntax-key)">install</span><span style="color: var(--talos-syntax-punctuation)">:</span></div><div class="diff-line" style="background: var(--talos-highlight-removed)"><span class="diff-gutter" style="color: var(--talos-status-danger-text)">25 -</span>    <span style="color: var(--talos-syntax-key)">disk</span><span style="color: var(--talos-syntax-punctuation)">:</span> /dev/<span style="background: var(--talos-highlight-removed-emphasis)">sda</span></div><div class="diff-line" style="background: var(--talos-highlight-added)"><span class="diff-gutter" style="color: var(--talos-status-success-text)">25 +</span>    <span style="color: var(--talos-syntax-key)">disk</span><span style="color: var(--talos-syntax-punctuation)">:</span> /dev/<span style="background: var(--talos-highlight-added-emphasis)">nvme0n1</span></div><div class="diff-line"><span class="diff-gutter">26</span>    <span style="color: var(--talos-syntax-key)">wipe</span><span style="color: var(--talos-syntax-punctuation)">:</span> <span style="color: var(--talos-syntax-constant)">false</span></div><div class="diff-line" style="background: var(--talos-highlight-added)"><span class="diff-gutter" style="color: var(--talos-status-success-text)">27 +</span>  <span style="color: var(--talos-syntax-comment); font-style: italic"># Labels applied at join</span></div><div class="diff-line" style="background: var(--talos-highlight-added)"><span class="diff-gutter" style="color: var(--talos-status-success-text)">28 +</span>  <span style="color: var(--talos-syntax-key)">nodeLabels</span><span style="color: var(--talos-syntax-punctuation)">:</span></div><div class="diff-line" style="background: var(--talos-highlight-added)"><span class="diff-gutter" style="color: var(--talos-status-success-text)">29 +</span>    <span style="color: var(--talos-syntax-key)">rack</span><span style="color: var(--talos-syntax-punctuation)">:</span> <span style="color: var(--talos-syntax-string)">"r12"</span></div><div class="diff-line"><span class="diff-gutter">30</span>  <span style="color: var(--talos-syntax-key)">kubelet</span><span style="color: var(--talos-syntax-punctuation)">:</span></div></pre>
+      </div>
+
+      <h2>Checked and selected</h2>
+      <div class="card stack">
+        <div class="row" style="font-size: var(--talos-text-sm); color: var(--talos-content-default)">
+          <label style="display: inline-flex; gap: var(--talos-space-tight); align-items: center"><span style="width: 14px; height: 14px; border-radius: 2px; border: 1px solid var(--talos-border-control)"></span>Unchecked</label>
+          <label style="display: inline-flex; gap: var(--talos-space-tight); align-items: center"><span style="width: 14px; height: 14px; border-radius: 2px; border: 1px solid var(--talos-accent-fill); background: var(--talos-accent-fill); display: grid; place-items: center"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M1.5 5.2 4 7.5 8.5 2.5" fill="none" stroke="var(--talos-content-on-accent)" stroke-width="1.6" /></svg></span>Checked</label>
+          <label style="display: inline-flex; gap: var(--talos-space-tight); align-items: center"><span style="width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--talos-border-control)"></span>Radio</label>
+          <label style="display: inline-flex; gap: var(--talos-space-tight); align-items: center"><span style="width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--talos-accent-fill); background: var(--talos-accent-fill); display: grid; place-items: center"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--talos-content-on-accent)"></span></span>Radio selected</label>
+          <span style="display: inline-flex; gap: 2px; padding: var(--talos-space-micro); border-radius: var(--talos-radius-sm); background: var(--talos-surface-inset); font-size: var(--talos-text-xs)">
+            <span style="padding: 2px var(--talos-space-tight); border-radius: var(--talos-radius-sm); background: var(--talos-surface-inert); box-shadow: 0 0 0 1px var(--talos-border-strong); color: var(--talos-content-emphasis)">Hostnames</span>
+            <span style="padding: 2px var(--talos-space-tight); color: var(--talos-content-muted)">UUIDs</span>
+          </span>
+        </div>
+      </div>
+
+      <h2>Focus and overlay</h2>
+      <div class="card stack">
+        <div class="row" style="font-size: var(--talos-text-sm)">
+          <button class="btn btn-ghost" style="box-shadow: var(--talos-shadow-focus)">Focused button</button>
+          <span style="display: inline-flex; gap: 2px; padding: var(--talos-space-micro); border-radius: var(--talos-radius-sm); background: var(--talos-surface-inset); font-size: var(--talos-text-xs)">
+            <span style="padding: 2px var(--talos-space-tight); border-radius: var(--talos-radius-sm); background: var(--talos-surface-inert); box-shadow: 0 0 0 1px var(--talos-border-strong); outline: 3px solid var(--talos-border-focus); color: var(--talos-content-emphasis)">Focused segment</span>
+            <span style="padding: 2px var(--talos-space-tight); color: var(--talos-content-muted)">UUIDs</span>
+          </span>
+          <span style="color: var(--talos-content-muted)">shadow-focus on :focus-visible; border-focus as an outline where a ring already exists</span>
+        </div>
+        <div style="position: relative; height: 140px; border-radius: var(--talos-radius-sm); overflow: hidden; border: var(--talos-border-hairline) solid var(--talos-border-default); background: var(--talos-surface-page)">
+          <div style="position: absolute; inset: 0; padding: var(--talos-space-snug); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--talos-space-snug); align-content: start">
+            <div class="card" style="height: 40px"></div><div class="card" style="height: 40px"></div><div class="card" style="height: 40px"></div>
+            <div class="card" style="height: 40px"></div><div class="card" style="height: 40px"></div><div class="card" style="height: 40px"></div>
+          </div>
+          <div style="position: absolute; inset: 0; background: var(--talos-surface-scrim)"></div>
+          <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 260px; padding: var(--talos-space-compact); border-radius: var(--talos-radius-base); background: var(--talos-surface-raised); border: var(--talos-border-hairline) solid var(--talos-border-default); box-shadow: var(--talos-shadow-modal); font-size: var(--talos-text-sm)">
+            <div style="color: var(--talos-content-emphasis); font-weight: var(--talos-weight-semibold); margin-bottom: var(--talos-space-tight)">Remove node?</div>
+            <div style="color: var(--talos-content-secondary)">surface-scrim behind, surface-raised in front.</div>
+          </div>
         </div>
       </div>
 
