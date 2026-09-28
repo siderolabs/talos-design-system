@@ -79,6 +79,7 @@ function ratio(foreground, background) {
 const TEXT_ON_SURFACE = ['emphasis', 'default', 'secondary', 'muted']
 const SURFACES = ['page', 'chrome', 'card', 'inset', 'raised', 'hover']
 const STATUSES = ['success', 'warning', 'danger', 'info']
+const SYNTAX = ['plain', 'key', 'string', 'constant', 'keyword', 'punctuation', 'comment', 'invalid']
 
 /**
  * Pairs that are expected to fail and why. Each entry is a decision, not a
@@ -210,11 +211,58 @@ function checks(theme) {
 
   // Hairlines are brand-mandated and will not reach 3:1. Reported so the
   // number is known, never enforced: borders here are decorative, and every
-  // component they appear on is identifiable without them.
+  // component they appear on is identifiable without them. The one exception
+  // is border-control, for controls whose edge is the whole affordance, which
+  // is enforced on every surface a control can sit on.
   for (const edge of ['subtle', 'default', 'strong']) {
     add(`border-${edge} on surface-card`, t(`border-${edge}`), t('surface-card'), 0, 'informational')
   }
   add('border-accent on surface-card', t('border-accent'), t('surface-card'), AA_LARGE)
+  for (const surface of SURFACES) {
+    add(`border-control on surface-${surface}`, t('border-control'), t(`surface-${surface}`), AA_LARGE)
+  }
+
+  // Checked and selected controls. A checked checkbox is the accent fill with
+  // an on-accent tick; the fill must read against the card and the tick
+  // against the fill, both as graphics. A selected segment is emphasis text
+  // on the inert thumb.
+  for (const surface of ['page', 'card', 'raised']) {
+    add(`accent-fill (checked) on surface-${surface}`, t('accent-fill'), t(`surface-${surface}`), AA_LARGE)
+  }
+  add('content-on-accent (tick) on accent-fill', t('content-on-accent'), t('accent-fill'), AA_LARGE)
+  add('content-emphasis on surface-inert (selected segment)', t('content-emphasis'), t('surface-inert'), AA_TEXT)
+
+  // Series are graphics (1.4.11): measured on the surfaces charts are drawn
+  // on, and on the inert track a bar or ring fills.
+  for (let n = 1; n <= 8; n += 1) {
+    for (const surface of ['page', 'card', 'inert']) {
+      add(`series-${n} on surface-${surface}`, t(`series-${n}`), t(`surface-${surface}`), AA_LARGE)
+    }
+    add(`content-inverse on series-${n} (segment label)`, t('content-inverse'), t(`series-${n}`), AA_TEXT)
+  }
+
+  // Syntax colours are text, measured on the surfaces code sits on and on the
+  // search-match fill. The match outline is the graphic that makes a match
+  // findable, so it carries the 3:1.
+  for (const token of SYNTAX) {
+    for (const surface of ['page', 'card', 'raised']) {
+      add(`syntax-${token} on surface-${surface}`, t(`syntax-${token}`), t(`surface-${surface}`), AA_TEXT)
+    }
+    add(`syntax-${token} on highlight-match`, t(`syntax-${token}`), t('highlight-match'), AA_TEXT)
+    // Diff lines and the changed words within them are tinted, and the code
+    // on them still has to read.
+    for (const fill of ['added', 'added-emphasis', 'removed', 'removed-emphasis']) {
+      add(`syntax-${token} on highlight-${fill}`, t(`syntax-${token}`), t(`highlight-${fill}`), AA_TEXT)
+    }
+  }
+  // The same fill sits behind matched text in tables and lists, so body text
+  // has to pass on it too.
+  for (const role of ['emphasis', 'default', 'secondary', 'muted']) {
+    add(`content-${role} on highlight-match`, t(`content-${role}`), t('highlight-match'), AA_TEXT)
+  }
+  for (const surface of ['page', 'card', 'raised']) {
+    add(`highlight-match-border on surface-${surface}`, t('highlight-match-border'), t(`surface-${surface}`), AA_LARGE)
+  }
 
   return rows
 }
