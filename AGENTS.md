@@ -16,7 +16,8 @@ The goal is a product whose rendered pages use only token values: colours from t
 6. **Move spacing onto the menu.** Padding, margin and gap take `--talos-space-*` steps: 4, 8, 12, 16, 24, 32, 64. Pick the nearest step that keeps the layout; on a tie, match the siblings.
 7. **Replace colour literals** with semantic roles, or delete them where the theme now supplies the colour. Then classify every coloured or chip-shaped element with the table in the style guide's "What colour means" and draw it that way. Colour and the pastel pill mean status; anything that is not a status gets neither, and a count of things in a state is a neutral number with the dot on its label.
 8. **Charts read tokens at runtime.** Chart libraries cannot resolve `var()`, so read `--talos-type-annotation-size`, `--talos-font-sans` and the colour roles with `getComputedStyle`, build one shared chart theme, and rebuild it when the theme switches. Series take `series-1` onward in order; a chart whose series are states takes the status `-default` colours instead.
-9. **Turn on the lint** (`@siderolabs/talos-design-system/eslint` and `/stylelint`, both in [`docs/integration.md`](docs/integration.md)). Record existing violations as a suppressions baseline; the count only goes down.
+9. **Offer the theme choice.** Light, Dark and System from an icon button at the right end of the top bar, default System, stored under `theme`, applied to `<html>` before first paint. The behaviour is in the style guide's "Choosing a theme" and the script in the integration guide. A product with a two-state toggle replaces it.
+10. **Turn on the lint** (`@siderolabs/talos-design-system/eslint` and `/stylelint`, both in [`docs/integration.md`](docs/integration.md)). Record existing violations as a suppressions baseline; the count only goes down.
 
 ### Verifying
 

@@ -288,6 +288,18 @@ Both faces ship with the token package as woff2 and are served by the product, n
 
 `shadow-focus` is the focus ring. It is never removed without a replacement, and `outline: none` without one is a defect. The ring is applied on `:focus-visible`, not `:focus`, so a mouse click does not draw it, and it is applied once, in a base rule, rather than per component: a product that suppresses the browser outline on a component then has to remember to draw the ring there too, and the places it forgets are the ones nobody tabs through while developing. Where a component already carries a `ring` or `shadow` (a selected segment, a raised card), the focus ring is drawn with `outline` in the same colour and offset instead, so the two do not fight over one property.
 
+## Choosing a theme
+
+Every product ships both themes and lets the reader pick, the same way everywhere, so someone who has set it once in one product finds it in the next.
+
+**Three choices: Light, Dark and System. System is the default.** A first visit follows the operating system, and System keeps following it, so a laptop that switches to dark at sunset takes an open tab with it. Light and Dark are pinned and stay put.
+
+**One control, at the right end of the top bar.** An icon button whose icon shows the current choice, not the theme on screen: a sun for Light, a moon for Dark, a monitor for System. Clicking it opens a menu of the three choices, each with its icon and its name, the current one checked. The button's accessible name carries the choice ("Theme: System"), because the icon alone says nothing to a screen reader. A two-state toggle is not this control. It has no way to say "follow the system", so a reader who flips it once has lost System for good.
+
+**The choice belongs to the browser, not the account.** It is kept in local storage. The same person signs in from a bright office and from a dark operations room, and the right theme follows the screen rather than the login.
+
+**The page never flashes the wrong theme.** The choice is applied before first paint and on the root element, so a light-mode reader never sees a dark frame while the app loads, and menus and dialogs rendered outside the app's own tree take the theme with everything else. The mechanics are in the [integration guide](integration.md#choosing-a-theme).
+
 ## Navigation grammar
 
 The products have drifted most here, and tokens do not fix it.
