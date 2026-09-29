@@ -8,7 +8,7 @@ Read [`docs/style-guide.md`](docs/style-guide.md), [`docs/type-roles.md`](docs/t
 
 The goal is a product whose rendered pages use only token values: colours from the semantic roles, sizes from the type roles, spacing from the menu, and the two typefaces served by the product itself. Work in this order. Each step is shippable on its own and the first carries most of the visible change.
 
-1. **Install at a tag.** `"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.4.0"`. Never track `main`.
+1. **Install at a tag.** `"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.5.0"`. Never track `main`.
 2. **Emit the tokens** the way [`docs/integration.md`](docs/integration.md) describes for the product's stack: `tokens.css` plus `tailwind.css` for Tailwind (or `tailwind-colour.css` when the product is adopting colour before type and spacing), the `tokens.scss` mixins for Sass and Bootstrap, `tokens.css` plus `type.css` for anything else. Emit the light theme under whatever selector the product already uses for it.
 3. **Serve the fonts from the product.** Copy `fonts/*.woff2` and the licences, import `fonts.css`, and delete every Google Fonts `<link>`, `preconnect` and `@import`. A product that loads type from a CDN loses it in an air-gapped install, silently.
 4. **Map the product's existing variables onto the semantic roles,** keeping the old names as aliases so page code keeps working. If the product owner has supplied a mapping, follow it as written. If not, map by what the variable is used for, never by which token has the nearest value, and write the mapping down in the product repo.

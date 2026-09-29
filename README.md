@@ -46,7 +46,7 @@ A product that finds it needs a value the system does not have has found a token
 Consumers take the package as a git dependency pinned to a release tag:
 
 ```json
-"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.4.0"
+"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.5.0"
 ```
 
 Tags are immutable. A released version never changes; a correction is a new tag. Renovate and Dependabot understand tagged git dependencies, so bumps arrive as ordinary bot PRs, and drift between products shows up as a version number rather than as a divergent hex. Nothing is published to npm; that can happen later or never without changing how consumers import anything.
