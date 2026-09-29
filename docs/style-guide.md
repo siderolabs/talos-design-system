@@ -157,13 +157,19 @@ Eight data colours, `series-1` to `series-8`, for things that have no good or ba
 
 **Why these hues.** There is no red, because red is the accent and danger. Blue leads because no status and no accent uses it: the brand has no blue and info is grey, so a blue series cannot be mistaken for a status. Green sits seventh because it is the hue nearest success.
 
-**States are not categories.** A chart whose series are states (healthy against failing, used against over quota) takes the status `-default` graphics instead. A series palette on a state chart turns an alert into decoration, and a status palette on a category chart turns decoration into an alert. Info is the only neutral status, so a state chart with a second neutral state (scaling up beside scaling down) gives the second one `series-5`. Two segments in the same grey cannot be told apart, and violet is the series furthest from every status hue. A series colour never stands in for success, warning or danger.
+**States are not categories.** A chart whose series are states (healthy against failing, used against over quota) takes the status `-default` graphics instead. A series palette on a state chart turns an alert into decoration, and a status palette on a category chart turns decoration into an alert. A series colour never stands in for success, warning or danger.
 
-The test for which palette a chart takes: **would a reader want to act on one of the segments?** A bar that splits a fleet into "in a cluster", "free" and "pending" is a partition of a whole, and none of those is better than another, so it takes `series-1`, `-2`, `-3` in order. A bar that splits the same fleet into "healthy", "degraded" and "unreachable" is a set of states, and it takes the status `-default` graphics. When one chart mixes both (a state chart with an "other" or "remaining" segment), the neutral remainder is `series-8`, so it stays quiet beside the states. One more rule follows from this: a state has **one colour everywhere**. If scaling is amber in a status pill, it is amber in the chart above it. The pill is the reference, because it is where the word sits next to the colour.
+The test for which palette a chart takes: **would a reader want to act on one of the segments?** A bar that splits a fleet into "in a cluster", "free" and "pending" is a partition of a whole, and none of those is better than another, so it takes `series-1`, `-2`, `-3` in order. A bar that splits the same fleet into "healthy", "degraded" and "unreachable" is a set of states, and it takes the status `-default` graphics. When one chart mixes both (a state chart with an "other" or "remaining" segment), the neutral remainder is `series-8`, so it stays quiet beside the states.
 
 **Tracks and grids.** A ring or bar fills over `surface-inert`. Where the track's own extent matters, as in a ring whose empty part is the reading, outline it in `border-control`. Axis labels are `content-muted` in the `annotation` type role, and gridlines are `border-subtle`.
 
 **Category chips.** A label with a category but no state is the neutral filterable chip from the table below, with a 6px dot in its `series-N` before the text. The dot carries the category; the chip stays neutral, because the pastel pill means status.
+
+### One colour per state
+
+A state has one colour everywhere it appears. If scaling is amber in a status pill, it is amber in the chart above it, in the dot beside the count, and in the row's edge. The pill is the reference, because it is where the word sits next to the colour, so a product that has to choose looks at its pill first and draws everything else to match.
+
+Two consequences follow. A chart cannot give two states different colours when their pills share one: scaling up and scaling down are both amber in the pill, so a chart that wants to show both merges them into one segment under a shared label rather than inventing a second amber or borrowing a series colour. The reading is coarser and it is honest; a colour the pill never uses would tell the reader there is a state that does not exist. And a state that reads as an error in one place cannot read as progress in another: a cluster being destroyed on purpose is in progress, so it is info in the pill and info in the chart, not danger in either.
 
 ### Syntax
 
