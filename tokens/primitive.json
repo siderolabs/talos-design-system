@@ -102,6 +102,31 @@
     "3": { "$value": "#5D5B58", "$description": "Info text and graphics on light." }
   },
 
+  "categorical": {
+    "$type": "color",
+    "$description": "Data colours for things with no good or bad meaning: chart series and category markers. Eight OKLCH hues at chroma 0.14, in a fixed order. Lightness alternates between three levels so the first six stay apart under protanopia, deuteranopia and tritanopia, not just in hue. No red: red is the accent and danger. Blue leads because it is the one hue nothing else in the system uses, so a blue series cannot be read as a status. Green is seventh because it sits nearest success. Each step reaches 3:1 on every surface its theme draws charts on.",
+    "dark": {
+      "1": { "$value": "#6DADFF", "$description": "Blue. L 0.74." },
+      "2": { "$value": "#FEB98F", "$description": "Orange. L 0.84." },
+      "3": { "$value": "#04A19B", "$description": "Teal. L 0.64." },
+      "4": { "$value": "#EB88C2", "$description": "Magenta. L 0.75, a step above the others at this level so it holds 4.5:1 as syntax-string on the diff line tints." },
+      "5": { "$value": "#D3BDFE", "$description": "Violet. L 0.84." },
+      "6": { "$value": "#A98904", "$description": "Gold. L 0.64." },
+      "7": { "$value": "#74C16C", "$description": "Green. L 0.74." },
+      "8": { "$value": "#C6CBD1", "$description": "Slate, near-neutral. L 0.84. The remainder series: other, unallocated." }
+    },
+    "light": {
+      "1": { "$value": "#155AA7", "$description": "Blue. L 0.47." },
+      "2": { "$value": "#693002", "$description": "Orange. L 0.38." },
+      "3": { "$value": "#05837E", "$description": "Teal. L 0.55." },
+      "4": { "$value": "#8E336C", "$description": "Magenta. L 0.47." },
+      "5": { "$value": "#4F2980", "$description": "Violet. L 0.38." },
+      "6": { "$value": "#896F02", "$description": "Gold. L 0.55." },
+      "7": { "$value": "#1F6D18", "$description": "Green. L 0.47." },
+      "8": { "$value": "#3E4348", "$description": "Slate, near-neutral. L 0.38. The remainder series." }
+    }
+  },
+
   "paper": {
     "$type": "color",
     "$value": "#E2D2A8",

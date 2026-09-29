@@ -13,6 +13,7 @@
     "inert":   { "$value": "{cream.5}", "$description": "Chart grid, track fills, skeleton states" },
     "subtle":  { "$value": "rgba(0, 0, 0, 0.04)", "$description": "Tint wash over an unknown surface: nav items, chips, zebra rows" },
     "inverse": { "$value": "{cream.10}", "$description": "Inverted surfaces: tooltips" },
+    "scrim":   { "$value": "rgba(19, 19, 22, 0.55)", "$description": "The backdrop behind a modal or drawer: near-black at 55%, dark enough that the raised surface reads as the only lit plane while the page stays legible as context." },
     "paper":   { "$value": "{paper}", "$description": "Brand cream insert" }
   },
 
@@ -33,7 +34,9 @@
     "subtle":  { "$value": "rgba(0, 0, 0, 0.06)", "$description": "Internal dividers, table rows" },
     "default": { "$value": "rgba(0, 0, 0, 0.08)", "$description": "Card and input edges, the default" },
     "strong":  { "$value": "rgba(0, 0, 0, 0.16)", "$description": "Hover edges, emphasis" },
-    "accent":  { "$value": "{red.3}", "$description": "Active tab underline, focused input, selected row rail" }
+    "control": { "$value": "rgba(0, 0, 0, 0.44)", "$description": "The edge of a control whose edge is the whole affordance: an unchecked checkbox or radio, a switch track, the outline of a chart track. 3:1 on every surface (WCAG 1.4.11). Not for cards, inputs or dividers." },
+    "accent":  { "$value": "{red.3}", "$description": "Active tab underline, focused input, selected row rail" },
+    "focus":   { "$value": "rgba(225, 45, 70, 0.30)", "$description": "The focus ring colour, for an outline where a component already carries a ring or shadow. Otherwise the ring is shadow-focus." }
   },
 
   "accent": {
@@ -92,6 +95,43 @@
       "surface": { "$value": "{surface.card}", "$description": "Info is neutral in both themes." },
       "border":  { "$value": "{surface.inert}" }
     }
+  },
+
+  "series": {
+    "$type": "color",
+    "$description": "Categorical data colours: chart series in this order, and the marker dot on a category chip. Graphics only, at 3:1: never a text colour, never a chip fill, never a status. A label drawn on a series fill takes content-inverse. Past six series, label every one; past eight, fold the tail into 8.",
+    "1": { "$value": "{categorical.light.1}" },
+    "2": { "$value": "{categorical.light.2}" },
+    "3": { "$value": "{categorical.light.3}" },
+    "4": { "$value": "{categorical.light.4}" },
+    "5": { "$value": "{categorical.light.5}" },
+    "6": { "$value": "{categorical.light.6}" },
+    "7": { "$value": "{categorical.light.7}" },
+    "8": { "$value": "{categorical.light.8}", "$description": "The remainder: other, unallocated." }
+  },
+
+  "syntax": {
+    "$type": "color",
+    "$description": "Syntax highlighting in code blocks, editors and diffs. Text at 4.5:1 on the surfaces code sits on. Green and red are never syntax colours: in a diff they mean added and removed, and a token in either would read as a change. The accent stays out too, so a string never looks like a link.",
+    "plain":       { "$value": "{content.default}", "$description": "Scalars and anything the grammar leaves unscoped." },
+    "key":         { "$value": "{categorical.light.1}", "$description": "Mapping keys, properties, tags and attribute names: the structure a reader scans first." },
+    "string":      { "$value": "{categorical.light.4}", "$description": "Quoted strings." },
+    "constant":    { "$value": "{categorical.light.2}", "$description": "Numbers, booleans, null, and language constants." },
+    "keyword":     { "$value": "{categorical.light.5}", "$description": "Keywords, operators with a name, and YAML anchors and tags." },
+    "punctuation": { "$value": "{content.secondary}", "$description": "Brackets, separators and indicators." },
+    "comment":     { "$value": "{content.secondary}", "$description": "Comments, set in italic. Secondary rather than muted, because comments also sit on the tinted lines of a diff and have to stay at 4.5:1 there." },
+    "invalid":     { "$value": "{status.danger.text}", "$description": "Parse errors only." }
+  },
+
+  "highlight": {
+    "$type": "color",
+    "$description": "Fills that sit behind text that still has to be read: a search match, wherever text is searched, and the added and removed lines of a diff. Every syntax token and every content step reaches 4.5:1 on each of them.",
+    "match":        { "$value": "#ECF2F8", "$description": "The fill behind a search match, in code and in a table or list: a pale blue that keeps every syntax token at 4.5:1. The outline, not the fill, is what makes a match findable." },
+    "match-border": { "$value": "{categorical.light.1}", "$description": "The 1px outline of a search match, at 3:1 on the surfaces text sits on." },
+    "added":            { "$value": "#DEF8E2", "$description": "The tint on an added line in a diff. Its lightness is capped by the quietest syntax token, so it differs from the card by hue rather than by brightness." },
+    "added-emphasis":   { "$value": "#B4EFBF", "$description": "The changed words within an added line: the same lightness as the line tint at three times the chroma, so it reads as more green rather than as lighter." },
+    "removed":          { "$value": "#FFE4E0", "$description": "The tint on a removed line in a diff." },
+    "removed-emphasis": { "$value": "#FED2CC", "$description": "The changed words within a removed line." }
   },
 
   "shadow": {
