@@ -2,7 +2,7 @@
 
 Instructions for agents, and for people working the way an agent would. Two jobs come up: adopting the system in a product, and changing the system itself. They have different rules.
 
-Read [`docs/style-guide.md`](docs/style-guide.md) and [`docs/type-roles.md`](docs/type-roles.md) before either. This file is the procedure; those are the rules.
+Read [`docs/style-guide.md`](docs/style-guide.md), [`docs/type-roles.md`](docs/type-roles.md) and [`docs/iconography.md`](docs/iconography.md) before either. This file is the procedure; those are the rules.
 
 ## Adopting it in a product
 
@@ -14,7 +14,7 @@ The goal is a product whose rendered pages use only token values: colours from t
 4. **Map the product's existing variables onto the semantic roles,** keeping the old names as aliases so page code keeps working. If the product owner has supplied a mapping, follow it as written. If not, map by what the variable is used for, never by which token has the nearest value, and write the mapping down in the product repo.
 5. **Give every piece of text a type role.** Classify it with the decision order in `docs/type-roles.md` and apply the role (`type-*` utility, `talos-type($role)` mixin, or `talos-type-*` class). The shipped size is evidence, not the answer: most 13px text becomes 14, not 12.
 6. **Move spacing onto the menu.** Padding, margin and gap take `--talos-space-*` steps: 4, 8, 12, 16, 24, 32, 64. Pick the nearest step that keeps the layout; on a tie, match the siblings.
-7. **Replace colour literals** with semantic roles, or delete them where the theme now supplies the colour. Then classify every coloured or chip-shaped element with the table in the style guide's "What colour means" and draw it that way. Colour and the pastel pill mean status; anything that is not a status gets neither, and a count of things in a state is a neutral number with the dot on its label.
+7. **Replace colour literals** with semantic roles, or delete them where the theme now supplies the colour. Then classify every coloured or chip-shaped element with the table in the style guide's "What colour means" and draw it that way. Colour and the pastel pill mean status; anything that is not a status gets neither, and a count of things in a state is a neutral number with the status glyph on its label. Every status takes its glyph from the iconography guide; the dot stays only for levels, legends and categories.
 8. **Charts read tokens at runtime.** Chart libraries cannot resolve `var()`, so read `--talos-type-annotation-size`, `--talos-font-sans` and the colour roles with `getComputedStyle`, build one shared chart theme, and rebuild it when the theme switches. Series take `series-1` onward in order; a chart whose series are states takes the status `-default` colours instead.
 9. **Offer the theme choice.** Light, Dark and System from an icon button at the right end of the top bar, default System, stored under `theme`, applied to `<html>` before first paint. The behaviour is in the style guide's "Choosing a theme" and the script in the integration guide. A product with a two-state toggle replaces it.
 10. **Turn on the lint** (`@siderolabs/talos-design-system/eslint` and `/stylelint`, both in [`docs/integration.md`](docs/integration.md)). Record existing violations as a suppressions baseline; the count only goes down.

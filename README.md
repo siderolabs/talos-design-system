@@ -12,7 +12,7 @@ Open [`docs/preview.html`](docs/preview.html) in a browser to see the current bu
 
 ## The rules
 
-The system is written to be applied by an agent, so its rules are phrased as tests that can be run against a page rather than as taste. Seven of them explain most of what you will see. The rest, with the values and the exceptions, are in [`docs/style-guide.md`](docs/style-guide.md).
+The system is written to be applied by an agent, so its rules are phrased as tests that can be run against a page rather than as taste. Eight of them explain most of what you will see. The rest, with the values and the exceptions, are in [`docs/style-guide.md`](docs/style-guide.md).
 
 1. **Roles, not values.** Code names what a colour is for (`surface-card`, `content-muted`, `status-danger-text`), never a hex or a palette step. Themes swap underneath. ([The two-tier model](docs/style-guide.md#the-two-tier-model))
 2. **Colour means status.** The pastel pill and the coloured word are reserved for a state someone might act on. Anything that is not a state (a version, a count, an ID, a label) loses both and is plain text or a neutral chip. ([What colour means](docs/style-guide.md#what-colour-means))
@@ -21,8 +21,9 @@ The system is written to be applied by an agent, so its rules are phrased as tes
 5. **One colour per state, everywhere.** If scaling is amber in a status pill, it is amber in the chart above it. The pill is the reference, because it is where the word sits next to the colour. ([One colour per state](docs/style-guide.md#one-colour-per-state))
 6. **Contrast is enforced by the build.** 4.5:1 for text, 3:1 for graphics, both themes, every pair. Exceptions are listed in `build/contrast.mjs` with a reason, and adding one is an argument, not a way to quiet the check. ([Enforcement](docs/style-guide.md#enforcement))
 7. **Opacity fades an element, never a colour.** No brightness filters, no ad hoc alpha. A hover or pressed state re-points a role; a disabled composite fades whole. ([Text and icons](docs/style-guide.md#text-and-icons))
+8. **A state has a shape as well as a colour.** Every status takes one of six glyphs (succeeded, failed, needs attention, in progress, off, unknown) and keeps its word. The test is whether the page still reads in greyscale. ([Iconography](docs/iconography.md))
 
-Type has its own rules, in [`docs/type-roles.md`](docs/type-roles.md): every piece of text gets a role, and the role resolves onto the scale.
+Type has its own rules, in [`docs/type-roles.md`](docs/type-roles.md): every piece of text gets a role, and the role resolves onto the scale. Icons that carry meaning have theirs in [`docs/iconography.md`](docs/iconography.md).
 
 ## Adopting it in a product
 
@@ -38,7 +39,7 @@ A product that finds it needs a value the system does not have has found a token
 - **Typefaces**: Manrope and JetBrains Mono as woff2 under `fonts/`, with their OFL licences, so a self-hosted or air-gapped install never reaches for a CDN.
 - **Lint**: ESLint rules (`no-raw-color`, `no-raw-font-size`, `no-off-menu-spacing`, `no-primitive-token`) and a stylelint config.
 - **Audit**: `talos-audit`, a Playwright runner that checks a rendered page against the scale, the menu, the typeface stacks and the active theme's roles.
-- **Docs**: the style guide, the type roles, the integration guide, and the rendered preview.
+- **Docs**: the style guide, the type roles, the iconography guide, the integration guide, and the rendered preview.
 
 ## Versioning
 

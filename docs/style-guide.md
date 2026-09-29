@@ -167,7 +167,7 @@ The test for which palette a chart takes: **would a reader want to act on one of
 
 ### One colour per state
 
-A state has one colour everywhere it appears. If scaling is amber in a status pill, it is amber in the chart above it, in the dot beside the count, and in the row's edge. The pill is the reference, because it is where the word sits next to the colour, so a product that has to choose looks at its pill first and draws everything else to match.
+A state has one colour everywhere it appears. If scaling is amber in a status pill, it is amber in the chart above it, in the glyph beside the count, and in the row's edge. The pill is the reference, because it is where the word sits next to the colour, so a product that has to choose looks at its pill first and draws everything else to match.
 
 Two consequences follow. A chart cannot give two states different colours when their pills share one: scaling up and scaling down are both amber in the pill, so a chart that wants to show both merges them into one segment under a shared label rather than inventing a second amber or borrowing a series colour. The reading is coarser and it is honest; a colour the pill never uses would tell the reader there is a state that does not exist. And a state that reads as an error in one place cannot read as progress in another: a cluster being destroyed on purpose is in progress, so it is info in the pill and info in the chart, not danger in either.
 
@@ -202,8 +202,8 @@ Colour and the pastel pill mean status. Anything that isn't a status loses both.
 
 | Role | Treatment | Clickable |
 | --- | --- | --- |
-| Status | Chip: `-subtle` background, `-subtle-border` edge, `-text` label, and a 6px dot in `-text` before the word | Never |
-| Status count | The number in `content-emphasis`, with the status dot moved onto its label (`content-secondary`) | No |
+| Status | Chip: `-subtle` background, `-subtle-border` edge, `-text` label, and the state's glyph in `-text` before the word ([Iconography](iconography.md#state-glyphs)) | Never |
+| Status count | The number in `content-emphasis`, with the status glyph moved onto its label (`content-secondary`) | No |
 | Value | Plain text in `content-default`, no chip. A coloured word that isn't a state, such as a capacity figure or an ID | No |
 | Filterable label | Outlined neutral chip: transparent, `border-strong` edge, `content-default` text, key in `content-secondary` | Yes, filters |
 | Category label | The filterable label with a 6px dot in `series-N` before the text | Yes, filters |
@@ -217,11 +217,11 @@ Colour and the pastel pill mean status. Anything that isn't a status loses both.
 | Selected segment | On a `surface-inset` track, a `surface-inert` thumb with a `border-strong` ring and a `content-emphasis` label; unselected segments are `content-muted`. One of several views is showing, nothing is switched on | Yes |
 | Inline code | `content-emphasis` on `surface-inset` | No |
 
-A status count is a number whose meaning is a state: "5 need a look", "12 running", "2 firing". Colouring the number itself makes a dashboard of stat cards read as a wall of alerts, and a green or amber figure at display size fails contrast on light. The dot on the label carries the state; the number stays readable. A number that is a quantity rather than a state (free capacity, allocated cores) is a value.
+A status count is a number whose meaning is a state: "5 need a look", "12 running", "2 firing". Colouring the number itself makes a dashboard of stat cards read as a wall of alerts, and a green or amber figure at display size fails contrast on light. The glyph on the label carries the state; the number stays readable. A number that is a quantity rather than a state (free capacity, allocated cores) is a value.
 
 A status is never a button. If an element changes something when clicked, it's an action or a toggle and takes that treatment, whatever colour it wore before.
 
-Colour is never the only carrier of state. A status needs a word, an icon, or a position as well, and the status vocabulary itself is a separate open piece of work ([ux#15](https://github.com/siderolabs/ux/issues/15)).
+Colour is never the only carrier of state. Every status takes a glyph from the closed set in [Iconography](iconography.md#state-glyphs) and keeps its word, and the status vocabulary itself is a separate open piece of work ([ux#15](https://github.com/siderolabs/ux/issues/15)).
 
 ### Borders
 
@@ -294,7 +294,7 @@ Every product ships both themes and lets the reader pick, the same way everywher
 
 **Three choices: Light, Dark and System. System is the default.** A first visit follows the operating system, and System keeps following it, so a laptop that switches to dark at sunset takes an open tab with it. Light and Dark are pinned and stay put.
 
-**One control, at the right end of the top bar.** An icon button whose icon shows the current choice, not the theme on screen: a sun for Light, a moon for Dark, a monitor for System. Clicking it opens a menu of the three choices, each with its icon and its name, the current one checked. The button's accessible name carries the choice ("Theme: System"), because the icon alone says nothing to a screen reader. A two-state toggle is not this control. It has no way to say "follow the system", so a reader who flips it once has lost System for good.
+**One control, at the right end of the top bar.** An icon button whose icon shows the current choice, not the theme on screen: a sun for Light, a moon for Dark, a monitor for System ([Iconography](iconography.md#the-theme-choice)). Clicking it opens a menu of the three choices, each with its icon and its name, the current one checked. The button's accessible name carries the choice ("Theme: System"), because the icon alone says nothing to a screen reader. A two-state toggle is not this control. It has no way to say "follow the system", so a reader who flips it once has lost System for good.
 
 **The choice belongs to the browser, not the account.** It is kept in local storage. The same person signs in from a bright office and from a dark operations room, and the right theme follows the screen rather than the login.
 
