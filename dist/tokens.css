@@ -52,9 +52,11 @@
   --talos-green-3: #A0C8A7;  /* Large-surface border on light (45% of the fill into white). */
   --talos-green-4: #6FD087;  /* Success text and graphics on dark. */
   --talos-green-5: #1B8641;  /* Fill, under a white label (4.63:1). The 3px edge on dark status surfaces. */
-  --talos-green-6: #046E31;  /* Success text and graphics on light. */
+  --talos-green-6: #1C7A3D;  /* Success text on light, as light as 4.5:1 on its chip and the page allows. */
   --talos-green-7: #24492F;  /* Chip edge on dark: 46% of the fill into the dark card, fitted to 1.3:1 on the chip (step 8). */
   --talos-green-8: #213428;  /* Chip background on dark (26% of the fill into the dark card). */
+  --talos-green-graphic: #0A9D49;  /* Success graphics on light: dots, glyphs, progress fills. As light as 3:1 on the page and on its own chip allows. */
+  --talos-green-chart: #36A558;  /* Success as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family. */
 
   /* amber */
   --talos-amber-1: #FEEED9;  /* Pastel. Large status surface and chip background on light (22% of the fill into white). */
@@ -62,9 +64,11 @@
   --talos-amber-3: #F6B44F;  /* Large-surface border on light: 92% of the fill into white, fitted to match green and scarlet (1.6:1 on the surface, step 1). Amber is so light that it takes most of the fill to get there. */
   --talos-amber-4: #F5AE39;  /* Fill, under a dark label. The 3px edge on dark status surfaces. */
   --talos-amber-5: #E6AC3D;  /* Warning text and graphics on dark. */
-  --talos-amber-6: #7E5905;  /* Warning text and graphics on light. */
+  --talos-amber-6: #8A6419;  /* Warning text on light, as light as 4.5:1 on its chip and the page allows. */
   --talos-amber-7: #695132;  /* Chip edge on dark (40%). */
   --talos-amber-8: #403529;  /* Chip background on dark (20%). */
+  --talos-amber-graphic: #B87C06;  /* Warning graphics on light. As light as 3:1 on the page and on its own chip allows. */
+  --talos-amber-chart: #EBA42C;  /* Warning as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family. */
 
   /* scarlet */
   --talos-scarlet-1: #FFECEA;  /* Pastel. Large status surface and chip background on light (10% of the fill into white). */
@@ -72,14 +76,19 @@
   --talos-scarlet-3: #FAABA1;  /* Large-surface border on light (45%). */
   --talos-scarlet-4: #FF5B5B;  /* Danger text and graphics on dark. */
   --talos-scarlet-5: #DE2F2E;  /* Fill, under a white label (4.61:1). The 3px edge on dark status surfaces. */
-  --talos-scarlet-6: #BB081F;  /* Danger text and graphics on light. */
+  --talos-scarlet-6: #CC272E;  /* Danger text on light, as light as 4.5:1 on its chip and the page allows. */
   --talos-scarlet-7: #642B29;  /* Chip edge on dark: 40% of the fill into the dark card, fitted to 1.3:1 on the chip (step 8). */
   --talos-scarlet-8: #3E2324;  /* Chip background on dark (20%). */
+  --talos-scarlet-graphic: #F14F47;  /* Danger graphics on light. As light as 3:1 on the page and on its own chip allows. */
+  --talos-scarlet-code: #BB081F;  /* Parse errors in code on light: danger deep enough for 4.5:1 on the diff line tints, which the lighter danger text no longer reaches. */
+  --talos-scarlet-chart: #E95048;  /* Danger as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family. */
 
   /* stone */
   --talos-stone-1: #BAB7B3;  /* Info text and graphics on dark. */
   --talos-stone-2: #75726F;  /* Fill, under a white label (4.78:1). */
-  --talos-stone-3: #5D5B58;  /* Info text and graphics on light. */
+  --talos-stone-3: #676461;  /* Info text on light, as light as 4.5:1 on its chip and the page allows. */
+  --talos-stone-graphic: #837F7C;  /* Info graphics on light. As light as 3:1 on the page and on its own chip allows. */
+  --talos-stone-chart: #96918C;  /* Info as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family. */
 
   /* categorical */
   --talos-categorical-dark-1: #6DADFF;  /* Blue. L 0.74. */
@@ -90,14 +99,18 @@
   --talos-categorical-dark-6: #A98904;  /* Gold. L 0.64. */
   --talos-categorical-dark-7: #74C16C;  /* Green. L 0.74. */
   --talos-categorical-dark-8: #C6CBD1;  /* Slate, near-neutral. L 0.84. The remainder series: other, unallocated. */
-  --talos-categorical-light-1: #155AA7;  /* Blue. L 0.47. */
-  --talos-categorical-light-2: #693002;  /* Orange. L 0.38. */
-  --talos-categorical-light-3: #05837E;  /* Teal. L 0.55. */
-  --talos-categorical-light-4: #8E336C;  /* Magenta. L 0.47. */
-  --talos-categorical-light-5: #4F2980;  /* Violet. L 0.38. */
-  --talos-categorical-light-6: #896F02;  /* Gold. L 0.55. */
-  --talos-categorical-light-7: #1F6D18;  /* Green. L 0.47. */
-  --talos-categorical-light-8: #3E4348;  /* Slate, near-neutral. L 0.38. The remainder series. */
+  --talos-categorical-light-1: #4087DE;  /* Blue. L 0.62, under a dark label. Lifted above its natural weight so a 6px marker dot does not read as black. */
+  --talos-categorical-light-2: #E6803B;  /* Orange. L 0.70, under a dark label. */
+  --talos-categorical-light-3: #04A19B;  /* Teal. L 0.64, under a dark label. The same teal as dark. */
+  --talos-categorical-light-4: #AC4785;  /* Magenta. L 0.55, under a white label. */
+  --talos-categorical-light-5: #B993FB;  /* Violet. L 0.74, under a dark label. Kept a step above blue so protanopes can separate them. */
+  --talos-categorical-light-6: #D3AD1B;  /* Gold. L 0.76, under a dark label. 2.2:1 on the card, the lightest of the set. */
+  --talos-categorical-light-7: #4A9C42;  /* Green. L 0.62, under a dark label. */
+  --talos-categorical-light-8: #8D9399;  /* Slate, near-neutral. L 0.66, under a dark label. The remainder series. */
+  --talos-categorical-light-text-1: #155AA7;  /* Blue at text strength, for syntax on light. */
+  --talos-categorical-light-text-2: #693002;  /* Orange at text strength, for syntax on light. */
+  --talos-categorical-light-text-4: #8E336C;  /* Magenta at text strength, for syntax on light. */
+  --talos-categorical-light-text-5: #4F2980;  /* Violet at text strength, for syntax on light. */
 
   /* paper */
   --talos-paper: #E2D2A8;  /* Brand cream insert. Used for the paper panel treatment, never as a UI surface. */
@@ -280,6 +293,7 @@
   --talos-accent-gradient: linear-gradient(90deg, var(--talos-gradient-display-1) 0%, var(--talos-gradient-display-2) 51%, var(--talos-gradient-display-3) 100%);
   --talos-accent-gradient-fill: linear-gradient(270deg, var(--talos-gradient-display-3) 0%, var(--talos-red-3) 30%, var(--talos-red-3) 70%, var(--talos-gradient-display-1) 100%);
   --talos-status-success-default: var(--talos-green-4);
+  --talos-status-success-chart: var(--talos-status-success-default);
   --talos-status-success-text: var(--talos-green-4);
   --talos-status-success-fill: var(--talos-green-5);
   --talos-status-success-on-fill: var(--talos-white);
@@ -288,6 +302,7 @@
   --talos-status-success-surface: var(--talos-surface-card);
   --talos-status-success-border: var(--talos-surface-inert);
   --talos-status-warning-default: var(--talos-amber-5);
+  --talos-status-warning-chart: var(--talos-status-warning-default);
   --talos-status-warning-text: var(--talos-amber-5);
   --talos-status-warning-fill: var(--talos-amber-4);
   --talos-status-warning-on-fill: var(--talos-cream-10);
@@ -296,6 +311,7 @@
   --talos-status-warning-surface: var(--talos-surface-card);
   --talos-status-warning-border: var(--talos-surface-inert);
   --talos-status-danger-default: var(--talos-scarlet-4);
+  --talos-status-danger-chart: var(--talos-status-danger-default);
   --talos-status-danger-text: var(--talos-scarlet-4);
   --talos-status-danger-fill: var(--talos-scarlet-5);
   --talos-status-danger-on-fill: var(--talos-white);
@@ -304,6 +320,7 @@
   --talos-status-danger-surface: var(--talos-surface-card);
   --talos-status-danger-border: var(--talos-surface-inert);
   --talos-status-info-default: var(--talos-stone-1);
+  --talos-status-info-chart: var(--talos-status-info-default);
   --talos-status-info-text: var(--talos-stone-1);
   --talos-status-info-fill: var(--talos-stone-2);
   --talos-status-info-on-fill: var(--talos-white);
@@ -319,6 +336,14 @@
   --talos-series-6: var(--talos-categorical-dark-6);
   --talos-series-7: var(--talos-categorical-dark-7);
   --talos-series-8: var(--talos-categorical-dark-8);
+  --talos-on-series-1: var(--talos-content-inverse);
+  --talos-on-series-2: var(--talos-content-inverse);
+  --talos-on-series-3: var(--talos-content-inverse);
+  --talos-on-series-4: var(--talos-content-inverse);
+  --talos-on-series-5: var(--talos-content-inverse);
+  --talos-on-series-6: var(--talos-content-inverse);
+  --talos-on-series-7: var(--talos-content-inverse);
+  --talos-on-series-8: var(--talos-content-inverse);
   --talos-syntax-plain: var(--talos-content-default);
   --talos-syntax-key: var(--talos-categorical-dark-1);
   --talos-syntax-string: var(--talos-categorical-dark-4);
@@ -379,7 +404,8 @@
   --talos-accent-subtle: rgba(212, 26, 59, 0.08);
   --talos-accent-gradient: linear-gradient(90deg, var(--talos-gradient-display-1) 0%, var(--talos-gradient-display-2) 51%, var(--talos-gradient-display-3) 100%);
   --talos-accent-gradient-fill: linear-gradient(270deg, var(--talos-gradient-display-3) 0%, var(--talos-red-3) 30%, var(--talos-red-3) 70%, var(--talos-gradient-display-1) 100%);
-  --talos-status-success-default: var(--talos-green-6);
+  --talos-status-success-default: var(--talos-green-graphic);
+  --talos-status-success-chart: var(--talos-green-chart);
   --talos-status-success-text: var(--talos-green-6);
   --talos-status-success-fill: var(--talos-green-5);
   --talos-status-success-on-fill: var(--talos-white);
@@ -387,7 +413,8 @@
   --talos-status-success-subtle-border: var(--talos-green-2);
   --talos-status-success-surface: var(--talos-green-1);
   --talos-status-success-border: var(--talos-green-3);
-  --talos-status-warning-default: var(--talos-amber-6);
+  --talos-status-warning-default: var(--talos-amber-graphic);
+  --talos-status-warning-chart: var(--talos-amber-chart);
   --talos-status-warning-text: var(--talos-amber-6);
   --talos-status-warning-fill: var(--talos-amber-4);
   --talos-status-warning-on-fill: var(--talos-cream-10);
@@ -395,7 +422,8 @@
   --talos-status-warning-subtle-border: var(--talos-amber-2);
   --talos-status-warning-surface: var(--talos-amber-1);
   --talos-status-warning-border: var(--talos-amber-3);
-  --talos-status-danger-default: var(--talos-scarlet-6);
+  --talos-status-danger-default: var(--talos-scarlet-graphic);
+  --talos-status-danger-chart: var(--talos-scarlet-chart);
   --talos-status-danger-text: var(--talos-scarlet-6);
   --talos-status-danger-fill: var(--talos-scarlet-5);
   --talos-status-danger-on-fill: var(--talos-white);
@@ -403,7 +431,8 @@
   --talos-status-danger-subtle-border: var(--talos-scarlet-2);
   --talos-status-danger-surface: var(--talos-scarlet-1);
   --talos-status-danger-border: var(--talos-scarlet-3);
-  --talos-status-info-default: var(--talos-stone-3);
+  --talos-status-info-default: var(--talos-stone-graphic);
+  --talos-status-info-chart: var(--talos-stone-chart);
   --talos-status-info-text: var(--talos-stone-3);
   --talos-status-info-fill: var(--talos-stone-2);
   --talos-status-info-on-fill: var(--talos-white);
@@ -419,14 +448,22 @@
   --talos-series-6: var(--talos-categorical-light-6);
   --talos-series-7: var(--talos-categorical-light-7);
   --talos-series-8: var(--talos-categorical-light-8);
+  --talos-on-series-1: var(--talos-content-emphasis);
+  --talos-on-series-2: var(--talos-content-emphasis);
+  --talos-on-series-3: var(--talos-content-emphasis);
+  --talos-on-series-4: var(--talos-white);
+  --talos-on-series-5: var(--talos-content-emphasis);
+  --talos-on-series-6: var(--talos-content-emphasis);
+  --talos-on-series-7: var(--talos-content-emphasis);
+  --talos-on-series-8: var(--talos-content-emphasis);
   --talos-syntax-plain: var(--talos-content-default);
-  --talos-syntax-key: var(--talos-categorical-light-1);
-  --talos-syntax-string: var(--talos-categorical-light-4);
-  --talos-syntax-constant: var(--talos-categorical-light-2);
-  --talos-syntax-keyword: var(--talos-categorical-light-5);
+  --talos-syntax-key: var(--talos-categorical-light-text-1);
+  --talos-syntax-string: var(--talos-categorical-light-text-4);
+  --talos-syntax-constant: var(--talos-categorical-light-text-2);
+  --talos-syntax-keyword: var(--talos-categorical-light-text-5);
   --talos-syntax-punctuation: var(--talos-content-secondary);
   --talos-syntax-comment: var(--talos-content-secondary);
-  --talos-syntax-invalid: var(--talos-status-danger-text);
+  --talos-syntax-invalid: var(--talos-scarlet-code);
   --talos-highlight-match: #ECF2F8;
   --talos-highlight-match-border: var(--talos-categorical-light-1);
   --talos-highlight-added: #DEF8E2;

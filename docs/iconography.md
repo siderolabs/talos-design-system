@@ -33,16 +33,19 @@ A value can take a state glyph when it is a verdict. True and false in a health 
 
 | Place | Treatment |
 | --- | --- |
-| Status chip | The glyph at 12px in the chip's `-text`, before the word, with 4px of padding before it and 4px between it and the word. It replaces the 6px dot. |
-| State beside a label | The same glyph at 12px, for an inline indicator such as a connection state on a list row. |
+| Status chip | The glyph at 12px in the state's `-default`, before the word, with 4px of padding before it and 4px between it and the word. It replaces the 8px dot. |
+| State beside a label | The same glyph at 12px in the state's `-default`, for an inline indicator such as a connection state on a list row. The word beside it stays neutral. |
+| Inline message | A warning or error line in a form or a footer is neutral text led by the state's glyph in `-default`. The colour sits on the glyph, not the sentence: a paragraph of amber or red text is hard to read, and amber text on light is a dull brown at best. |
 | Status count | The number stays neutral, and the glyph sits on its label ([What colour means](style-guide.md#what-colour-means)). |
-| Callout or banner | The same shapes at the callout's icon size: danger takes the circled cross, warning the triangle, success the circled tick. Info and note callouts take a circled "i", which is not a state. |
+| Callout or banner | The same shapes at the callout's icon size, in `-default`: danger takes the circled cross, warning the triangle, success the circled tick. Info and note callouts take a circled "i", which is not a state. |
 
 At 12px, use a solid glyph. Outline strokes blur below 16px.
 
+**A glyph is always drawn in the state's `-default`.** It is a graphic and only has to hold 3:1, which `-default` does on every surface, including the state's own chip and callout. The word beside it takes `-text` in a chip or callout title, and stays neutral elsewhere. On light this puts a lighter glyph beside darker text, which is what keeps a chip from reading as a block of dark green.
+
 ## Where the dot stays
 
-The 6px dot is a marker, not a state glyph. It stays in three places.
+The 8px dot is a marker, not a state glyph. It stays in three places. 8px rather than 6px because a field that small loses most of its perceived chroma, and a deep colour in a 6px dot reads as black on a light surface.
 
 - **Levels and rankings**, such as a severity. The word carries the level, and a tick or a cross would read as pass or fail.
 - **Chart legends.** The key is a swatch that has to match its segment. The number beside each key is what carries the reading, so the chart is never the only source.

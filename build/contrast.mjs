@@ -24,6 +24,8 @@ const AA_LARGE = 3.0 // 1.4.3 for large text, and 1.4.11 for UI component bounda
 // that its edges vanished at the same mix as green and scarlet.
 const CHIP_EDGE = 1.3
 const SURFACE_EDGE = 1.5
+// Floor for chart fills on light, under the 'chart fills on light' exception.
+const CHART_FILL = 2.0
 
 // ------------------------------------------------------------------ colour
 
@@ -99,6 +101,8 @@ const EXCEPTIONS = {
     'Hover is the accent fill at 90%, as settled in the September design review, so the resting 4.50:1 drops to about 4.0:1 over light surfaces while the pointer is over the button. Over dark surfaces it rises to 5.2:1. The label is readable at rest and the change is transient.',
   'banner gradient ends':
     'The banner gradient ends in the logo colours, which do not carry white text. The text sits on the solid accent band from 30% to 70%, which is measured as accent-fill. Pending a decision on narrow viewports, where banner text can reach the ends.',
+  'chart fills on light':
+    'Series fills and status chart segments on light are held to 2:1 on the card instead of 3:1, and category marker dots are reported only. WCAG 1.4.11 covers graphics required to understand the content; these never are, because every segment has a legend entry or label carrying its value and every marker sits beside its word. At 3:1 on white, orange, gold, violet and amber can only be mid-tones. A chart whose colour is the only way to read it is not covered and must meet 3:1. Dark is not covered and meets 3:1 everywhere.',
 }
 
 function checks(theme) {
@@ -115,7 +119,8 @@ function checks(theme) {
   }
 
   const rows = []
-  const add = (label, fg, bg, required, note) => rows.push({ label, fg, bg, required, note })
+  const add = (label, fg, bg, required, note, standard) => rows.push({ label, fg, bg, required, note, standard })
+  const chart = theme === 'light' ? [CHART_FILL, 'chart fills on light', AA_LARGE] : [AA_LARGE]
 
   for (const surface of SURFACES) {
     for (const role of TEXT_ON_SURFACE) {
@@ -188,8 +193,25 @@ function checks(theme) {
       t(`status-${status}-fill`),
       AA_TEXT,
     )
-    // A status dot or chart series is a meaningful graphic: WCAG 1.4.11.
-    add(`status-${status}-default on surface-card`, t(`status-${status}-default`), t('surface-card'), AA_LARGE)
+    // A status dot, a glyph beside neutral text or a chart segment is a
+    // meaningful graphic: WCAG 1.4.11, on every surface one can sit on.
+    for (const surface of ['page', 'chrome', 'card']) {
+      add(`status-${status}-default on surface-${surface}`, t(`status-${status}-default`), t(`surface-${surface}`), AA_LARGE)
+    }
+    // The glyph inside a chip is drawn in `default` over the chip's pastel.
+    add(
+      `status-${status}-default on status-${status}-subtle (chip glyph)`,
+      t(`status-${status}-default`),
+      flatten(t(`status-${status}-subtle`), t('surface-card')),
+      AA_LARGE,
+    )
+    add(`status-${status}-chart on surface-card`, t(`status-${status}-chart`), t('surface-card'), ...chart)
+    // Status text stands on its own on ordinary surfaces too. Hover is a
+    // transient state and is reported, as content-muted on hover is waived.
+    for (const surface of ['page', 'chrome', 'card', 'inset']) {
+      add(`status-${status}-text on surface-${surface}`, t(`status-${status}-text`), t(`surface-${surface}`), AA_TEXT)
+    }
+    add(`status-${status}-text on surface-hover`, t(`status-${status}-text`), t('surface-hover'), 0, 'informational')
     // Status chips put `text` on `subtle` over a card.
     add(
       `status-${status}-text on status-${status}-subtle`,
@@ -197,8 +219,8 @@ function checks(theme) {
       flatten(t(`status-${status}-subtle`), t('surface-card')),
       AA_TEXT,
     )
-    // Large status surfaces (callouts, banners, tiles): the icon and title
-    // take `text`, the body stays content-default, and a title set in
+    // Large status surfaces (callouts, banners, tiles): the title takes
+    // `text`, the icon `default`, the body stays content-default, and a title set in
     // content-emphasis (info and note) must hold as well.
     if (status !== 'info') {
       add(
@@ -248,13 +270,17 @@ function checks(theme) {
   add('content-on-accent (tick) on accent-fill', t('content-on-accent'), t('accent-fill'), AA_LARGE)
   add('content-emphasis on surface-inert (selected segment)', t('content-emphasis'), t('surface-inert'), AA_TEXT)
 
-  // Series are graphics (1.4.11): measured on the surfaces charts are drawn
-  // on, and on the inert track a bar or ring fills.
+  // Series are chart fills, measured on the card charts are drawn on and on
+  // the page category markers sit on. Light is under the 'chart fills on
+  // light' exception. The inert track a bar fills is reported only: a segment
+  // is always named by its label or legend, and a ring whose empty part is the
+  // reading outlines its track in border-control.
   for (let n = 1; n <= 8; n += 1) {
-    for (const surface of ['page', 'card', 'inert']) {
-      add(`series-${n} on surface-${surface}`, t(`series-${n}`), t(`surface-${surface}`), AA_LARGE)
-    }
-    add(`content-inverse on series-${n} (segment label)`, t('content-inverse'), t(`series-${n}`), AA_TEXT)
+    add(`series-${n} on surface-card`, t(`series-${n}`), t('surface-card'), ...chart)
+    if (theme === 'light') add(`series-${n} on surface-page (marker)`, t(`series-${n}`), t('surface-page'), 0, 'informational')
+    else add(`series-${n} on surface-page (marker)`, t(`series-${n}`), t('surface-page'), AA_LARGE)
+    add(`series-${n} on surface-inert (track)`, t(`series-${n}`), t('surface-inert'), 0, 'informational')
+    add(`on-series-${n} on series-${n} (segment label)`, t(`on-series-${n}`), t(`series-${n}`), AA_TEXT)
   }
 
   // Syntax colours are text, measured on the surfaces code sits on and on the
@@ -287,6 +313,7 @@ function checks(theme) {
 
 let failures = 0
 let waived = 0
+let excepted = 0
 
 for (const theme of ['dark', 'light']) {
   console.log(`\n${theme.toUpperCase()}\n${'='.repeat(60)}`)
@@ -298,7 +325,10 @@ for (const theme of ['dark', 'light']) {
 
     let mark = '  ok  '
     if (row.required === 0) mark = ' info '
-    else if (!passed && exempt) {
+    else if (passed && row.standard && value < row.standard) {
+      mark = 'except'
+      excepted += 1
+    } else if (!passed && exempt) {
       mark = 'waived'
       waived += 1
     } else if (!passed) {
@@ -306,7 +336,9 @@ for (const theme of ['dark', 'light']) {
       failures += 1
     }
 
-    const target = row.required ? `needs ${row.required.toFixed(1)}` : ''
+    const target = row.required
+      ? `needs ${row.required.toFixed(1)}${row.standard ? `, not ${row.standard.toFixed(1)} (${row.note})` : ''}`
+      : ''
     console.log(`[${mark}] ${value.toFixed(2).padStart(5)}:1  ${row.label.padEnd(46)} ${target}`)
   }
 }
@@ -316,6 +348,6 @@ if (Object.keys(EXCEPTIONS).length) {
   console.log('Documented exceptions:')
   for (const [pair, reason] of Object.entries(EXCEPTIONS)) console.log(`  ${pair}\n    ${reason}`)
 }
-console.log(`\n${failures} failing, ${waived} waived by a documented exception.`)
+console.log(`\n${failures} failing, ${waived} waived and ${excepted} passing a lowered floor, each by a documented exception.`)
 
 process.exit(failures ? 1 : 0)
