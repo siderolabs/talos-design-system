@@ -19,6 +19,11 @@ const tokens = JSON.parse(readFileSync(join(ROOT, 'dist', 'tokens.json'), 'utf8'
 
 const AA_TEXT = 4.5 // WCAG 2.1 1.4.3, text below 18px (or below 14px bold)
 const AA_LARGE = 3.0 // 1.4.3 for large text, and 1.4.11 for UI component boundaries
+// A coloured chip's edge and a light status surface's border are decorative, so
+// WCAG sets no floor. These keep the three colours at parity: amber is so light
+// that its edges vanished at the same mix as green and scarlet.
+const CHIP_EDGE = 1.3
+const SURFACE_EDGE = 1.5
 
 // ------------------------------------------------------------------ colour
 
@@ -195,7 +200,18 @@ function checks(theme) {
     // Large status surfaces (callouts, banners, tiles): the icon and title
     // take `text`, the body stays content-default, and a title set in
     // content-emphasis (info and note) must hold as well.
+    if (status !== 'info') {
+      add(
+        `status-${status}-subtle-border on status-${status}-subtle`,
+        flatten(t(`status-${status}-subtle-border`), t('surface-card')),
+        flatten(t(`status-${status}-subtle`), t('surface-card')),
+        CHIP_EDGE,
+      )
+    }
     const surface = t(`status-${status}-surface`)
+    if (theme === 'light' && status !== 'info') {
+      add(`status-${status}-border on status-${status}-surface`, t(`status-${status}-border`), surface, SURFACE_EDGE)
+    }
     add(`status-${status}-text on status-${status}-surface`, t(`status-${status}-text`), surface, AA_TEXT)
     add(`content-default on status-${status}-surface`, t('content-default'), surface, AA_TEXT)
     add(`content-emphasis on status-${status}-surface`, t('content-emphasis'), surface, AA_TEXT)

@@ -48,18 +48,18 @@
 
   /* green */
   --talos-green-1: #E6F0E7;  /* Pastel. Large status surface and chip background on light (12% of the fill into white, OKLab). */
-  --talos-green-2: #C0DAC4;  /* Chip edge on light (30% of the fill into white). */
+  --talos-green-2: #BCD8C1;  /* Chip edge on light: 32% of the fill into white, fitted to 1.3:1 on the chip (step 1). */
   --talos-green-3: #A0C8A7;  /* Large-surface border on light (45% of the fill into white). */
   --talos-green-4: #6FD087;  /* Success text and graphics on dark. */
   --talos-green-5: #1B8641;  /* Fill, under a white label (4.63:1). The 3px edge on dark status surfaces. */
   --talos-green-6: #046E31;  /* Success text and graphics on light. */
-  --talos-green-7: #23432E;  /* Chip edge on dark (40% of the fill into the dark card). */
+  --talos-green-7: #24492F;  /* Chip edge on dark: 46% of the fill into the dark card, fitted to 1.3:1 on the chip (step 8). */
   --talos-green-8: #213428;  /* Chip background on dark (26% of the fill into the dark card). */
 
   /* amber */
   --talos-amber-1: #FEEED9;  /* Pastel. Large status surface and chip background on light (22% of the fill into white). */
-  --talos-amber-2: #FDE8CB;  /* Chip edge on light (30%). */
-  --talos-amber-3: #FCDCB0;  /* Large-surface border on light (45%). */
+  --talos-amber-2: #FACD8E;  /* Chip edge on light: 63% of the fill into white, fitted to 1.3:1 on the chip (step 1). Amber's fill is pale, so its edge takes more of it than green or scarlet. */
+  --talos-amber-3: #F6B44F;  /* Large-surface border on light: 92% of the fill into white, fitted to match green and scarlet (1.6:1 on the surface, step 1). Amber is so light that it takes most of the fill to get there. */
   --talos-amber-4: #F5AE39;  /* Fill, under a dark label. The 3px edge on dark status surfaces. */
   --talos-amber-5: #E6AC3D;  /* Warning text and graphics on dark. */
   --talos-amber-6: #7E5905;  /* Warning text and graphics on light. */
@@ -73,7 +73,7 @@
   --talos-scarlet-4: #FF5B5B;  /* Danger text and graphics on dark. */
   --talos-scarlet-5: #DE2F2E;  /* Fill, under a white label (4.61:1). The 3px edge on dark status surfaces. */
   --talos-scarlet-6: #BB081F;  /* Danger text and graphics on light. */
-  --talos-scarlet-7: #642A29;  /* Chip edge on dark (40%). */
+  --talos-scarlet-7: #642B29;  /* Chip edge on dark: 40% of the fill into the dark card, fitted to 1.3:1 on the chip (step 8). */
   --talos-scarlet-8: #3E2324;  /* Chip background on dark (20%). */
 
   /* stone */
