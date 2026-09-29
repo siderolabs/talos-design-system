@@ -38,9 +38,12 @@ A two-pole ladder. In dark, the well behind cards is the darkest plane and raise
 | `surface-hover` | Hover, tertiary fills | `#26262B` | `#E6E1DC` |
 | `surface-inert` | Chart grid, tracks, skeletons | `#2E2E33` | `#D8D2CB` |
 | `surface-subtle` | Tint wash over an unknown backdrop | white 5% | black 4% |
+| `surface-scrim` | The backdrop behind a modal or drawer | page 80% | near-black 55% |
 | `surface-paper` | Brand cream insert | `#E2D2A8` | `#E2D2A8` |
 
 `surface-subtle` is translucent on purpose: nav items, chips and zebra rows sit on backdrops that vary, and a translucent wash keeps the relationship right wherever it lands.
+
+`surface-scrim` is the one translucent black. It goes behind anything modal so the raised surface reads as the only lit plane while the page stays legible as context. A product does not mix its own: an ad hoc `black/75` here and `page/90` there is how modals end up at three different depths.
 
 The page well sits one barely visible step below the chrome, the same 1.03 luminance ratio in both themes. The reference skin's light well was `#EDE9E4`, which is too dark to carry accent text at AA.
 
@@ -57,6 +60,8 @@ Four steps plus disabled. Every step except disabled meets WCAG AA on every surf
 | `content-disabled` | Disabled controls only | `#5A5A58` | `#8A8A88` |
 
 Disabled is the one role allowed below AA, because WCAG 1.4.3 exempts inactive controls. It is never the only signal that something is off: pair it with a cursor change, a tooltip, or a helper line.
+
+A disabled run of text takes `content-disabled`. A disabled composite control (a switch, a step in a stepper, a button with an icon and a fill) fades the whole control to 50% opacity instead, because re-pointing three or four roles at once produces a control that looks broken rather than off. The same whole-element fade is how a composite is pushed out of attention for other reasons: the graph nodes that fall outside a filter, a stat block while its data loads. The rule is that opacity fades an element, never a colour. A single colour at reduced alpha is a new colour, and it has to be a role: `surface-subtle` for a wash, `accent-subtle` for a tint, `surface-scrim` behind a modal. `brightness` and other filters are never how colour changes: a hover or pressed state re-points a role (`surface-hover`, `accent-fill-hover`, `accent-fill-active`), and a status chip that is clickable sharpens its edge to `status-<state>-default` on hover rather than brightening.
 
 The rule for choosing: anything a person needs to read, including subtitles, stat labels, field hints and footers, is `content-muted` or louder. The disabled grey is for disabled text and nothing else.
 
@@ -131,7 +136,59 @@ Each colour keeps its hue and chroma, with lightness fitted so text passes on ev
 
 **Chips match the surfaces.** A status chip is the light pastel with an edge at 30% of the fill on light, and a pastel at the dark mix (success 26%, warning 20%, danger 20% into the card) with an edge at 40% on dark. Neutral chips are the hover grey with no edge. Worst chip ratio: 5.21:1 light (info), 4.69:1 dark (danger).
 
-Categorical label colours, for labels with no good or bad meaning, are not tokens yet.
+### Series and categories
+
+Eight data colours, `series-1` to `series-8`, for things that have no good or bad meaning: the series in a chart, and the marker on a category chip. They are graphics only. Each reaches 3:1 on the page well, the card and the inert track, and none of them is used as a text colour, fills a chip, or stands in for a status.
+
+**Labels on a series fill** (a segment of a stacked bar wide enough to name itself) take `content-inverse`: near-black on the light dark-theme series, white on the deep light-theme ones. Every series reaches 4.5:1 with it, so no drop shadow or outline is needed. A segment too narrow for its label leaves it to the legend.
+
+| Role | Hue | Dark | Light |
+| --- | --- | --- | --- |
+| `series-1` | Blue | `#6DADFF` | `#155AA7` |
+| `series-2` | Orange | `#FEB98F` | `#693002` |
+| `series-3` | Teal | `#04A19B` | `#05837E` |
+| `series-4` | Magenta | `#EB88C2` | `#8E336C` |
+| `series-5` | Violet | `#D3BDFE` | `#4F2980` |
+| `series-6` | Gold | `#A98904` | `#896F02` |
+| `series-7` | Green | `#74C16C` | `#1F6D18` |
+| `series-8` | Slate | `#C6CBD1` | `#3E4348` |
+
+**Use them in order.** A chart with three series takes 1, 2 and 3, so the same position means the same colour everywhere. The order is what makes the palette work for colour-blind readers: lightness alternates across three levels, so the first six stay apart under protanopia, deuteranopia and tritanopia even where their hues collapse. Seven and eight do not reliably separate from the rest, so a chart past six series labels every one directly rather than relying on a legend. Past eight, fold the tail into `series-8` as "Other". Slate is last and near-neutral for that reason.
+
+**Why these hues.** There is no red, because red is the accent and danger. Blue leads because no status and no accent uses it: the brand has no blue and info is grey, so a blue series cannot be mistaken for a status. Green sits seventh because it is the hue nearest success.
+
+**States are not categories.** A chart whose series are states (healthy against failing, used against over quota) takes the status `-default` graphics instead. A series palette on a state chart turns an alert into decoration, and a status palette on a category chart turns decoration into an alert. Info is the only neutral status, so a state chart with a second neutral state (scaling up beside scaling down) gives the second one `series-5`. Two segments in the same grey cannot be told apart, and violet is the series furthest from every status hue. A series colour never stands in for success, warning or danger.
+
+The test for which palette a chart takes: **would a reader want to act on one of the segments?** A bar that splits a fleet into "in a cluster", "free" and "pending" is a partition of a whole, and none of those is better than another, so it takes `series-1`, `-2`, `-3` in order. A bar that splits the same fleet into "healthy", "degraded" and "unreachable" is a set of states, and it takes the status `-default` graphics. When one chart mixes both (a state chart with an "other" or "remaining" segment), the neutral remainder is `series-8`, so it stays quiet beside the states. One more rule follows from this: a state has **one colour everywhere**. If scaling is amber in a status pill, it is amber in the chart above it. The pill is the reference, because it is where the word sits next to the colour.
+
+**Tracks and grids.** A ring or bar fills over `surface-inert`. Where the track's own extent matters, as in a ring whose empty part is the reading, outline it in `border-control`. Axis labels are `content-muted` in the `annotation` type role, and gridlines are `border-subtle`.
+
+**Category chips.** A label with a category but no state is the neutral filterable chip from the table below, with a 6px dot in its `series-N` before the text. The dot carries the category; the chip stays neutral, because the pastel pill means status.
+
+### Syntax
+
+Syntax highlighting has its own roles, `syntax-*`, used by code blocks, editors and diffs in every product. They are text, so each reaches 4.5:1 on the page well, the card, the raised surface, and every `highlight-*` fill (a search match, an added or removed diff line), in both themes. The hues come from the series palette, which keeps code and charts one family, but the roles are separate: a chart never takes a `syntax-*` colour, and code never takes a `series-*` one.
+
+| Role | For | Dark | Light |
+| --- | --- | --- | --- |
+| `syntax-key` | Mapping keys, properties, tags, attribute names | Blue | Blue |
+| `syntax-string` | Quoted strings | Magenta | Magenta |
+| `syntax-constant` | Numbers, booleans, null | Orange | Orange |
+| `syntax-keyword` | Keywords, YAML anchors and tags | Violet | Violet |
+| `syntax-plain` | Unscoped scalars and text | `content-default` | `content-default` |
+| `syntax-punctuation` | Brackets, separators, indicators | `content-secondary` | `content-secondary` |
+| `syntax-comment` | Comments, in italic | `content-secondary` | `content-secondary` |
+| `syntax-invalid` | Parse errors only | `status-danger-text` | `status-danger-text` |
+
+**Green and red are never syntax.** In a diff they mean added and removed, and a token in either would read as a change. The accent stays out as well, so a string cannot be mistaken for a link. Keys take the strongest hue because the key is what a reader scans for in configuration; scalars stay close to body text so the eye lands on keys and on what changed. Comments are the quietest token, but they are `content-secondary` rather than `content-muted`: a comment on a tinted diff line has to stay legible, and the italic already sets it apart.
+
+### Highlights
+
+The `highlight-*` roles are fills that sit behind text which still has to be read, so every syntax token and every `content-*` step reaches 4.5:1 on each of them. There are three: a search match, an added line, and a removed line.
+
+**Search matches.** Matched text, wherever text is searched, is a `highlight-match` fill with a 1px `highlight-match-border` outline. The roles are separate from `syntax-*` because the same treatment is used in tables and lists, not only in code: a match in a machine list looks the same as a match in a config. On dark, any tint lighter than the code surface takes comments below 4.5:1, so the fill is a deep blue that keeps every syntax token and every `content-*` step legible, and the outline is what makes the match findable. The current match, where there is one, adds weight to the outline rather than a second colour. A match never inverts the text or bolds it: a heavier weight changes the line's length and makes the list jump as the query is typed.
+
+**Diff lines.** An added line sits on `highlight-added`, a removed one on `highlight-removed`, and the changed words within a line on `highlight-added-emphasis` and `highlight-removed-emphasis`. These are not the status chip backgrounds. A chip only has to carry its own `-text`; a diff line carries every syntax token, and the quietest of them caps how light the tint can be. On dark that cap is close to the card, so the line tint differs from the card by hue rather than by lightness, and the emphasis fill is the same lightness again at three times the chroma: it reads as more green or more red, not as brighter. The line number and the `+` or `-` sign take the status `-text`, so the state is carried by more than the tint.
 
 ### What colour means
 
@@ -143,12 +200,15 @@ Colour and the pastel pill mean status. Anything that isn't a status loses both.
 | Status count | The number in `content-emphasis`, with the status dot moved onto its label (`content-secondary`) | No |
 | Value | Plain text in `content-default`, no chip. A coloured word that isn't a state, such as a capacity figure or an ID | No |
 | Filterable label | Outlined neutral chip: transparent, `border-strong` edge, `content-default` text, key in `content-secondary` | Yes, filters |
+| Category label | The filterable label with a 6px dot in `series-N` before the text | Yes, filters |
 | Applied filter | Filled neutral chip (`surface-hover`) with × | Yes, removes |
 | Count badge | Small neutral badge: `surface-hover`, `content-default` | No |
 | Callout, banner, tile | The large status surface above | No |
 | Destructive action | `status-danger-fill`, `status-danger-on-fill` label | Yes |
 | Action | Neutral button: `surface-card`, `border-default` edge, `content-default` | Yes |
-| Selected toggle | `accent-fill`, `content-on-accent` label | Yes |
+| Toggle that is on | `accent-fill`, `content-on-accent` label. Something is switched on | Yes |
+| Checked checkbox or radio | `accent-fill` box with its edge in the same colour, the tick or dot in `content-on-accent`. Unchecked: transparent with a `border-control` edge | Yes |
+| Selected segment | On a `surface-inset` track, a `surface-inert` thumb with a `border-strong` ring and a `content-emphasis` label; unselected segments are `content-muted`. One of several views is showing, nothing is switched on | Yes |
 | Inline code | `content-emphasis` on `surface-inset` | No |
 
 A status count is a number whose meaning is a state: "5 need a look", "12 running", "2 firing". Colouring the number itself makes a dashboard of stat cards read as a wall of alerts, and a green or amber figure at display size fails contrast on light. The dot on the label carries the state; the number stays readable. A number that is a quantity rather than a state (free capacity, allocated cores) is a value.
@@ -163,9 +223,11 @@ Hairlines, not weight. One width, `1px`, and separation comes from the surface l
 
 `border-edge` (3px) is a colour bar, not a border: the status edge on dark callouts and tiles, and the active nav marker. It is never a neutral separator.
 
-`border-subtle` (6%) for internal dividers and table rows, `border-default` (8%) for card and input edges, `border-strong` (14% dark / 16% light) for hover and emphasis, `border-accent` for an active tab underline or a focused input.
+`border-subtle` (6%) for internal dividers and table rows, `border-default` (8%) for card and input edges, `border-strong` (14% dark / 16% light) for hover and emphasis, `border-accent` for an active tab underline or a focused input, `border-focus` for the keyboard focus ring where it has to be an outline (see Elevation and focus).
 
-These are translucent and well below 3:1 by design. That is allowed: every component they appear on is identifiable without its border. If a boundary is the only thing telling a user a control exists, it needs `border-strong` at minimum and probably needs rethinking.
+These are translucent and well below 3:1 by design. That is allowed: every component they appear on is identifiable without its border.
+
+`border-control` is the exception, for a control whose edge is the whole affordance: an unchecked checkbox or radio, a switch track, the outline of a chart track. It is white at 36% on dark and black at 44% on light, which reaches 3:1 on every surface in the ladder (WCAG 1.4.11), and the audit enforces it. It is not a heavier card or input border. Inputs are identifiable by their fill, placeholder and label, and keep `border-default`. If a component needs a 3:1 edge and is not one of these, that is a design question.
 
 ## Spacing
 
@@ -218,7 +280,7 @@ Both faces ship with the token package as woff2 and are served by the product, n
 
 `shadow-card`, `shadow-dropdown`, `shadow-modal`. Elevation is carried by the surface ladder first; shadows are a secondary cue, deeper in dark mode because brightness alone cannot convey lift on a near-black canvas.
 
-`shadow-focus` is the focus ring. It is never removed without a replacement, and `outline: none` without one is a defect.
+`shadow-focus` is the focus ring. It is never removed without a replacement, and `outline: none` without one is a defect. The ring is applied on `:focus-visible`, not `:focus`, so a mouse click does not draw it, and it is applied once, in a base rule, rather than per component: a product that suppresses the browser outline on a component then has to remember to draw the ring there too, and the places it forgets are the ones nobody tabs through while developing. Where a component already carries a `ring` or `shadow` (a selected segment, a raised card), the focus ring is drawn with `outline` in the same colour and offset instead, so the two do not fight over one property.
 
 ## Navigation grammar
 
