@@ -59,26 +59,30 @@
     "$type": "color",
     "$description": "Status success. Lightest to darkest. Hue and chroma held; lightness fitted so text passes on every warm surface and on its own chip.",
     "1": { "$value": "#E6F0E7", "$description": "Pastel. Large status surface and chip background on light (12% of the fill into white, OKLab)." },
-    "2": { "$value": "#C0DAC4", "$description": "Chip edge on light (30% of the fill into white)." },
+    "2": { "$value": "#BCD8C1", "$description": "Chip edge on light: 32% of the fill into white, fitted to 1.3:1 on the chip (step 1)." },
     "3": { "$value": "#A0C8A7", "$description": "Large-surface border on light (45% of the fill into white)." },
     "4": { "$value": "#6FD087", "$description": "Success text and graphics on dark." },
     "5": { "$value": "#1B8641", "$description": "Fill, under a white label (4.63:1). The 3px edge on dark status surfaces." },
-    "6": { "$value": "#046E31", "$description": "Success text and graphics on light." },
-    "7": { "$value": "#23432E", "$description": "Chip edge on dark (40% of the fill into the dark card)." },
-    "8": { "$value": "#213428", "$description": "Chip background on dark (26% of the fill into the dark card)." }
+    "6": { "$value": "#1C7A3D", "$description": "Success text on light, as light as 4.5:1 on its chip and the page allows." },
+    "7": { "$value": "#24492F", "$description": "Chip edge on dark: 46% of the fill into the dark card, fitted to 1.3:1 on the chip (step 8)." },
+    "8": { "$value": "#213428", "$description": "Chip background on dark (26% of the fill into the dark card)." },
+    "graphic": { "$value": "#0A9D49", "$description": "Success graphics on light: dots, glyphs, progress fills. As light as 3:1 on the page and on its own chip allows." },
+    "chart": { "$value": "#36A558", "$description": "Success as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family." }
   },
 
   "amber": {
     "$type": "color",
     "$description": "Status warning. Lightest to darkest, same construction as green.",
     "1": { "$value": "#FEEED9", "$description": "Pastel. Large status surface and chip background on light (22% of the fill into white)." },
-    "2": { "$value": "#FDE8CB", "$description": "Chip edge on light (30%)." },
-    "3": { "$value": "#FCDCB0", "$description": "Large-surface border on light (45%)." },
+    "2": { "$value": "#FACD8E", "$description": "Chip edge on light: 63% of the fill into white, fitted to 1.3:1 on the chip (step 1). Amber's fill is pale, so its edge takes more of it than green or scarlet." },
+    "3": { "$value": "#F6B44F", "$description": "Large-surface border on light: 92% of the fill into white, fitted to match green and scarlet (1.6:1 on the surface, step 1). Amber is so light that it takes most of the fill to get there." },
     "4": { "$value": "#F5AE39", "$description": "Fill, under a dark label. The 3px edge on dark status surfaces." },
     "5": { "$value": "#E6AC3D", "$description": "Warning text and graphics on dark." },
-    "6": { "$value": "#7E5905", "$description": "Warning text and graphics on light." },
+    "6": { "$value": "#8A6419", "$description": "Warning text on light, as light as 4.5:1 on its chip and the page allows." },
     "7": { "$value": "#695132", "$description": "Chip edge on dark (40%)." },
-    "8": { "$value": "#403529", "$description": "Chip background on dark (20%)." }
+    "8": { "$value": "#403529", "$description": "Chip background on dark (20%)." },
+    "graphic": { "$value": "#B87C06", "$description": "Warning graphics on light. As light as 3:1 on the page and on its own chip allows." },
+    "chart": { "$value": "#EBA42C", "$description": "Warning as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family." }
   },
 
   "scarlet": {
@@ -89,9 +93,12 @@
     "3": { "$value": "#FAABA1", "$description": "Large-surface border on light (45%)." },
     "4": { "$value": "#FF5B5B", "$description": "Danger text and graphics on dark." },
     "5": { "$value": "#DE2F2E", "$description": "Fill, under a white label (4.61:1). The 3px edge on dark status surfaces." },
-    "6": { "$value": "#BB081F", "$description": "Danger text and graphics on light." },
-    "7": { "$value": "#642A29", "$description": "Chip edge on dark (40%)." },
-    "8": { "$value": "#3E2324", "$description": "Chip background on dark (20%)." }
+    "6": { "$value": "#CC272E", "$description": "Danger text on light, as light as 4.5:1 on its chip and the page allows." },
+    "7": { "$value": "#642B29", "$description": "Chip edge on dark: 40% of the fill into the dark card, fitted to 1.3:1 on the chip (step 8)." },
+    "8": { "$value": "#3E2324", "$description": "Chip background on dark (20%)." },
+    "graphic": { "$value": "#F14F47", "$description": "Danger graphics on light. As light as 3:1 on the page and on its own chip allows." },
+    "code": { "$value": "#BB081F", "$description": "Parse errors in code on light: danger deep enough for 4.5:1 on the diff line tints, which the lighter danger text no longer reaches." },
+    "chart": { "$value": "#E95048", "$description": "Danger as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family." }
   },
 
   "stone": {
@@ -99,12 +106,14 @@
     "$description": "Status info. A warm grey: the brand has no blue. Info surfaces and chips use the neutral surface ramp, so this carries text and fill only.",
     "1": { "$value": "#BAB7B3", "$description": "Info text and graphics on dark." },
     "2": { "$value": "#75726F", "$description": "Fill, under a white label (4.78:1)." },
-    "3": { "$value": "#5D5B58", "$description": "Info text and graphics on light." }
+    "3": { "$value": "#676461", "$description": "Info text on light, as light as 4.5:1 on its chip and the page allows." },
+    "graphic": { "$value": "#837F7C", "$description": "Info graphics on light. As light as 3:1 on the page and on its own chip allows." },
+    "chart": { "$value": "#96918C", "$description": "Info as a chart segment on light, beside a legend or label that carries the number. Holds 2:1 on the card; lighter than the graphic step so a light chart reads as one family." }
   },
 
   "categorical": {
     "$type": "color",
-    "$description": "Data colours for things with no good or bad meaning: chart series and category markers. Eight OKLCH hues at chroma 0.14, in a fixed order. Lightness alternates between three levels so the first six stay apart under protanopia, deuteranopia and tritanopia, not just in hue. No red: red is the accent and danger. Blue leads because it is the one hue nothing else in the system uses, so a blue series cannot be read as a status. Green is seventh because it sits nearest success. Each step reaches 3:1 on every surface its theme draws charts on.",
+    "$description": "Data colours for things with no good or bad meaning: chart series and category markers. Eight OKLCH hues at chroma 0.14, in a fixed order. Lightness alternates between three levels so the first six stay apart under protanopia, deuteranopia and tritanopia, not just in hue. On light, lightness follows each hue's natural weight, blue and magenta deep (0.55), orange and gold light (0.70 and 0.76), the rest between, at chroma 0.15, which is what makes the set read as one family; the lightness spread is also what keeps it apart under colour blindness. No red: red is the accent and danger. Blue leads because it is the one hue nothing else in the system uses, so a blue series cannot be read as a status. Green is seventh because it sits nearest success. On dark each step reaches 3:1 on every surface charts are drawn on. On light a chart fill holds 2:1 on the card and is never the only source of its reading (legend, label or value). Syntax colours are text and need 4.5:1, so on light they take the deeper light-text steps rather than the series.",
     "dark": {
       "1": { "$value": "#6DADFF", "$description": "Blue. L 0.74." },
       "2": { "$value": "#FEB98F", "$description": "Orange. L 0.84." },
@@ -116,14 +125,20 @@
       "8": { "$value": "#C6CBD1", "$description": "Slate, near-neutral. L 0.84. The remainder series: other, unallocated." }
     },
     "light": {
-      "1": { "$value": "#155AA7", "$description": "Blue. L 0.47." },
-      "2": { "$value": "#693002", "$description": "Orange. L 0.38." },
-      "3": { "$value": "#05837E", "$description": "Teal. L 0.55." },
-      "4": { "$value": "#8E336C", "$description": "Magenta. L 0.47." },
-      "5": { "$value": "#4F2980", "$description": "Violet. L 0.38." },
-      "6": { "$value": "#896F02", "$description": "Gold. L 0.55." },
-      "7": { "$value": "#1F6D18", "$description": "Green. L 0.47." },
-      "8": { "$value": "#3E4348", "$description": "Slate, near-neutral. L 0.38. The remainder series." }
+      "1": { "$value": "#4087DE", "$description": "Blue. L 0.62, under a dark label. Lifted above its natural weight so a 6px marker dot does not read as black." },
+      "2": { "$value": "#E6803B", "$description": "Orange. L 0.70, under a dark label." },
+      "3": { "$value": "#04A19B", "$description": "Teal. L 0.64, under a dark label. The same teal as dark." },
+      "4": { "$value": "#AC4785", "$description": "Magenta. L 0.55, under a white label." },
+      "5": { "$value": "#B993FB", "$description": "Violet. L 0.74, under a dark label. Kept a step above blue so protanopes can separate them." },
+      "6": { "$value": "#D3AD1B", "$description": "Gold. L 0.76, under a dark label. 2.2:1 on the card, the lightest of the set." },
+      "7": { "$value": "#4A9C42", "$description": "Green. L 0.62, under a dark label." },
+      "8": { "$value": "#8D9399", "$description": "Slate, near-neutral. L 0.66, under a dark label. The remainder series." }
+    },
+    "light-text": {
+      "1": { "$value": "#155AA7", "$description": "Blue at text strength, for syntax on light." },
+      "2": { "$value": "#693002", "$description": "Orange at text strength, for syntax on light." },
+      "4": { "$value": "#8E336C", "$description": "Magenta at text strength, for syntax on light." },
+      "5": { "$value": "#4F2980", "$description": "Violet at text strength, for syntax on light." }
     }
   },
 

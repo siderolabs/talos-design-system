@@ -21,7 +21,7 @@ This repository is public to read and org-only to write. Consumers take it as a 
 
 ```json
 "dependencies": {
-  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.4.0"
+  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.5.0"
 }
 ```
 
@@ -95,6 +95,35 @@ Variable weight 400 to 700, latin and latin-ext, 81 kB for all four files. Both 
 ## Anything else
 
 `dist/tokens.css` and `dist/type.css` work regardless of framework. Import them, serve the fonts, and use the `--talos-*` custom properties and `talos-type-*` classes directly.
+
+## Choosing a theme
+
+The behaviour is in the [style guide](style-guide.md#choosing-a-theme). These are the parts every product implements the same way.
+
+**Storage.** Local storage key `theme`, value `light`, `dark` or `system`. A missing or unrecognised value means System, so an older build never strands a reader on a value it doesn't know.
+
+**The attribute goes on `<html>`.** Set `data-theme` to the resolved theme, `light` or `dark`, never `system`, and set `color-scheme` to match so native scrollbars and form controls follow. Custom properties resolve where they are declared, so a light block scoped to an app container leaves any menu or dialog that renders into `<body>` on the dark values. A Bootstrap host sets `data-bs-theme` alongside it.
+
+**Apply it before first paint** with an inline script in `<head>`, ahead of the stylesheets and the app bundle:
+
+```html
+<script>
+  (function () {
+    var choice = 'system'
+    try { choice = localStorage.getItem('theme') || 'system' } catch (e) {}
+    var theme = choice === 'light' || choice === 'dark' ? choice
+      : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.style.colorScheme = theme
+  })()
+</script>
+```
+
+The `try` is there because storage access throws in some privacy modes. Under a Content Security Policy that forbids inline script, give the tag the page's nonce rather than loosening the policy. Declare `<meta name="color-scheme" content="dark light">` as well.
+
+**Follow the system while it's chosen.** Once the app is running, listen for changes to `prefers-color-scheme` and re-resolve when the choice is System. Anything that copied colours out of the tokens at start-up (a chart theme, a code editor theme) rebuilds when the resolved theme changes, the same as for [charts](../AGENTS.md).
+
+**Documentation sites on Mintlify** get this from Mintlify's own switcher, which already offers Light, Dark and System. Its defaults in `docs.json` are the standard (`appearance.default` is `system`, and `strict` is off so the switcher shows), so leave `appearance` unset or set it to exactly those.
 
 ## Enforcement
 

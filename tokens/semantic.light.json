@@ -56,7 +56,8 @@
     "$type": "color",
     "$description": "Graphics and text darken in light mode; the fills are shared by both themes so a badge reads the same in either. Large status surfaces on light are a pastel mixed from the fill, with a deeper pastel border.",
     "success": {
-      "default": { "$value": "{green.6}" },
+      "default": { "$value": "{green.graphic}" },
+      "chart":   { "$value": "{green.chart}", "$description": "The state as a chart segment, beside a legend or label that carries the number. On light it is lighter than `default` so a chart reads as one family with the series; on dark it is `default`." },
       "text":    { "$value": "{green.6}" },
       "fill":    { "$value": "{green.5}" },
       "on-fill": { "$value": "{white}" },
@@ -66,7 +67,8 @@
       "border":  { "$value": "{green.3}" }
     },
     "warning": {
-      "default": { "$value": "{amber.6}" },
+      "default": { "$value": "{amber.graphic}" },
+      "chart":   { "$value": "{amber.chart}" },
       "text":    { "$value": "{amber.6}" },
       "fill":    { "$value": "{amber.4}" },
       "on-fill": { "$value": "{cream.10}", "$description": "Dark label. The warning fill is too light for white." },
@@ -76,7 +78,8 @@
       "border":  { "$value": "{amber.3}" }
     },
     "danger": {
-      "default": { "$value": "{scarlet.6}", "$description": "A true red, separate from the crimson accent." },
+      "default": { "$value": "{scarlet.graphic}", "$description": "A true red, separate from the crimson accent." },
+      "chart":   { "$value": "{scarlet.chart}" },
       "text":    { "$value": "{scarlet.6}" },
       "fill":    { "$value": "{scarlet.5}" },
       "on-fill": { "$value": "{white}" },
@@ -86,7 +89,8 @@
       "border":  { "$value": "{scarlet.3}" }
     },
     "info": {
-      "default": { "$value": "{stone.3}", "$description": "Neutral grey. The brand has no blue." },
+      "default": { "$value": "{stone.graphic}", "$description": "Neutral grey. The brand has no blue." },
+      "chart":   { "$value": "{stone.chart}" },
       "text":    { "$value": "{stone.3}" },
       "fill":    { "$value": "{stone.2}" },
       "on-fill": { "$value": "{white}" },
@@ -99,7 +103,7 @@
 
   "series": {
     "$type": "color",
-    "$description": "Categorical data colours: chart series in this order, and the marker dot on a category chip. Graphics only, at 3:1: never a text colour, never a chip fill, never a status. A label drawn on a series fill takes content-inverse. Past six series, label every one; past eight, fold the tail into 8.",
+    "$description": "Categorical data colours: chart series in this order, and the marker dot on a category chip. Graphics only: never a text colour, never a chip fill, never a status. On light a chart fill holds 2:1 on the card and is always named by a legend or label; on dark every series clears 3:1. A label drawn on a series fill takes on-series of the same number. Past six series, label every one; past eight, fold the tail into 8.",
     "1": { "$value": "{categorical.light.1}" },
     "2": { "$value": "{categorical.light.2}" },
     "3": { "$value": "{categorical.light.3}" },
@@ -110,17 +114,30 @@
     "8": { "$value": "{categorical.light.8}", "$description": "The remainder: other, unallocated." }
   },
 
+  "on-series": {
+    "$type": "color",
+    "$description": "The label on a series fill, one per series: a segment of a stacked bar wide enough to name itself. Each reaches 4.5:1 on its series. On dark every series is light and takes the dark label; on light the deeper series take white and the lighter ones a dark label.",
+    "1": { "$value": "{content.emphasis}" },
+    "2": { "$value": "{content.emphasis}" },
+    "3": { "$value": "{content.emphasis}" },
+    "4": { "$value": "{white}" },
+    "5": { "$value": "{content.emphasis}" },
+    "6": { "$value": "{content.emphasis}" },
+    "7": { "$value": "{content.emphasis}" },
+    "8": { "$value": "{content.emphasis}" }
+  },
+
   "syntax": {
     "$type": "color",
     "$description": "Syntax highlighting in code blocks, editors and diffs. Text at 4.5:1 on the surfaces code sits on. Green and red are never syntax colours: in a diff they mean added and removed, and a token in either would read as a change. The accent stays out too, so a string never looks like a link.",
     "plain":       { "$value": "{content.default}", "$description": "Scalars and anything the grammar leaves unscoped." },
-    "key":         { "$value": "{categorical.light.1}", "$description": "Mapping keys, properties, tags and attribute names: the structure a reader scans first." },
-    "string":      { "$value": "{categorical.light.4}", "$description": "Quoted strings." },
-    "constant":    { "$value": "{categorical.light.2}", "$description": "Numbers, booleans, null, and language constants." },
-    "keyword":     { "$value": "{categorical.light.5}", "$description": "Keywords, operators with a name, and YAML anchors and tags." },
+    "key":         { "$value": "{categorical.light-text.1}", "$description": "Mapping keys, properties, tags and attribute names: the structure a reader scans first." },
+    "string":      { "$value": "{categorical.light-text.4}", "$description": "Quoted strings." },
+    "constant":    { "$value": "{categorical.light-text.2}", "$description": "Numbers, booleans, null, and language constants." },
+    "keyword":     { "$value": "{categorical.light-text.5}", "$description": "Keywords, operators with a name, and YAML anchors and tags." },
     "punctuation": { "$value": "{content.secondary}", "$description": "Brackets, separators and indicators." },
     "comment":     { "$value": "{content.secondary}", "$description": "Comments, set in italic. Secondary rather than muted, because comments also sit on the tinted lines of a diff and have to stay at 4.5:1 there." },
-    "invalid":     { "$value": "{status.danger.text}", "$description": "Parse errors only." }
+    "invalid":     { "$value": "{scarlet.code}", "$description": "Parse errors only. Deeper than danger text so it holds on the diff tints." }
   },
 
   "highlight": {

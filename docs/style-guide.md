@@ -115,43 +115,52 @@ Product surfaces should be recognisably the same family as the marketing site wi
 
 Eight roles per state, because a status hue does different jobs at different contrasts.
 
-- `status-<state>-default` is the hue as a **graphic**: a dot, an icon, a chart series. It meets 3:1 on a card (WCAG 1.4.11).
+- `status-<state>-default` is the hue as a **graphic**: a dot, a glyph, a progress fill. It meets 3:1 on the page, the chrome, the card and its own chip (WCAG 1.4.11), and on light it is as light as that allows, so a graphic is not held to text contrast it doesn't need.
+- `status-<state>-chart` is the hue as a **chart segment**, beside a legend or label that carries the number. On light it is lighter than `-default` and holds 2:1 on the card, so a state chart reads as one family with the series. On dark it is `-default`.
 - `status-<state>-text` is a **label on a normal surface** at 4.5:1.
 - `status-<state>-fill` is a **solid** badge or button background, with `status-<state>-on-fill` as its label. On dark it is also the colour edge on large surfaces.
 - `status-<state>-subtle` and `-subtle-border` are a **status chip**: `-text` on a pastel with a faint edge of the same hue.
 - `status-<state>-surface` and `-border` are a **large status surface**: a callout, banner, or tile.
 
-| State | Text, light | Text, dark | Fill | Label on fill |
-| --- | --- | --- | --- | --- |
-| success | `#046E31` | `#6FD087` | `#1B8641` | white |
-| warning | `#7E5905` | `#E6AC3D` | `#F5AE39` | `#1A1A18` |
-| danger | `#BB081F` | `#FF5B5B` | `#DE2F2E` | white |
-| info | `#5D5B58` | `#BAB7B3` | `#75726F` | white |
+| State | Text, light | Graphic, light | Chart, light | Text and graphic, dark | Fill | Label on fill |
+| --- | --- | --- | --- | --- | --- | --- |
+| success | `#1C7A3D` | `#0A9D49` | `#36A558` | `#6FD087` | `#1B8641` | white |
+| warning | `#8A6419` | `#B87C06` | `#EBA42C` | `#E6AC3D` | `#F5AE39` | `#1A1A18` |
+| danger | `#CC272E` | `#F14F47` | `#E95048` | `#FF5B5B` | `#DE2F2E` | white |
+| info | `#676461` | `#837F7C` | `#96918C` | `#BAB7B3` | `#75726F` | white |
 
-Each colour keeps its hue and chroma, with lightness fitted so text passes on every warm surface and on its own chip. There is no blue: the brand palette does not have one, and info is a warm grey.
+Each colour keeps its hue and chroma, with lightness fitted to the contrast its job needs and no darker. Light text is as light as 4.5:1 on its chip and the page allows. On light, text, graphics and chart segments are separate steps. A light-theme chart drawn in text colours comes out dark and muddy, worst in amber. On dark, the light text colour already sits well as a graphic, so one step does all three.
+
+**Amber tops out at mustard as a graphic on light.** 3:1 against a light background caps its lightness whatever the background, and amber is the hue that suffers most, because it is only vivid when it is light. A white page instead of cream would lift it a little, from `#B87C06` to about `#C68706`, still a mustard. That is why chart segments have their own step: a warning segment beside a legend can be the amber it wants to be. There is no blue: the brand palette does not have one, and info is a warm grey.
 
 **Danger is a true red, separate from the accent.** The accent stays crimson for links and primary buttons; danger shifts toward scarlet so a destructive state never reads as a link. Light reds drift toward coral on dark, so dark danger text sits at the most neutral red that still passes on its chip.
 
-**Large surfaces are two treatments, one per theme.** On light, the surface is a pastel mixed in OKLab from the fill into white (success 12%, warning 22%, danger 10%) with a border at 45%. On dark, a tinted surface cannot get light enough without costing the text on it contrast, so the surface is neutral (the card for callouts, `surface-hover` for tiles inside a card), the border is the inert hairline, and the state is carried by a 3px edge in the fill: on the left for callouts, on top for tiles. Info is neutral in both themes and takes no edge. In every case, body text stays `content-default` and only the icon and bold title take `-text`.
+**Large surfaces are two treatments, one per theme.** On light, the surface is a pastel mixed in OKLab from the fill into white (success 12%, warning 22%, danger 10%) with a border at 45% of the fill (92% for warning, see below). On dark, a tinted surface cannot get light enough without costing the text on it contrast, so the surface is neutral (the card for callouts, `surface-hover` for tiles inside a card), the border is the inert hairline, and the state is carried by a 3px edge in the fill: on the left for callouts, on top for tiles. Info is neutral in both themes and takes no edge. In every case, body text stays `content-default`, the bold title takes `-text` and the icon takes `-default`.
 
-**Chips match the surfaces.** A status chip is the light pastel with an edge at 30% of the fill on light, and a pastel at the dark mix (success 26%, warning 20%, danger 20% into the card) with an edge at 40% on dark. Neutral chips are the hover grey with no edge. Worst chip ratio: 5.21:1 light (info), 4.69:1 dark (danger).
+**Chips match the surfaces.** A status chip is the light pastel with an edge mixed from the fill, and on dark a pastel at the dark mix (success 26%, warning 20%, danger 20% into the card) with an edge mixed into the card. Neutral chips are the hover grey with no edge. Worst chip ratio: 5.21:1 light (info), 4.69:1 dark (danger).
+
+**Edges are fitted to a contrast, not a mix.** A chip's edge holds 1.3:1 against its own pastel and a light surface's border holds 1.5:1 against its surface, and the audit enforces both. A fixed mix leaves amber's edges invisible, because amber is so much lighter than green or scarlet: at the 30% that gives green a clear edge, amber's is 1.05:1. So the mix differs by colour. On light the chip edge is 32% for success, 63% for warning and 30% for danger; on dark it is 46%, 40% and 40%. The mix percentages are recorded on each primitive.
 
 ### Series and categories
 
-Eight data colours, `series-1` to `series-8`, for things that have no good or bad meaning: the series in a chart, and the marker on a category chip. They are graphics only. Each reaches 3:1 on the page well, the card and the inert track, and none of them is used as a text colour, fills a chip, or stands in for a status.
+Eight data colours, `series-1` to `series-8`, for things that have no good or bad meaning: the series in a chart, and the marker on a category chip. They are graphics only. None of them is used as a text colour, fills a chip, or stands in for a status. On dark each reaches 3:1 on every surface charts are drawn on. On light a chart fill is held to 2:1 on the card, under a [contrast exception](#contrast-exceptions) that depends on its reading never being carried by colour alone: every segment has a legend entry or a label, and a ring whose empty part is the reading outlines its track (below). Holding light chart fills to 3:1 forces every hue to a mid-tone, where orange turns brown and gold turns mustard, and the set stops reading as a family.
 
-**Labels on a series fill** (a segment of a stacked bar wide enough to name itself) take `content-inverse`: near-black on the light dark-theme series, white on the deep light-theme ones. Every series reaches 4.5:1 with it, so no drop shadow or outline is needed. A segment too narrow for its label leaves it to the legend.
+**Lightness follows the hue.** On light, the eight run at one chroma (0.15) with a lightness that follows each hue's natural weight: magenta deep (OKLCH 0.55), orange, violet and gold light (0.70 to 0.76), blue, teal, green and slate between. Blue is lifted a step above where its weight alone would put it (0.62) because even an 8px marker dot loses much of its perceived chroma, and a deep blue dot reads as black. A palette forced to one lightness looks like paint chips and collapses under colour blindness; one that follows the hues reads as a family, and the lightness spread is what keeps the first six apart for protanopes, deuteranopes and tritanopes.
+
+**Labels on a series fill** (a segment of a stacked bar wide enough to name itself) take `on-series-N` for series N. On dark every series is light and takes the dark label. On light, magenta takes white and the rest take near-black. Every series reaches 4.5:1 with its label, so no drop shadow or outline is needed. A segment too narrow for its label leaves it to the legend.
+
+**Syntax colours are not series on light.** Syntax is text and needs 4.5:1, so it takes deeper steps of the same hues (`categorical.light-text`). Sharing one palette is what made light charts dark: every series was held to text contrast.
 
 | Role | Hue | Dark | Light |
 | --- | --- | --- | --- |
-| `series-1` | Blue | `#6DADFF` | `#155AA7` |
-| `series-2` | Orange | `#FEB98F` | `#693002` |
-| `series-3` | Teal | `#04A19B` | `#05837E` |
-| `series-4` | Magenta | `#EB88C2` | `#8E336C` |
-| `series-5` | Violet | `#D3BDFE` | `#4F2980` |
-| `series-6` | Gold | `#A98904` | `#896F02` |
-| `series-7` | Green | `#74C16C` | `#1F6D18` |
-| `series-8` | Slate | `#C6CBD1` | `#3E4348` |
+| `series-1` | Blue | `#6DADFF` | `#4087DE` |
+| `series-2` | Orange | `#FEB98F` | `#E6803B` |
+| `series-3` | Teal | `#04A19B` | `#04A19B` |
+| `series-4` | Magenta | `#EB88C2` | `#AC4785` |
+| `series-5` | Violet | `#D3BDFE` | `#B993FB` |
+| `series-6` | Gold | `#A98904` | `#D3AD1B` |
+| `series-7` | Green | `#74C16C` | `#4A9C42` |
+| `series-8` | Slate | `#C6CBD1` | `#8D9399` |
 
 **Use them in order.** A chart with three series takes 1, 2 and 3, so the same position means the same colour everywhere. The order is what makes the palette work for colour-blind readers: lightness alternates across three levels, so the first six stay apart under protanopia, deuteranopia and tritanopia even where their hues collapse. Seven and eight do not reliably separate from the rest, so a chart past six series labels every one directly rather than relying on a legend. Past eight, fold the tail into `series-8` as "Other". Slate is last and near-neutral for that reason.
 
@@ -163,11 +172,11 @@ The test for which palette a chart takes: **would a reader want to act on one of
 
 **Tracks and grids.** A ring or bar fills over `surface-inert`. Where the track's own extent matters, as in a ring whose empty part is the reading, outline it in `border-control`. Axis labels are `content-muted` in the `annotation` type role, and gridlines are `border-subtle`.
 
-**Category chips.** A label with a category but no state is the neutral filterable chip from the table below, with a 6px dot in its `series-N` before the text. The dot carries the category; the chip stays neutral, because the pastel pill means status.
+**Category chips.** A label with a category but no state is the neutral filterable chip from the table below, with an 8px dot in its `series-N` before the text. The dot carries the category; the chip stays neutral, because the pastel pill means status.
 
 ### One colour per state
 
-A state has one colour everywhere it appears. If scaling is amber in a status pill, it is amber in the chart above it, in the dot beside the count, and in the row's edge. The pill is the reference, because it is where the word sits next to the colour, so a product that has to choose looks at its pill first and draws everything else to match.
+A state has one colour everywhere it appears. If scaling is amber in a status pill, it is amber in the chart above it, in the glyph beside the count, and in the row's edge. The pill is the reference, because it is where the word sits next to the colour, so a product that has to choose looks at its pill first and draws everything else to match.
 
 Two consequences follow. A chart cannot give two states different colours when their pills share one: scaling up and scaling down are both amber in the pill, so a chart that wants to show both merges them into one segment under a shared label rather than inventing a second amber or borrowing a series colour. The reading is coarser and it is honest; a colour the pill never uses would tell the reader there is a state that does not exist. And a state that reads as an error in one place cannot read as progress in another: a cluster being destroyed on purpose is in progress, so it is info in the pill and info in the chart, not danger in either.
 
@@ -202,11 +211,11 @@ Colour and the pastel pill mean status. Anything that isn't a status loses both.
 
 | Role | Treatment | Clickable |
 | --- | --- | --- |
-| Status | Chip: `-subtle` background, `-subtle-border` edge, `-text` label, and a 6px dot in `-text` before the word | Never |
-| Status count | The number in `content-emphasis`, with the status dot moved onto its label (`content-secondary`) | No |
+| Status | Chip: `-subtle` background, `-subtle-border` edge, `-text` label, and the state's glyph in `-text` before the word ([Iconography](iconography.md#state-glyphs)) | Never |
+| Status count | The number in `content-emphasis`, with the status glyph moved onto its label (`content-secondary`) | No |
 | Value | Plain text in `content-default`, no chip. A coloured word that isn't a state, such as a capacity figure or an ID | No |
 | Filterable label | Outlined neutral chip: transparent, `border-strong` edge, `content-default` text, key in `content-secondary` | Yes, filters |
-| Category label | The filterable label with a 6px dot in `series-N` before the text | Yes, filters |
+| Category label | The filterable label with an 8px dot in `series-N` before the text | Yes, filters |
 | Applied filter | Filled neutral chip (`surface-hover`) with × | Yes, removes |
 | Count badge | Small neutral badge: `surface-hover`, `content-default` | No |
 | Callout, banner, tile | The large status surface above | No |
@@ -217,11 +226,11 @@ Colour and the pastel pill mean status. Anything that isn't a status loses both.
 | Selected segment | On a `surface-inset` track, a `surface-inert` thumb with a `border-strong` ring and a `content-emphasis` label; unselected segments are `content-muted`. One of several views is showing, nothing is switched on | Yes |
 | Inline code | `content-emphasis` on `surface-inset` | No |
 
-A status count is a number whose meaning is a state: "5 need a look", "12 running", "2 firing". Colouring the number itself makes a dashboard of stat cards read as a wall of alerts, and a green or amber figure at display size fails contrast on light. The dot on the label carries the state; the number stays readable. A number that is a quantity rather than a state (free capacity, allocated cores) is a value.
+A status count is a number whose meaning is a state: "5 need a look", "12 running", "2 firing". Colouring the number itself makes a dashboard of stat cards read as a wall of alerts, and a green or amber figure at display size fails contrast on light. The glyph on the label carries the state; the number stays readable. A number that is a quantity rather than a state (free capacity, allocated cores) is a value.
 
 A status is never a button. If an element changes something when clicked, it's an action or a toggle and takes that treatment, whatever colour it wore before.
 
-Colour is never the only carrier of state. A status needs a word, an icon, or a position as well, and the status vocabulary itself is a separate open piece of work ([ux#15](https://github.com/siderolabs/ux/issues/15)).
+Colour is never the only carrier of state. Every status takes a glyph from the closed set in [Iconography](iconography.md#state-glyphs) and keeps its word, and the status vocabulary itself is a separate open piece of work ([ux#15](https://github.com/siderolabs/ux/issues/15)).
 
 ### Borders
 
@@ -288,6 +297,18 @@ Both faces ship with the token package as woff2 and are served by the product, n
 
 `shadow-focus` is the focus ring. It is never removed without a replacement, and `outline: none` without one is a defect. The ring is applied on `:focus-visible`, not `:focus`, so a mouse click does not draw it, and it is applied once, in a base rule, rather than per component: a product that suppresses the browser outline on a component then has to remember to draw the ring there too, and the places it forgets are the ones nobody tabs through while developing. Where a component already carries a `ring` or `shadow` (a selected segment, a raised card), the focus ring is drawn with `outline` in the same colour and offset instead, so the two do not fight over one property.
 
+## Choosing a theme
+
+Every product ships both themes and lets the reader pick, the same way everywhere, so someone who has set it once in one product finds it in the next.
+
+**Three choices: Light, Dark and System. System is the default.** A first visit follows the operating system, and System keeps following it, so a laptop that switches to dark at sunset takes an open tab with it. Light and Dark are pinned and stay put.
+
+**One control, at the right end of the top bar.** An icon button whose icon shows the current choice, not the theme on screen: a sun for Light, a moon for Dark, a monitor for System ([Iconography](iconography.md#the-theme-choice)). Clicking it opens a menu of the three choices, each with its icon and its name, the current one checked. The button's accessible name carries the choice ("Theme: System"), because the icon alone says nothing to a screen reader. A two-state toggle is not this control. It has no way to say "follow the system", so a reader who flips it once has lost System for good.
+
+**The choice belongs to the browser, not the account.** It is kept in local storage. The same person signs in from a bright office and from a dark operations room, and the right theme follows the screen rather than the login.
+
+**The page never flashes the wrong theme.** The choice is applied before first paint and on the root element, so a light-mode reader never sees a dark frame while the app loads, and menus and dialogs rendered outside the app's own tree take the theme with everything else. The mechanics are in the [integration guide](integration.md#choosing-a-theme).
+
 ## Navigation grammar
 
 The products have drifted most here, and tokens do not fix it.
@@ -337,6 +358,20 @@ Rules that live only in a document decay. Each product runs the lint preset from
 - The stylelint config covers the same ground for SCSS.
 - `npm run contrast` in the token repo fails the build when a role pair drops below its threshold. Exceptions are listed in the script with a reason, not silently skipped.
 - `talos-audit` checks a rendered page: type below the floor or off the scale, spacing off the menu, typefaces that are not ours or not self-hosted, and colours outside the active theme. Run it on a migrated page before calling the migration done.
+
+### Contrast exceptions
+
+The floors are 4.5:1 for text and 3:1 for graphics (WCAG 1.4.3 and 1.4.11). These are the only places the build accepts less, each printed with its reason on every run. A product may not add to this list; a new exception is a change to this repository.
+
+| Exception | What it allows | Why, and the condition it depends on |
+| --- | --- | --- |
+| Chart fills on light | Series fills and `status-*-chart` segments hold 2:1 on the card, not 3:1. Category marker dots on the page are not enforced. | 1.4.11 covers graphics required to understand the content. A segment always has a legend entry or label carrying its value, and a marker always sits beside its word, so the colour is never the only way to read it. A chart that relies on colour alone (no legend, no labels, colour-coded points) is not covered and uses 3:1. Dark is not covered. |
+| Disabled text | `content-disabled` below 4.5:1. | 1.4.3 exempts disabled controls. Disabled state is also carried by something other than colour. |
+| Text on hover | `content-muted` and `status-*-text` on `surface-hover`, at 4.1 to 4.3:1 on light. | Hover is a transient backdrop under the pointer. The same text meets 4.5:1 at rest. |
+| Primary button hover | The label on `accent-fill-hover` at about 4.0:1 over light surfaces. | Transient, and settled in design review; the label meets 4.5:1 at rest. |
+| Banner gradient ends | White text on the logo-colour ends of the banner gradient. | Text sits on the solid band from 30% to 70%, which is enforced as `accent-fill`. Open for narrow viewports, where text can reach the ends. |
+
+Decorative edges (hairline borders, a chip's edge, a light status surface's border) are not exceptions: WCAG sets no floor for them. They are reported, and chip and surface edges are held to a visibility floor so the three state colours stay at parity.
 
 Adopt with a suppressions file rather than a rewrite. Existing violations are recorded once and the count only goes down, so new code is constrained from day one without blocking on a cleanup. A first baseline of well over a thousand lines is normal and is the intended shape.
 

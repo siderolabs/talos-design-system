@@ -56,9 +56,10 @@
 
   "status": {
     "$type": "color",
-    "$description": "Eight roles per state. `default` is the hue as a graphic (dot, icon, chart series) and must reach 3:1 on a card. `text` is the label on a normal surface at 4.5:1. `fill` is a solid badge or button background with `on-fill` as its label, and on dark it is also the 3px edge on large status surfaces. `subtle` and `subtle-border` are a status chip: `text` on a pastel with a faint edge of the same hue. `surface` and `border` are a large status surface (callout, banner, tile). On dark those are neutral, and the state is carried by a 3px edge in `fill`, because a tinted dark surface cannot get light enough without costing the text on it contrast. Body text on a large surface stays content-default; only the icon and title take `text`.",
+    "$description": "Eight roles per state. `default` is the hue as a graphic (dot, glyph, progress fill) at 3:1 on every surface it sits on, including its own chip. `chart` is the hue as a chart segment, which on light is lighter still and holds 2:1 on the card, its reading carried by a legend or label. `text` is the label on a normal surface at 4.5:1. `fill` is a solid badge or button background with `on-fill` as its label, and on dark it is also the 3px edge on large status surfaces. `subtle` and `subtle-border` are a status chip: `text` on a pastel with a faint edge of the same hue. `surface` and `border` are a large status surface (callout, banner, tile). On dark those are neutral, and the state is carried by a 3px edge in `fill`, because a tinted dark surface cannot get light enough without costing the text on it contrast. Body text on a large surface stays content-default; the title takes `text` and the icon `default`.",
     "success": {
       "default": { "$value": "{green.4}" },
+      "chart":   { "$value": "{status.success.default}", "$description": "The state as a chart segment, beside a legend or label that carries the number. On light it is lighter than `default` so a chart reads as one family with the series; on dark it is `default`." },
       "text":    { "$value": "{green.4}" },
       "fill":    { "$value": "{green.5}" },
       "on-fill": { "$value": "{white}" },
@@ -69,6 +70,7 @@
     },
     "warning": {
       "default": { "$value": "{amber.5}" },
+      "chart":   { "$value": "{status.warning.default}" },
       "text":    { "$value": "{amber.5}" },
       "fill":    { "$value": "{amber.4}" },
       "on-fill": { "$value": "{cream.10}", "$description": "Dark label. The warning fill is too light for white." },
@@ -79,6 +81,7 @@
     },
     "danger": {
       "default": { "$value": "{scarlet.4}", "$description": "A true red, separate from the crimson accent." },
+      "chart":   { "$value": "{status.danger.default}" },
       "text":    { "$value": "{scarlet.4}" },
       "fill":    { "$value": "{scarlet.5}" },
       "on-fill": { "$value": "{white}" },
@@ -89,6 +92,7 @@
     },
     "info": {
       "default": { "$value": "{stone.1}", "$description": "Neutral grey. The brand has no blue." },
+      "chart":   { "$value": "{status.info.default}" },
       "text":    { "$value": "{stone.1}" },
       "fill":    { "$value": "{stone.2}" },
       "on-fill": { "$value": "{white}" },
@@ -101,7 +105,7 @@
 
   "series": {
     "$type": "color",
-    "$description": "Categorical data colours: chart series in this order, and the marker dot on a category chip. Graphics only, at 3:1: never a text colour, never a chip fill, never a status. A label drawn on a series fill takes content-inverse. Past six series, label every one; past eight, fold the tail into 8.",
+    "$description": "Categorical data colours: chart series in this order, and the marker dot on a category chip. Graphics only: never a text colour, never a chip fill, never a status. On light a chart fill holds 2:1 on the card and is always named by a legend or label; on dark every series clears 3:1. A label drawn on a series fill takes on-series of the same number. Past six series, label every one; past eight, fold the tail into 8.",
     "1": { "$value": "{categorical.dark.1}" },
     "2": { "$value": "{categorical.dark.2}" },
     "3": { "$value": "{categorical.dark.3}" },
@@ -110,6 +114,19 @@
     "6": { "$value": "{categorical.dark.6}" },
     "7": { "$value": "{categorical.dark.7}" },
     "8": { "$value": "{categorical.dark.8}", "$description": "The remainder: other, unallocated." }
+  },
+
+  "on-series": {
+    "$type": "color",
+    "$description": "The label on a series fill, one per series: a segment of a stacked bar wide enough to name itself. Each reaches 4.5:1 on its series. On dark every series is light and takes the dark label; on light the deeper series take white and the lighter ones a dark label.",
+    "1": { "$value": "{content.inverse}" },
+    "2": { "$value": "{content.inverse}" },
+    "3": { "$value": "{content.inverse}" },
+    "4": { "$value": "{content.inverse}" },
+    "5": { "$value": "{content.inverse}" },
+    "6": { "$value": "{content.inverse}" },
+    "7": { "$value": "{content.inverse}" },
+    "8": { "$value": "{content.inverse}" }
   },
 
   "syntax": {

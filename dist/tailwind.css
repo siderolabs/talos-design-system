@@ -86,6 +86,7 @@
   --color-accent-fill-active: var(--talos-accent-fill-active);
   --color-accent-subtle: var(--talos-accent-subtle);
   --color-status-success-default: var(--talos-status-success-default);
+  --color-status-success-chart: var(--talos-status-success-chart);
   --color-status-success-text: var(--talos-status-success-text);
   --color-status-success-fill: var(--talos-status-success-fill);
   --color-status-success-on-fill: var(--talos-status-success-on-fill);
@@ -94,6 +95,7 @@
   --color-status-success-surface: var(--talos-status-success-surface);
   --color-status-success-border: var(--talos-status-success-border);
   --color-status-warning-default: var(--talos-status-warning-default);
+  --color-status-warning-chart: var(--talos-status-warning-chart);
   --color-status-warning-text: var(--talos-status-warning-text);
   --color-status-warning-fill: var(--talos-status-warning-fill);
   --color-status-warning-on-fill: var(--talos-status-warning-on-fill);
@@ -102,6 +104,7 @@
   --color-status-warning-surface: var(--talos-status-warning-surface);
   --color-status-warning-border: var(--talos-status-warning-border);
   --color-status-danger-default: var(--talos-status-danger-default);
+  --color-status-danger-chart: var(--talos-status-danger-chart);
   --color-status-danger-text: var(--talos-status-danger-text);
   --color-status-danger-fill: var(--talos-status-danger-fill);
   --color-status-danger-on-fill: var(--talos-status-danger-on-fill);
@@ -110,6 +113,7 @@
   --color-status-danger-surface: var(--talos-status-danger-surface);
   --color-status-danger-border: var(--talos-status-danger-border);
   --color-status-info-default: var(--talos-status-info-default);
+  --color-status-info-chart: var(--talos-status-info-chart);
   --color-status-info-text: var(--talos-status-info-text);
   --color-status-info-fill: var(--talos-status-info-fill);
   --color-status-info-on-fill: var(--talos-status-info-on-fill);
@@ -125,6 +129,14 @@
   --color-series-6: var(--talos-series-6);
   --color-series-7: var(--talos-series-7);
   --color-series-8: var(--talos-series-8);
+  --color-on-series-1: var(--talos-on-series-1);
+  --color-on-series-2: var(--talos-on-series-2);
+  --color-on-series-3: var(--talos-on-series-3);
+  --color-on-series-4: var(--talos-on-series-4);
+  --color-on-series-5: var(--talos-on-series-5);
+  --color-on-series-6: var(--talos-on-series-6);
+  --color-on-series-7: var(--talos-on-series-7);
+  --color-on-series-8: var(--talos-on-series-8);
   --color-syntax-plain: var(--talos-syntax-plain);
   --color-syntax-key: var(--talos-syntax-key);
   --color-syntax-string: var(--talos-syntax-string);
