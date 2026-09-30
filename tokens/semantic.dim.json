@@ -1,0 +1,25 @@
+{
+  "$description": "Semantic roles, dim theme. An overlay on dark: a role not named here takes its dark value, so status, series, accent, syntax and highlight colours are shared. Dim only moves the planes and the text, onto the dusk ramp: Omni's original blue-grey values. It may not introduce a role that dark lacks.",
+
+  "surface": {
+    "$type": "color",
+    "page":    { "$value": "{dusk.0}", "$description": "Body, the content well behind cards" },
+    "chrome":  { "$value": "{dusk.1}", "$description": "Topbar and sidenav" },
+    "card":    { "$value": "{dusk.2}", "$description": "Cards, tables, panels" },
+    "inset":   { "$value": "{dusk.3}", "$description": "Inputs, secondary buttons" },
+    "raised":  { "$value": "{dusk.3}", "$description": "Modals, dropdowns, popovers" },
+    "hover":   { "$value": "{dusk.4}", "$description": "Interactive hover and tertiary fills" },
+    "inert":   { "$value": "{dusk.5}", "$description": "Chart grid, track fills, skeleton states" },
+    "scrim":   { "$value": "rgba(16, 17, 24, 0.80)", "$description": "The page colour at 80%, behind a modal or drawer." }
+  },
+
+  "content": {
+    "$type": "color",
+    "emphasis":  { "$value": "{dusk.10}", "$description": "Headings, active nav, key figures" },
+    "default":   { "$value": "{dusk.9}",  "$description": "Body copy, table cells" },
+    "secondary": { "$value": "{dusk.8}",  "$description": "Labels, eyebrows, column headers" },
+    "muted":     { "$value": "{dusk.7}",  "$description": "Hints, placeholders, timestamps" },
+    "disabled":  { "$value": "{dusk.6}",  "$description": "Disabled controls. Exempt from AA per WCAG 1.4.3, and never the only signal that a control is off." },
+    "inverse":   { "$value": "{dusk.1}",  "$description": "Text on surface-inverse" }
+  }
+}

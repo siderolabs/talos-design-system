@@ -33,6 +33,22 @@
     "10": { "$value": "#1A1A18", "$description": "Headings, emphasis" }
   },
 
+  "dusk": {
+    "$type": "color",
+    "$description": "Dim-theme neutral ramp. Omni's original blue-grey ladder, for people who find the near-black planes too stark: the surfaces sit lighter and closer together, and the text stops short of white. Used only by the Dim theme, which otherwise inherits dark. Mirrors the ink ramp step for step.",
+    "0":  { "$value": "#101118", "$description": "Content well" },
+    "1":  { "$value": "#13141C", "$description": "Chrome canvas (topbar, sidenav)" },
+    "2":  { "$value": "#15161E", "$description": "Cards, tables. One small step above the chrome, so the sidebar and cards read at one depth." },
+    "3":  { "$value": "#191B24", "$description": "Inputs, secondary buttons, raised surfaces" },
+    "4":  { "$value": "#1F222E", "$description": "Hover, tertiary fills" },
+    "5":  { "$value": "#272932", "$description": "Chart grid, inert fills" },
+    "6":  { "$value": "#5B5C64", "$description": "Disabled only. Below AA as text by design." },
+    "7":  { "$value": "#878990", "$description": "Hints, placeholders, timestamps" },
+    "8":  { "$value": "#9FA1A6", "$description": "Labels, eyebrows, column headers" },
+    "9":  { "$value": "#C3C3C7", "$description": "Body text" },
+    "10": { "$value": "#E8E8E9", "$description": "Headings, emphasis. Short of white on purpose." }
+  },
+
   "red": {
     "$type": "color",
     "$description": "Brand accent, a crimson. Step 3 is the product accent and the primary button fill: white on it reaches 4.50:1. The vivid fill cannot be used as text on cream, so accent text has its own steps, tinted on dark (1) and shaded on light (4). Danger is a separate, truer red (scarlet) so a destructive state never reads as a link.",

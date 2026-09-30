@@ -6,7 +6,7 @@ How each stack takes the token package. The rules are in [`style-guide.md`](styl
 
 | File | For | Contains |
 | --- | --- | --- |
-| `dist/tokens.css` | Any web product | `--talos-*` custom properties; dark under `:root`, light under `[data-theme="light"]` |
+| `dist/tokens.css` | Any web product | `--talos-*` custom properties; dark under `:root`, light under `[data-theme="light"]`, dim under `[data-theme="dim"]` |
 | `dist/tokens.scss` | Sass consumers (Bootstrap-based UIs) | `$talos-*` compile-time variables, `talos-tokens-dark` / `talos-tokens-light` mixins, and `talos-type($role)` |
 | `dist/tailwind.css` | Tailwind v4 consumers | `@theme inline` block mapping utility names onto the custom properties, plus `type-*` role utilities |
 | `dist/tailwind-colour.css` | Tailwind v4 consumers adopting colour first | The colour and elevation part of `tailwind.css` only, leaving the host's fonts, sizes and spacing alone |
@@ -21,7 +21,7 @@ This repository is public to read and org-only to write. Consumers take it as a 
 
 ```json
 "dependencies": {
-  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.5.0"
+  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.6.0"
 }
 ```
 
@@ -100,9 +100,9 @@ Variable weight 400 to 700, latin and latin-ext, 81 kB for all four files. Both 
 
 The behaviour is in the [style guide](style-guide.md#choosing-a-theme). These are the parts every product implements the same way.
 
-**Storage.** Local storage key `theme`, value `light`, `dark` or `system`. A missing or unrecognised value means System, so an older build never strands a reader on a value it doesn't know.
+**Storage.** Local storage key `theme`, value `light`, `dark`, `dim` or `system`. A missing or unrecognised value means System, so an older build never strands a reader on a value it doesn't know.
 
-**The attribute goes on `<html>`.** Set `data-theme` to the resolved theme, `light` or `dark`, never `system`, and set `color-scheme` to match so native scrollbars and form controls follow. Custom properties resolve where they are declared, so a light block scoped to an app container leaves any menu or dialog that renders into `<body>` on the dark values. A Bootstrap host sets `data-bs-theme` alongside it.
+**The attribute goes on `<html>`.** Set `data-theme` to the resolved theme, `light`, `dark` or `dim`, never `system`, and set `color-scheme` to match so native scrollbars and form controls follow. Dim's `color-scheme` is `dark`, and so is anything else that asks for light or dark (a chart theme, a code editor's base theme, a diff viewer). Custom properties resolve where they are declared, so a light block scoped to an app container leaves any menu or dialog that renders into `<body>` on the dark values. A Bootstrap host sets `data-bs-theme` alongside it.
 
 **Apply it before first paint** with an inline script in `<head>`, ahead of the stylesheets and the app bundle:
 
@@ -111,15 +111,15 @@ The behaviour is in the [style guide](style-guide.md#choosing-a-theme). These ar
   (function () {
     var choice = 'system'
     try { choice = localStorage.getItem('theme') || 'system' } catch (e) {}
-    var theme = choice === 'light' || choice === 'dark' ? choice
+    var theme = choice === 'light' || choice === 'dark' || choice === 'dim' ? choice
       : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     document.documentElement.setAttribute('data-theme', theme)
-    document.documentElement.style.colorScheme = theme
+    document.documentElement.style.colorScheme = theme === 'light' ? 'light' : 'dark'
   })()
 </script>
 ```
 
-The `try` is there because storage access throws in some privacy modes. Under a Content Security Policy that forbids inline script, give the tag the page's nonce rather than loosening the policy. Declare `<meta name="color-scheme" content="dark light">` as well.
+A product that doesn't offer Dim can keep `dim` out of the first line, and a stored `dim` then falls through to System. The `try` is there because storage access throws in some privacy modes. Under a Content Security Policy that forbids inline script, give the tag the page's nonce rather than loosening the policy. Declare `<meta name="color-scheme" content="dark light">` as well.
 
 **Follow the system while it's chosen.** Once the app is running, listen for changes to `prefers-color-scheme` and re-resolve when the choice is System. Anything that copied colours out of the tokens at start-up (a chart theme, a code editor theme) rebuilds when the resolved theme changes, the same as for [charts](../AGENTS.md).
 

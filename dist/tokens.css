@@ -32,6 +32,19 @@
   --talos-cream-9: #3A3A38;  /* Body text */
   --talos-cream-10: #1A1A18;  /* Headings, emphasis */
 
+  /* dusk */
+  --talos-dusk-0: #101118;  /* Content well */
+  --talos-dusk-1: #13141C;  /* Chrome canvas (topbar, sidenav) */
+  --talos-dusk-2: #15161E;  /* Cards, tables. One small step above the chrome, so the sidebar and cards read at one depth. */
+  --talos-dusk-3: #191B24;  /* Inputs, secondary buttons, raised surfaces */
+  --talos-dusk-4: #1F222E;  /* Hover, tertiary fills */
+  --talos-dusk-5: #272932;  /* Chart grid, inert fills */
+  --talos-dusk-6: #5B5C64;  /* Disabled only. Below AA as text by design. */
+  --talos-dusk-7: #878990;  /* Hints, placeholders, timestamps */
+  --talos-dusk-8: #9FA1A6;  /* Labels, eyebrows, column headers */
+  --talos-dusk-9: #C3C3C7;  /* Body text */
+  --talos-dusk-10: #E8E8E9;  /* Headings, emphasis. Short of white on purpose. */
+
   /* red */
   --talos-red-1: #E48E96;  /* Tinted. Accent text on dark surfaces. */
   --talos-red-2: #DB6973;  /* Hover for accent-coloured text and icons on dark */
@@ -474,4 +487,116 @@
   --talos-shadow-dropdown: 0 4px 16px rgba(26, 26, 24, 0.12);
   --talos-shadow-modal: 0 8px 32px rgba(26, 26, 24, 0.16);
   --talos-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.30);
+}
+
+/*
+ * Dim theme, an optional second dark theme: cooler, lighter planes and
+ * text short of white. Every role is re-declared, not only the ones dim
+ * changes, so the block also works on an element below the root.
+ */
+[data-theme="dim"],
+.talos-theme-dim {
+  --talos-surface-page: var(--talos-dusk-0);
+  --talos-surface-chrome: var(--talos-dusk-1);
+  --talos-surface-card: var(--talos-dusk-2);
+  --talos-surface-inset: var(--talos-dusk-3);
+  --talos-surface-raised: var(--talos-dusk-3);
+  --talos-surface-hover: var(--talos-dusk-4);
+  --talos-surface-inert: var(--talos-dusk-5);
+  --talos-surface-subtle: rgba(255, 255, 255, 0.05);
+  --talos-surface-inverse: var(--talos-ink-10);
+  --talos-surface-scrim: rgba(16, 17, 24, 0.80);
+  --talos-surface-paper: var(--talos-paper);
+  --talos-content-emphasis: var(--talos-dusk-10);
+  --talos-content-default: var(--talos-dusk-9);
+  --talos-content-secondary: var(--talos-dusk-8);
+  --talos-content-muted: var(--talos-dusk-7);
+  --talos-content-disabled: var(--talos-dusk-6);
+  --talos-content-inverse: var(--talos-dusk-1);
+  --talos-content-on-accent: var(--talos-white);
+  --talos-border-subtle: rgba(255, 255, 255, 0.06);
+  --talos-border-default: rgba(255, 255, 255, 0.08);
+  --talos-border-strong: rgba(255, 255, 255, 0.14);
+  --talos-border-control: rgba(255, 255, 255, 0.36);
+  --talos-border-accent: var(--talos-red-3);
+  --talos-border-focus: rgba(225, 45, 70, 0.35);
+  --talos-accent-default: var(--talos-red-3);
+  --talos-accent-hover: var(--talos-red-2);
+  --talos-accent-text: var(--talos-red-1);
+  --talos-accent-fill: var(--talos-red-3);
+  --talos-accent-fill-hover: rgba(225, 45, 70, 0.9);
+  --talos-accent-fill-active: var(--talos-red-7);
+  --talos-accent-subtle: rgba(228, 142, 150, 0.20);
+  --talos-accent-gradient: linear-gradient(90deg, var(--talos-gradient-display-1) 0%, var(--talos-gradient-display-2) 51%, var(--talos-gradient-display-3) 100%);
+  --talos-accent-gradient-fill: linear-gradient(270deg, var(--talos-gradient-display-3) 0%, var(--talos-red-3) 30%, var(--talos-red-3) 70%, var(--talos-gradient-display-1) 100%);
+  --talos-status-success-default: var(--talos-green-4);
+  --talos-status-success-chart: var(--talos-status-success-default);
+  --talos-status-success-text: var(--talos-green-4);
+  --talos-status-success-fill: var(--talos-green-5);
+  --talos-status-success-on-fill: var(--talos-white);
+  --talos-status-success-subtle: var(--talos-green-8);
+  --talos-status-success-subtle-border: var(--talos-green-7);
+  --talos-status-success-surface: var(--talos-surface-card);
+  --talos-status-success-border: var(--talos-surface-inert);
+  --talos-status-warning-default: var(--talos-amber-5);
+  --talos-status-warning-chart: var(--talos-status-warning-default);
+  --talos-status-warning-text: var(--talos-amber-5);
+  --talos-status-warning-fill: var(--talos-amber-4);
+  --talos-status-warning-on-fill: var(--talos-cream-10);
+  --talos-status-warning-subtle: var(--talos-amber-8);
+  --talos-status-warning-subtle-border: var(--talos-amber-7);
+  --talos-status-warning-surface: var(--talos-surface-card);
+  --talos-status-warning-border: var(--talos-surface-inert);
+  --talos-status-danger-default: var(--talos-scarlet-4);
+  --talos-status-danger-chart: var(--talos-status-danger-default);
+  --talos-status-danger-text: var(--talos-scarlet-4);
+  --talos-status-danger-fill: var(--talos-scarlet-5);
+  --talos-status-danger-on-fill: var(--talos-white);
+  --talos-status-danger-subtle: var(--talos-scarlet-8);
+  --talos-status-danger-subtle-border: var(--talos-scarlet-7);
+  --talos-status-danger-surface: var(--talos-surface-card);
+  --talos-status-danger-border: var(--talos-surface-inert);
+  --talos-status-info-default: var(--talos-stone-1);
+  --talos-status-info-chart: var(--talos-status-info-default);
+  --talos-status-info-text: var(--talos-stone-1);
+  --talos-status-info-fill: var(--talos-stone-2);
+  --talos-status-info-on-fill: var(--talos-white);
+  --talos-status-info-subtle: var(--talos-surface-hover);
+  --talos-status-info-subtle-border: rgba(0, 0, 0, 0);
+  --talos-status-info-surface: var(--talos-surface-card);
+  --talos-status-info-border: var(--talos-surface-inert);
+  --talos-series-1: var(--talos-categorical-dark-1);
+  --talos-series-2: var(--talos-categorical-dark-2);
+  --talos-series-3: var(--talos-categorical-dark-3);
+  --talos-series-4: var(--talos-categorical-dark-4);
+  --talos-series-5: var(--talos-categorical-dark-5);
+  --talos-series-6: var(--talos-categorical-dark-6);
+  --talos-series-7: var(--talos-categorical-dark-7);
+  --talos-series-8: var(--talos-categorical-dark-8);
+  --talos-on-series-1: var(--talos-content-inverse);
+  --talos-on-series-2: var(--talos-content-inverse);
+  --talos-on-series-3: var(--talos-content-inverse);
+  --talos-on-series-4: var(--talos-content-inverse);
+  --talos-on-series-5: var(--talos-content-inverse);
+  --talos-on-series-6: var(--talos-content-inverse);
+  --talos-on-series-7: var(--talos-content-inverse);
+  --talos-on-series-8: var(--talos-content-inverse);
+  --talos-syntax-plain: var(--talos-content-default);
+  --talos-syntax-key: var(--talos-categorical-dark-1);
+  --talos-syntax-string: var(--talos-categorical-dark-4);
+  --talos-syntax-constant: var(--talos-categorical-dark-2);
+  --talos-syntax-keyword: var(--talos-categorical-dark-5);
+  --talos-syntax-punctuation: var(--talos-content-secondary);
+  --talos-syntax-comment: var(--talos-content-secondary);
+  --talos-syntax-invalid: var(--talos-status-danger-text);
+  --talos-highlight-match: #141D29;
+  --talos-highlight-match-border: var(--talos-categorical-dark-1);
+  --talos-highlight-added: #202F23;
+  --talos-highlight-added-emphasis: #083316;
+  --talos-highlight-removed: #3A2724;
+  --talos-highlight-removed-emphasis: #521613;
+  --talos-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --talos-shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --talos-shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --talos-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.35);
 }

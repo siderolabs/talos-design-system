@@ -72,9 +72,20 @@ const primitives = flatten(read('primitive.json'))
 const dark = flatten(read('semantic.dark.json'))
 const light = flatten(read('semantic.light.json'))
 
+// Dim is an overlay on dark: it re-points the planes and the text and inherits
+// every other role. An overlay role dark lacks would exist in one theme only.
+const dimOverlay = flatten(read('semantic.dim.json'))
+const strays = [...dimOverlay.keys()].filter((k) => !dark.has(k))
+if (strays.length) {
+  console.error('semantic.dim.json names roles dark does not have:\n  ' + strays.join('\n  '))
+  process.exit(1)
+}
+const dim = new Map([...dark].map(([name, token]) => [name, dimOverlay.get(name) ?? token]))
+
 // Semantic themes resolve against the primitives and against themselves.
 const darkLookup = new Map([...primitives, ...dark])
 const lightLookup = new Map([...primitives, ...light])
+const dimLookup = new Map([...primitives, ...dim])
 
 // A role present in one theme and missing from the other is the single most
 // common way a token system rots, so it is a build failure rather than a lint.
@@ -190,6 +201,18 @@ function buildCss() {
   }
   lines.push('}', '')
 
+  lines.push('/*')
+  lines.push(' * Dim theme, an optional second dark theme: cooler, lighter planes and')
+  lines.push(' * text short of white. Every role is re-declared, not only the ones dim')
+  lines.push(' * changes, so the block also works on an element below the root.')
+  lines.push(' */')
+  lines.push('[data-theme="dim"],')
+  lines.push('.talos-theme-dim {')
+  for (const [name, token] of dim) {
+    lines.push(`  ${PREFIX}${name}: ${toVarReference(token.value)};`)
+  }
+  lines.push('}', '')
+
   return lines.join('\n')
 }
 
@@ -218,6 +241,7 @@ function buildScss() {
   for (const [theme, tokens, lookup] of [
     ['dark', dark, darkLookup],
     ['light', light, lightLookup],
+    ['dim', dim, dimLookup],
   ]) {
     lines.push(`// Semantic roles, ${theme} theme`)
     for (const [name, token] of tokens) {
@@ -229,6 +253,7 @@ function buildScss() {
   for (const [theme, tokens] of [
     ['dark', dark],
     ['light', light],
+    ['dim', dim],
   ]) {
     lines.push(`// Emits the ${theme} semantic roles as custom properties. Include inside`)
     lines.push(`// whatever selector the host app uses for its ${theme} theme.`)
@@ -683,6 +708,7 @@ function buildJson() {
       semantic: {
         dark: Object.fromEntries([...dark].map((t) => entry(t, darkLookup))),
         light: Object.fromEntries([...light].map((t) => entry(t, lightLookup))),
+        dim: Object.fromEntries([...dim].map((t) => entry(t, dimLookup))),
       },
       typeRoles: Object.fromEntries(
         [...roles].map(([name, token]) => [
@@ -722,6 +748,6 @@ for (const [name, contents] of Object.entries(artifacts)) {
 }
 
 console.log(
-  `\n${primitives.size} primitives, ${dark.size} semantic roles \u00d7 2 themes, ` +
+  `\n${primitives.size} primitives, ${dark.size} semantic roles \u00d7 3 themes, ` +
     `${primitives.size + dark.size} custom properties per theme.`,
 )
