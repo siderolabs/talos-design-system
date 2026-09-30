@@ -20,7 +20,7 @@ Tokens are in two tiers and only one of them is for you.
 
 **Semantic roles** name a job: `surface-card`, `content-muted`, `accent-fill`, `status-danger-text`. These are the contract. Every product uses the same role names, so a value change is a token release rather than a refactor, and a theme is a set of role values rather than a rewrite.
 
-There are two themes, dark and light. Dark is the default. Both define exactly the same roles; a role in one and not the other fails the build.
+There are two themes, dark and light, and one optional variant of dark, [Dim](#dim). Dark is the default. Dark and light define exactly the same roles; a role in one and not the other fails the build. Dim is an overlay on dark and may only re-point roles dark already has.
 
 ## Colour
 
@@ -64,6 +64,28 @@ Disabled is the one role allowed below AA, because WCAG 1.4.3 exempts inactive c
 A disabled run of text takes `content-disabled`. A disabled composite control (a switch, a step in a stepper, a button with an icon and a fill) fades the whole control to 50% opacity instead, because re-pointing three or four roles at once produces a control that looks broken rather than off. The same whole-element fade is how a composite is pushed out of attention for other reasons: the graph nodes that fall outside a filter, a stat block while its data loads. The rule is that opacity fades an element, never a colour. A single colour at reduced alpha is a new colour, and it has to be a role: `surface-subtle` for a wash, `accent-subtle` for a tint, `surface-scrim` behind a modal. `brightness` and other filters are never how colour changes: a hover or pressed state re-points a role (`surface-hover`, `accent-fill-hover`, `accent-fill-active`), and a status chip that is clickable sharpens its edge to `status-<state>-default` on hover rather than brightening.
 
 The rule for choosing: anything a person needs to read, including subtitles, stat labels, field hints and footers, is `content-muted` or louder. The disabled grey is for disabled text and nothing else.
+
+### Dim
+
+Dim is a second dark theme for people who find the near-black planes too stark. Its surfaces are lighter and closer together, so the sidebar and cards read at one depth, and its text stops short of white. The values are Omni's original blue-grey ladder, on the `dusk` ramp.
+
+Dim changes the surfaces and the text and nothing else. Status, series, accent, syntax, highlight, borders and shadows are dark's, so a product needs no Dim-specific component code. The audit holds Dim to dark's rules, pair for pair.
+
+| Role | Dim | Dark, for comparison |
+| --- | --- | --- |
+| `surface-page` | `#101118` | `#060606` |
+| `surface-chrome` | `#13141C` | `#0B0B0B` |
+| `surface-card` | `#15161E` | `#1A1A1E` |
+| `surface-inset`, `surface-raised` | `#191B24` | `#1E1E22` |
+| `surface-hover` | `#1F222E` | `#26262B` |
+| `surface-inert` | `#272932` | `#2E2E33` |
+| `content-emphasis` | `#E8E8E9` | `#F5F5F4` |
+| `content-default` | `#C3C3C7` | `#C8C8C6` |
+| `content-secondary` | `#9FA1A6` | `#A8A8A6` |
+| `content-muted` | `#878990` | `#8A8A88` |
+| `content-disabled` | `#5B5C64` | `#5A5A58` |
+
+Dim is optional. Dark stays the default and the theme the products are designed and reviewed in, so a product can adopt the system without offering Dim, and the fleet looks the same until a reader asks otherwise. How a product offers it is under [Choosing a theme](#choosing-a-theme).
 
 ### Accent
 
@@ -304,6 +326,8 @@ Every product ships both themes and lets the reader pick, the same way everywher
 **Three choices: Light, Dark and System. System is the default.** A first visit follows the operating system, and System keeps following it, so a laptop that switches to dark at sunset takes an open tab with it. Light and Dark are pinned and stay put.
 
 **One control, at the right end of the top bar.** An icon button whose icon shows the current choice, not the theme on screen: a sun for Light, a moon for Dark, a monitor for System ([Iconography](iconography.md#the-theme-choice)). Clicking it opens a menu of the three choices, each with its icon and its name, the current one checked. The button's accessible name carries the choice ("Theme: System"), because the icon alone says nothing to a screen reader. A two-state toggle is not this control. It has no way to say "follow the system", so a reader who flips it once has lost System for good.
+
+**Dim, where a product offers it, is a fourth choice** between Dark and System: Light, Dark, Dim, System. It is only ever chosen, never resolved: System follows the operating system to Light or Dark and nothing else. Dark then takes a solid moon and Dim the outline moon, so the two stay apart in the menu and on the button.
 
 **The choice belongs to the browser, not the account.** It is kept in local storage. The same person signs in from a bright office and from a dark operations room, and the right theme follows the screen rather than the login.
 

@@ -8,7 +8,7 @@ The values implement the Sidero brand visual guide. Where they depart from it, t
 | --- | --- |
 | ![Dark theme preview](docs/preview-dark.png) | ![Light theme preview](docs/preview-light.png) |
 
-Open [`docs/preview.html`](docs/preview.html) in a browser to see the current build rendered in both themes. It reads `dist/tokens.css` directly.
+Dim, an optional softer variant of dark, is described in the [style guide](docs/style-guide.md#dim). Open [`docs/preview.html`](docs/preview.html) in a browser to see the current build rendered in every theme. It reads `dist/tokens.css` directly.
 
 ## The rules
 
@@ -19,7 +19,7 @@ The system is written to be applied by an agent, so its rules are phrased as tes
 3. **Red is spoken for twice**, as the accent and as danger, so it is never decoration, never a chart series, never a syntax colour. Green and amber belong to success and warning for the same reason. ([Accent](docs/style-guide.md#accent), [Status](docs/style-guide.md#status))
 4. **Categories are not states.** Things with no good or bad meaning (chart series, label groups) take the `series-*` palette, which leads with blue because nothing else in the system is blue. The test is whether a reader would want to act on the segment. ([Series and categories](docs/style-guide.md#series-and-categories))
 5. **One colour per state, everywhere.** If scaling is amber in a status pill, it is amber in the chart above it. The pill is the reference, because it is where the word sits next to the colour. ([One colour per state](docs/style-guide.md#one-colour-per-state))
-6. **Contrast is enforced by the build.** 4.5:1 for text, 3:1 for graphics, both themes, every pair. The one standing exception to the graphics floor is light-theme chart fills, held to 2:1 on the card because a legend or label always carries their value; a chart that relies on colour alone gets no exception. Every exception is listed in `build/contrast.mjs` with a reason, and adding one is an argument, not a way to quiet the check. ([Contrast exceptions](docs/style-guide.md#contrast-exceptions))
+6. **Contrast is enforced by the build.** 4.5:1 for text, 3:1 for graphics, every theme, every pair. The one standing exception to the graphics floor is light-theme chart fills, held to 2:1 on the card because a legend or label always carries their value; a chart that relies on colour alone gets no exception. Every exception is listed in `build/contrast.mjs` with a reason, and adding one is an argument, not a way to quiet the check. ([Contrast exceptions](docs/style-guide.md#contrast-exceptions))
 7. **Opacity fades an element, never a colour.** No brightness filters, no ad hoc alpha. A hover or pressed state re-points a role; a disabled composite fades whole. ([Text and icons](docs/style-guide.md#text-and-icons))
 8. **A state has a shape as well as a colour.** Every status takes one of six glyphs (succeeded, failed, needs attention, in progress, off, unknown) and keeps its word. The test is whether the page still reads in greyscale. ([Iconography](docs/iconography.md))
 
@@ -35,7 +35,7 @@ A product that finds it needs a value the system does not have has found a token
 
 ## What a release contains
 
-- **Tokens** in `dist/`: `tokens.css` (custom properties, dark under `:root`, light under `[data-theme="light"]`), `tokens.scss` (variables and mixins), `tailwind.css` and `tailwind-colour.css` (Tailwind v4 `@theme` blocks), `type.css` (type role classes), `fonts.css`, `mintlify.css` for the documentation site, and `tokens.json` with references and descriptions preserved.
+- **Tokens** in `dist/`: `tokens.css` (custom properties, dark under `:root`, light under `[data-theme="light"]`, dim under `[data-theme="dim"]`), `tokens.scss` (variables and mixins), `tailwind.css` and `tailwind-colour.css` (Tailwind v4 `@theme` blocks), `type.css` (type role classes), `fonts.css`, `mintlify.css` for the documentation site, and `tokens.json` with references and descriptions preserved.
 - **Typefaces**: Manrope and JetBrains Mono as woff2 under `fonts/`, with their OFL licences, so a self-hosted or air-gapped install never reaches for a CDN.
 - **Lint**: ESLint rules (`no-raw-color`, `no-raw-font-size`, `no-off-menu-spacing`, `no-primitive-token`) and a stylelint config.
 - **Audit**: `talos-audit`, a Playwright runner that checks a rendered page against the scale, the menu, the typeface stacks and the active theme's roles.
@@ -46,7 +46,7 @@ A product that finds it needs a value the system does not have has found a token
 Consumers take the package as a git dependency pinned to a release tag:
 
 ```json
-"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.5.0"
+"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.6.0"
 ```
 
 Tags are immutable. A released version never changes; a correction is a new tag. Renovate and Dependabot understand tagged git dependencies, so bumps arrive as ordinary bot PRs, and drift between products shows up as a version number rather than as a divergent hex. Nothing is published to npm; that can happen later or never without changing how consumers import anything.

@@ -239,10 +239,10 @@ function checks(theme) {
     add(`content-emphasis on status-${status}-surface`, t('content-emphasis'), surface, AA_TEXT)
     // Tiles inside a card sit on surface-hover in dark, so the title is
     // measured there too.
-    if (theme === 'dark') add(`status-${status}-text on surface-hover (tile)`, t(`status-${status}-text`), t('surface-hover'), AA_TEXT)
+    if (theme !== 'light') add(`status-${status}-text on surface-hover (tile)`, t(`status-${status}-text`), t('surface-hover'), AA_TEXT)
     // The dark colour edge and the chip edge are graphics next to the surface;
     // reported so the number is known.
-    if (theme === 'dark') add(`status-${status}-fill (edge) on surface-card`, t(`status-${status}-fill`), t('surface-card'), 0, 'informational')
+    if (theme !== 'light') add(`status-${status}-fill (edge) on surface-card`, t(`status-${status}-fill`), t('surface-card'), 0, 'informational')
   }
   // The note callout's icon is content-secondary on the neutral surface.
   add('content-secondary on status-info-surface (note icon)', t('content-secondary'), t('status-info-surface'), AA_TEXT)
@@ -315,7 +315,7 @@ let failures = 0
 let waived = 0
 let excepted = 0
 
-for (const theme of ['dark', 'light']) {
+for (const theme of ['dark', 'dim', 'light']) {
   console.log(`\n${theme.toUpperCase()}\n${'='.repeat(60)}`)
 
   for (const row of checks(theme)) {

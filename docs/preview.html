@@ -175,6 +175,11 @@
       <h1>Talos Design System</h1>
       <div id="dark-body"></div>
     </section>
+    <section class="theme" data-theme="dim">
+      <div class="eyebrow">Dim theme</div>
+      <h1>Talos Design System</h1>
+      <div id="dim-body"></div>
+    </section>
     <section class="theme" data-theme="light">
       <div class="eyebrow">Light theme</div>
       <h1>Talos Design System</h1>
@@ -348,7 +353,7 @@
 
     <script>
       const template = document.getElementById('body')
-      for (const id of ['dark-body', 'light-body']) {
+      for (const id of ['dark-body', 'dim-body', 'light-body']) {
         document.getElementById(id).append(template.content.cloneNode(true))
       }
     </script>

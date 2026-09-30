@@ -57,9 +57,10 @@ The 8px dot is a marker, not a state glyph. It stays in three places. 8px rather
 | --- | --- | --- |
 | Light | Sun | `SunIcon` |
 | Dark | Moon | `MoonIcon` |
+| Dim | Moon, outline | `MoonIcon` (outline), with Dark on the solid `MoonIcon` |
 | System | Monitor | `ComputerDesktopIcon` |
 
-The button shows the current choice, not the theme on screen. The behaviour is in [Choosing a theme](style-guide.md#choosing-a-theme).
+Dim appears only in a product that offers it. There, Dark switches to the solid moon so the two are distinct. The button shows the current choice, not the theme on screen. The behaviour is in [Choosing a theme](style-guide.md#choosing-a-theme).
 
 ## Selection
 
