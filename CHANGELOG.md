@@ -2,6 +2,12 @@
 
 Each release lists two kinds of change. **Act on** is a change to what a component should look like or how it behaves: a product has to change its own code to follow it, and the audit may not notice if it doesn't. **Arrives by itself** is a token value or tooling change that a product picks up by reinstalling.
 
+## 0.6.2
+
+Act on:
+
+- **A chart whose segments are states takes `status-*-chart`**, not `-default`. This was the intent when `-chart` arrived in 0.5.0, but three sentences in the style guide and `AGENTS.md` still said `-default`. Only light changes: there `-chart` is the lighter step that sits with the series (warning `#EBA42C` rather than mustard `#B87C06`). On dark the two are the same colour.
+
 ## 0.6.1
 
 Act on:
