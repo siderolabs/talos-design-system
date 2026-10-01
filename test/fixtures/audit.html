@@ -5,13 +5,22 @@
 <title>Audit fixture</title>
 <style>
   @font-face { font-family: Remote; src: url(https://fonts.example.invalid/remote.woff2) format('woff2'); }
-  :root { --talos-surface-page: #F2EDE8; --talos-content-default: #3A3A38; }
+  :root {
+    --talos-surface-page: #F2EDE8; --talos-content-default: #3A3A38; --talos-accent-text: #D41A3B;
+    --talos-status-warning-subtle: #FEEED9; --talos-status-warning-text: #8A6419;
+    --talos-status-success-subtle: #E6F0E7; --talos-status-success-text: #1C7A3D;
+  }
   body { margin: 0; padding: 24px; font-family: Arial, sans-serif; font-size: 14px; color: #3A3A38; background: #F2EDE8; }
   .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
   .centred { width: 200px; margin: 0 auto; }
   .percent { padding: 5%; }
   .hairline { padding: 1px; }
   .row { display: flex; gap: 2px; }
+  .chip { display: inline-block; margin: 0; padding: 4px 8px; border: 0; font: inherit; font-size: 12px; }
+  .warning { background: var(--talos-status-warning-subtle); color: var(--talos-status-warning-text); }
+  .success { background: var(--talos-status-success-subtle); color: var(--talos-status-success-text); }
+  a { color: var(--talos-accent-text); }
+  a.card { display: block; color: inherit; }
 </style>
 </head>
 <body>
@@ -25,5 +34,16 @@
   <div class="hairline">Hairline padding</div>
   <div class="row"><span>a</span><span>b</span></div>
   <p style="margin: 0; color: #123456">Off-token colour</p>
+
+  <span class="chip warning">Needs attention</span>
+  <button type="button" class="chip warning">10 behind dev</button>
+  <a href="#mute"><span class="chip success">Ready</span></a>
+  <a href="#card" class="card"><span>dev cluster</span> <span class="chip success">Healthy</span></a>
+
+  <table>
+    <tr><td><a href="#acct">Bluewater Hosting</a></td><td>Opened by <a href="#person">Dana Ridgeline</a> yesterday</td></tr>
+  </table>
+  <p style="margin: 0">See the <a href="#guide">guide</a>.</p>
+  <a href="#queue">Open queue</a>
 </body>
 </html>

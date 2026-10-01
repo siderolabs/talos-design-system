@@ -2,8 +2,10 @@
 //
 // Audits a rendered page against the token set: type below the floor or off
 // the scale, spacing off the menu, typefaces that are not ours or not served
-// by the page, fonts fetched from another origin, and colours that match no
-// role in the active theme.
+// by the page, fonts fetched from another origin, colours that match no role
+// in the active theme, and two role misuses that are visible in the render: a
+// status chip that is itself a button or link, and accent text standing alone
+// in a table cell.
 //
 // The lint rules read source; this reads what the browser actually computed,
 // which is the only way to see a Bootstrap default, a chart library's 8px
@@ -46,6 +48,9 @@ export function configFromTokens(tokens, { samples = 3 } = {}) {
       mono: parseStack(tokens.primitive['font-mono'].value),
     },
     colorRoles: Object.keys(semantic).filter((name) => semantic[name].type === 'color'),
+    statusStates: Object.keys(semantic)
+      .map((name) => name.match(/^status-([a-z]+)-subtle$/)?.[1])
+      .filter(Boolean),
     samples,
   }
 }
@@ -54,7 +59,7 @@ export function configFromTokens(tokens, { samples = 3 } = {}) {
  * @param {ReturnType<typeof configFromTokens> & { checks?: string[], requests?: string[] }} config
  */
 export function auditPage(config) {
-  const checks = new Set(config.checks ?? ['type', 'spacing', 'fonts', 'color'])
+  const checks = new Set(config.checks ?? ['type', 'spacing', 'fonts', 'color', 'roles'])
   const parseStack = (stack) => stack.split(',').map((family) => family.trim().replace(/^['"]|['"]$/g, ''))
   const doc = document
   const win = window
@@ -143,13 +148,59 @@ export function auditPage(config) {
   }
 
   const notes = []
-  let palette = null
-  if (checks.has('color')) {
-    const style = win.getComputedStyle(doc.body)
-    const values = config.colorRoles.map((role) => style.getPropertyValue(`${config.prefix}${role}`).trim()).filter(Boolean)
+  const bodyStyle = win.getComputedStyle(doc.body)
+  const roleKey = (role) => {
+    const value = bodyStyle.getPropertyValue(`${config.prefix}${role}`).trim()
+    return value ? colourKey(value) : null
+  }
+  const themed = config.colorRoles.some(roleKey)
+  if (!themed && (checks.has('color') || checks.has('roles'))) {
+    notes.push(`Colour and role checks skipped: the page defines no ${config.prefix}* custom properties, so there is no active theme to compare against.`)
+  }
 
-    if (values.length) palette = new Set(values.map(colourKey).filter(Boolean))
-    else notes.push(`Colour check skipped: the page defines no ${config.prefix}* custom properties, so there is no active theme to compare against.`)
+  const palette = themed && checks.has('color') ? new Set(config.colorRoles.map(roleKey).filter(Boolean)) : null
+
+  // A status chip is recognised by its pair: the state's -subtle background
+  // under the same state's -text. Either colour alone appears elsewhere.
+  const chipPairs = new Map()
+  const accentText = themed && checks.has('roles') ? roleKey('accent-text') : null
+  if (themed && checks.has('roles')) {
+    for (const state of config.statusStates ?? []) {
+      const background = roleKey(`status-${state}-subtle`)
+      const text = roleKey(`status-${state}-text`)
+      if (background && text) chipPairs.set(`${background}\u0000${text}`, state)
+    }
+  }
+
+  const INTERACTIVE = 'a[href], button, summary, label, select, input, [role="button"], [role="link"], [role="menuitem"], [role="tab"], [role="switch"], [role="checkbox"]'
+  const CELL = 'td, th, [role="cell"], [role="gridcell"], [role="rowheader"]'
+  const squash = (s) => (s ?? '').replace(/\s+/g, ' ').trim()
+  const inline = (node) => win.getComputedStyle(node).display.startsWith('inline')
+
+  // A chip inside a larger link (a card or row that opens on click) is fine:
+  // the link is the control and the chip is part of what it shows.
+  function chipIsControl(el) {
+    const control = el.closest(INTERACTIVE)
+    return control && squash(control.textContent) === squash(el.textContent)
+  }
+
+  // Accent text inside a sentence is a link the colour has to pick out. Alone
+  // in a cell it is a column of accent. Climb to the outermost inline wrapper
+  // that holds only this text, then look for words beside it.
+  function standsAlone(el, cell) {
+    let unit = el
+    while (unit.parentElement && unit.parentElement !== cell && inline(unit.parentElement) && squash(unit.parentElement.textContent) === squash(unit.textContent)) {
+      unit = unit.parentElement
+    }
+    const parent = unit.parentElement
+    if (!parent) return true
+
+    return ![...parent.childNodes].some((node) => {
+      if (node === unit) return false
+      if (node.nodeType === Node.TEXT_NODE) return node.textContent.trim() !== ''
+
+      return node.nodeType === Node.ELEMENT_NODE && inline(node) && node.textContent.trim() !== ''
+    })
   }
 
   // A family is ours only when the page serves it. A copy installed on the
@@ -252,6 +303,16 @@ export function auditPage(config) {
         seen.add(key + property)
         record('color', key, el, { property })
       }
+    }
+
+    if (chipPairs.size) {
+      const state = chipPairs.get(`${colourKey(cs.backgroundColor)}\u0000${colourKey(cs.color)}`)
+      if (state && chipIsControl(el)) record('status-control', state, el)
+    }
+
+    if (accentText && text && colourKey(cs.color) === accentText) {
+      const cell = el.closest(CELL)
+      if (cell && standsAlone(el, cell)) record('accent-in-table', 'accent-text', el)
     }
   }
 

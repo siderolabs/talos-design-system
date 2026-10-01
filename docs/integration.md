@@ -175,6 +175,10 @@ It reports, grouped by value with a count and example elements:
 - Typefaces outside the Manrope and JetBrains Mono stacks, and our faces requested but not served by the page, with the face that renders instead.
 - Fonts loaded from another origin.
 - Colours that match no role in the active theme. Skipped, with a note, on a page that defines no `--talos-*` properties.
+- Status chips that are buttons or links. A chip is recognised by its pair, a `status-*-subtle` background under the same state's `status-*-text`, and flagged when a button or link holds nothing but the chip. A chip inside a larger clickable card passes.
+- Accent text standing alone in a table cell. Accent text in a cell alongside other words is a link in a sentence and passes.
+
+The last two are the role checks (`--checks roles`). They catch two misuses that show up in the render; whether each element has the right role in general is still a reading job, so a clean run is necessary rather than sufficient.
 
 The scale, menu and stacks come from `dist/tokens.json`. `--max <n>` exits 1 when any page has more than `n` violations, so the same command gates CI or an agent's migration loop. `--checks type,spacing` narrows the run, `--theme light` sets `data-theme` and `data-bs-theme` first. Playwright is an optional peer dependency and the command says so if it is missing.
 

@@ -35,7 +35,7 @@ Ask these in order and stop at the first yes. The order matters: a number inside
 2. **Does it name the page?** `page-title`. **Does it name a card, panel, modal or section?** `section-title`.
 3. **Is it a headline number that a tile or card exists to show?** `stat`.
 4. **Is it inside a chip, pill or badge?** `badge`.
-5. **Can you click it, and is it not part of a sentence?** `control`. A link inside a sentence keeps the sentence's role and only changes colour.
+5. **Can you click it, and is it not part of a sentence?** `control`. A link inside a sentence keeps the sentence's role and only changes colour. A name in a table or list that opens its record is not a control either: it keeps the role it would have unlinked (step 10) and its text colour ([Links in tables and lists](style-guide.md#accent)).
 6. **Is it uppercase and tracked, grouping or captioning other content?** `overline`, or `overline-mono` in the machine voice.
 7. **Does it name a value that sits beside or below it?** `label`.
 8. **Is it multi-line code, config or log output?** `code-block`. **Is it an identifier standing on its own?** `mono`.
@@ -60,8 +60,8 @@ Drawn from real operator consoles, with the data changed.
 | "Oldest open requests" | `section-title` | Names the card. |
 | "Open queue →" | `control` | A standalone action link. |
 | "REQUEST", "ACCOUNT", "AGE" column headers | `overline` | Uppercase captions for the columns. |
-| "Cannot download schematics" | `body-strong` | Identifies the row. |
-| "Wayfinder Robotics" in the account column | `body` | Cell content. |
+| "Cannot download schematics" | `body-strong` | Identifies the row. Still `body-strong` in `content-emphasis` when it links to the request. |
+| "Wayfinder Robotics" in the account column | `body` | Cell content. Still `body` in `content-default` when it links to the account. |
 | "normal", "low" severity | `badge` | Inside a pill. |
 | "21 days ago" in the age column | `body` | A table cell is content, even when it holds a timestamp. |
 | "1 minute ago" under an audit event | `meta` | About the event above it. |
@@ -77,6 +77,9 @@ Drawn from real operator consoles, with the data changed.
 | "active" | `badge` | Inside a status chip. |
 | "Not yet a paying customer", "Billing email: finance@…" | `meta` | About the account. |
 | "Edit account", "Impersonate" | `control` | Buttons. |
+| "PLAN", "CREATED" in a key/value panel | `label`, or `overline` if uppercase and tracked | Names the value beside it. |
+| "Enterprise", "Aug 12, 2026" beside those keys | `body` | The value is content. Not `body-strong`: in a panel where every row is a value, bold on every value is no emphasis at all. |
+| An ID or a version as a value | `mono` | An identifier standing on its own, in a panel as anywhere else. |
 | "Members 2" tab | `control`, with the count in `badge` | The tab is clickable; the count is a chip inside it. |
 | "Morgan Tide" in the members table | `body-strong` | Identifies the row. |
 | "morgan@bluewater.example" under the name | `meta` | About the person above it. |
@@ -97,6 +100,8 @@ Drawn from real operator consoles, with the data changed.
 ## Cases that look ambiguous
 
 **A timestamp is `body` in a table cell and `meta` under a name.** The test is whether it is content in its own right or text about something next to it. A column called "Age" makes the age content.
+
+**A key/value panel is `label` and `body`, not `label` and `body-strong`.** `body-strong` marks the one thing that identifies a row or record. The values in a detail panel are all equally the record's content, so none of them is bold. An action column in an audit log ("fleet.poll") is an identifier, so it is `mono` at 12, not a bold or body-sized code face.
 
 **A number is `stat` only when a tile exists to show it.** A count in a table cell is `body`, a count in a tab is `badge`, a count in a sentence is whatever the sentence is.
 
