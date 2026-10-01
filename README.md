@@ -38,7 +38,7 @@ A product that finds it needs a value the system does not have has found a token
 - **Tokens** in `dist/`: `tokens.css` (custom properties, dark under `:root`, light under `[data-theme="light"]`, dim under `[data-theme="dim"]`), `tokens.scss` (variables and mixins), `tailwind.css` and `tailwind-colour.css` (Tailwind v4 `@theme` blocks), `type.css` (type role classes), `fonts.css`, `mintlify.css` for the documentation site, and `tokens.json` with references and descriptions preserved.
 - **Typefaces**: Manrope and JetBrains Mono as woff2 under `fonts/`, with their OFL licences, so a self-hosted or air-gapped install never reaches for a CDN.
 - **Lint**: ESLint rules (`no-raw-color`, `no-raw-font-size`, `no-off-menu-spacing`, `no-primitive-token`) and a stylelint config.
-- **Audit**: `talos-audit`, a Playwright runner that checks a rendered page against the scale, the menu, the typeface stacks and the active theme's roles.
+- **Audit**: `talos-audit`, a Playwright runner that checks a rendered page against the scale, the menu, the typeface stacks and the active theme's roles, and flags status chips used as buttons and accent links standing alone in tables.
 - **Docs**: the style guide, the type roles, the iconography guide, the integration guide, and the rendered preview.
 
 ## Versioning
@@ -48,6 +48,8 @@ Consumers take the package as a git dependency pinned to a release tag:
 ```json
 "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.6.0"
 ```
+
+Below 1.0 a caret range takes patch releases only: `^0.6.0` gets 0.6.1 but not 0.7.0. Moving to a new minor is a deliberate step, and [`CHANGELOG.md`](CHANGELOG.md) says what each release asks a product to change.
 
 Tags are immutable. A released version never changes; a correction is a new tag. Renovate and Dependabot understand tagged git dependencies, so bumps arrive as ordinary bot PRs, and drift between products shows up as a version number rather than as a divergent hex. Nothing is published to npm; that can happen later or never without changing how consumers import anything.
 

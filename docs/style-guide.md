@@ -108,6 +108,8 @@ The active nav item is the same in every product: emphasis text, a pill of `acce
 
 Budget: at most one accent fill per view. If a screen has two primary buttons, one of them is secondary.
 
+**Links in tables and lists keep their text colour.** Accent text marks a link inside running text, where colour is the only thing setting it apart from the words around it. A table or list is different: every row's name opens that row, so the position already says "this opens", and a column of accent turns the most-read column on the page into the loudest one. A name that opens its record keeps the role it would have unlinked, usually `body-strong` in `content-emphasis`. Any other linked cell (an account name in a requests table, a person) stays `body` in `content-default`. On hover the link underlines and takes `accent-text`. A header action that opens a fuller view ("Open queue →") is `control` in `content-default`, with the same hover. Accent text stays correct for a link inside a sentence, in a table cell or anywhere else. `talos-audit` flags accent text standing alone in a table cell.
+
 ### The brand gradient
 
 The end colours come from the logo (`talos-by-sidero-labs-horiz-white.svg`), sampled in sRGB: hot red `#E8312C` and orange `#F77216`. There are two gradients.
@@ -137,7 +139,7 @@ Product surfaces should be recognisably the same family as the marketing site wi
 
 Eight roles per state, because a status hue does different jobs at different contrasts.
 
-- `status-<state>-default` is the hue as a **graphic**: a dot, a glyph, a progress fill. It meets 3:1 on the page, the chrome, the card and its own chip (WCAG 1.4.11), and on light it is as light as that allows, so a graphic is not held to text contrast it doesn't need.
+- `status-<state>-default` is the hue as a **graphic**: a dot, a glyph, a progress fill, the edge on a status card. It meets 3:1 on the page, the chrome, the card and its own chip (WCAG 1.4.11), and on light it is as light as that allows, so a graphic is not held to text contrast it doesn't need.
 - `status-<state>-chart` is the hue as a **chart segment**, beside a legend or label that carries the number. On light it is lighter than `-default` and holds 2:1 on the card, so a state chart reads as one family with the series. On dark it is `-default`.
 - `status-<state>-text` is a **label on a normal surface** at 4.5:1.
 - `status-<state>-fill` is a **solid** badge or button background, with `status-<state>-on-fill` as its label. On dark it is also the colour edge on large surfaces.
@@ -158,6 +160,8 @@ Each colour keeps its hue and chroma, with lightness fitted to the contrast its 
 **Danger is a true red, separate from the accent.** The accent stays crimson for links and primary buttons; danger shifts toward scarlet so a destructive state never reads as a link. Light reds drift toward coral on dark, so dark danger text sits at the most neutral red that still passes on its chip.
 
 **Large surfaces are two treatments, one per theme.** On light, the surface is a pastel mixed in OKLab from the fill into white (success 12%, warning 22%, danger 10%) with a border at 45% of the fill (92% for warning, see below). On dark, a tinted surface cannot get light enough without costing the text on it contrast, so the surface is neutral (the card for callouts, `surface-hover` for tiles inside a card), the border is the inert hairline, and the state is carried by a 3px edge in the fill: on the left for callouts, on top for tiles. Info is neutral in both themes and takes no edge. In every case, body text stays `content-default`, the bold title takes `-text` and the icon takes `-default`.
+
+**A status edge on a card or row is `-default`, in both themes.** A card that stands for a record (a cluster, an account) can carry its worst state as a 3px edge on the left, beside the chip that names it. Unlike a callout, the card is not a status surface: it stays the card on the card's border, and the edge is a graphic summarising one of the things inside it. So it takes the graphic step. The fill would not do on light, where the warning fill is 1.9:1 on a white card. A card with no state worth flagging keeps `border-strong` on that edge rather than losing it, so a grid of cards stays aligned. Success is usually not worth an edge: if every healthy card is green, the amber one stops standing out.
 
 **Chips match the surfaces.** A status chip is the light pastel with an edge mixed from the fill, and on dark a pastel at the dark mix (success 26%, warning 20%, danger 20% into the card) with an edge mixed into the card. Neutral chips are the hover grey with no edge. Worst chip ratio: 5.21:1 light (info), 4.69:1 dark (danger).
 
@@ -252,13 +256,15 @@ A status count is a number whose meaning is a state: "5 need a look", "12 runnin
 
 A status is never a button. If an element changes something when clicked, it's an action or a toggle and takes that treatment, whatever colour it wore before.
 
+**When a status needs an action.** Some states come with something to do about them: mute a finding, acknowledge an alert, retry a failed step. The chip stays a read-only status and the action sits beside it as its own control, named by its verb: a small neutral button ("Mute"), or an item in the row's overflow menu when there are several. Clicking the chip does nothing. The one exception is a chip inside a larger link, such as a card or row that opens its record when clicked anywhere: the card is the control and the chip is part of what it shows. What happens after the action is part of the pattern. A muted or acknowledged item is no longer a status, so it drops its pastel and glyph and becomes a value or a neutral count ("2 muted"), with the reverse action ("Unmute") in the same place the first one was. `talos-audit` flags a chip that is the whole of a button or link.
+
 Colour is never the only carrier of state. Every status takes a glyph from the closed set in [Iconography](iconography.md#state-glyphs) and keeps its word, and the status vocabulary itself is a separate open piece of work ([ux#15](https://github.com/siderolabs/ux/issues/15)).
 
 ### Borders
 
 Hairlines, not weight. One width, `1px`, and separation comes from the surface ladder rather than from heavy rules.
 
-`border-edge` (3px) is a colour bar, not a border: the status edge on dark callouts and tiles, and the active nav marker. It is never a neutral separator.
+`border-edge` (3px) is a colour bar, not a border: the status edge on dark callouts and tiles, the status edge on a card or row in either theme, and the active nav marker. It is never a neutral separator.
 
 `border-subtle` (6%) for internal dividers and table rows, `border-default` (8%) for card and input edges, `border-strong` (14% dark / 16% light) for hover and emphasis, `border-accent` for an active tab underline or a focused input, `border-focus` for the keyboard focus ring where it has to be an outline (see Elevation and focus).
 
@@ -381,7 +387,7 @@ Rules that live only in a document decay. Each product runs the lint preset from
 - `no-primitive-token` catches application code reaching past the semantic layer into a palette ramp.
 - The stylelint config covers the same ground for SCSS.
 - `npm run contrast` in the token repo fails the build when a role pair drops below its threshold. Exceptions are listed in the script with a reason, not silently skipped.
-- `talos-audit` checks a rendered page: type below the floor or off the scale, spacing off the menu, typefaces that are not ours or not self-hosted, and colours outside the active theme. Run it on a migrated page before calling the migration done.
+- `talos-audit` checks a rendered page: type below the floor or off the scale, spacing off the menu, typefaces that are not ours or not self-hosted, colours outside the active theme, status chips that are buttons or links, and accent text standing alone in a table cell. Run it on a migrated page, in every theme the product offers, before calling the migration done. A clean run is necessary, not sufficient: it sees colours and sizes, not whether the right role was chosen for each element, so a bold value or a proportional ID passes.
 
 ### Contrast exceptions
 

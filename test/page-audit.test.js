@@ -64,4 +64,21 @@ describe('page audit', { skip: !playwright && 'Playwright is not installed' }, (
     const colours = report.findings.filter((f) => f.check === 'color')
     assert.deepEqual(colours.map((f) => f.value), ['#123456'])
   })
+
+  it('flags a status chip that is the whole of a button or link, and nothing else', () => {
+    const chips = report.findings.filter((f) => f.check === 'status-control')
+    assert.deepEqual(chips.map((f) => [f.value, f.count]).sort(), [['success', 1], ['warning', 1]])
+    assert.deepEqual(chips.flatMap((f) => f.samples.map((s) => s.text)).sort(), ['10 behind dev', 'Ready'])
+  })
+
+  it('flags accent text alone in a table cell, not in a sentence or outside a table', () => {
+    const accent = report.findings.filter((f) => f.check === 'accent-in-table')
+    assert.equal(accent.length, 1)
+    assert.equal(accent[0].count, 1)
+    assert.equal(accent[0].samples[0].text, 'Bluewater Hosting')
+  })
+
+  it('reads the status states from the built tokens', () => {
+    assert.deepEqual(configFromTokens(tokens).statusStates.sort(), ['danger', 'info', 'success', 'warning'])
+  })
 })

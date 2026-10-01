@@ -8,7 +8,7 @@ Read [`docs/style-guide.md`](docs/style-guide.md), [`docs/type-roles.md`](docs/t
 
 The goal is a product whose rendered pages use only token values: colours from the semantic roles, sizes from the type roles, spacing from the menu, and the two typefaces served by the product itself. Work in this order. Each step is shippable on its own and the first carries most of the visible change.
 
-1. **Install at a tag.** `"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.6.0"`. Never track `main`.
+1. **Install at a tag.** `"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.6.0"`. Never track `main`. Below 1.0 a caret range takes patch releases only, so a product on `^0.3.3` does not get 0.4 or later until someone moves the range. See [Upgrading](#upgrading).
 2. **Emit the tokens** the way [`docs/integration.md`](docs/integration.md) describes for the product's stack: `tokens.css` plus `tailwind.css` for Tailwind (or `tailwind-colour.css` when the product is adopting colour before type and spacing), the `tokens.scss` mixins for Sass and Bootstrap, `tokens.css` plus `type.css` for anything else. Emit the light theme under whatever selector the product already uses for it.
 3. **Serve the fonts from the product.** Copy `fonts/*.woff2` and the licences, import `fonts.css`, and delete every Google Fonts `<link>`, `preconnect` and `@import`. A product that loads type from a CDN loses it in an air-gapped install, silently.
 4. **Map the product's existing variables onto the semantic roles,** keeping the old names as aliases so page code keeps working. If the product owner has supplied a mapping, follow it as written. If not, map by what the variable is used for, never by which token has the nearest value, and write the mapping down in the product repo.
@@ -26,8 +26,18 @@ A step is done when all of these hold, in both themes:
 - The lint passes, apart from the recorded baseline.
 - `npx talos-audit --max 0` passes on every route you touched, logged in where the product needs it (`--storage-state`), once with `--theme light` and once with `--theme dark`. If the product has known exceptions, set `--max` to the agreed count and say so.
 - The page looks like the reference the product owner gave you. A visible difference is a mapping error or a question, never a reason to edit this repository.
+- Every piece of text you touched has the role the decision order gives it, checked by reading, not by the audit. The audit sees sizes and colours; a bold value or an ID in the proportional face passes it.
 
 Report what you changed, what the audit reported before and after, and every question you left open.
+
+### Upgrading
+
+A minor release (0.5 to 0.6) can change what a component is supposed to look like, not only token values. Moving the range is a migration step of its own:
+
+1. Move the range in `package.json` to the new minor and reinstall. Re-copy the fonts if `fonts/` changed.
+2. Read [`CHANGELOG.md`](CHANGELOG.md) for every version you skipped. Each entry lists the spec changes a product has to act on, separately from token value changes that arrive by themselves.
+3. Rerun `talos-audit` in every theme the product offers. New checks ship in patch and minor releases, so a page that was clean can report findings after an upgrade without any of its code changing.
+4. Act on the spec changes the audit cannot see: component anatomy (a chip's glyph, a segmented control's thumb), behaviour (the theme menu), and role choices.
 
 ### What not to do
 

@@ -15,7 +15,7 @@ const USAGE = `Usage: talos-audit [options] <url...>
 Options:
   --json                 Print the findings as JSON
   --max <n>              Exit 1 when any page has more than n violations
-  --checks <list>        Comma-separated: type,spacing,fonts,color (default: all)
+  --checks <list>        Comma-separated: type,spacing,fonts,color,roles (default: all)
   --storage-state <file> Playwright storage state, for pages behind a login
   --proxy <url>          Proxy server, e.g. socks5://127.0.0.1:8888
   --theme <name>         Set data-theme and data-bs-theme on <html> before auditing
@@ -32,6 +32,8 @@ const LABELS = {
   'font-external': 'Fonts loaded from another origin',
   spacing: 'Spacing off the menu',
   color: 'Colours that match no role in the active theme',
+  'status-control': 'Status chips that are buttons or links (a status is never a button)',
+  'accent-in-table': 'Accent text standing alone in a table cell (links in tables keep their text colour)',
 }
 
 function fail(message) {
