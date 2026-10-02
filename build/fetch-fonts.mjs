@@ -20,17 +20,27 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = join(ROOT, 'fonts')
 
 // Google's css2 endpoint serves woff2 only to browsers, and splits each family
-// into unicode-range subsets. Latin and latin-ext cover the product surface;
-// the Cyrillic, Greek and Vietnamese subsets are left behind deliberately.
+// into unicode-range subsets. Latin covers the product surface; Cyrillic and
+// Greek are there for what operators type, cluster names and labels, and cost
+// nothing on a page that doesn't use them, because the unicode ranges keep the
+// browser from fetching them. Ordered as Google orders them, latin last, so
+// latin wins where ranges overlap.
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
 
+// Manrope has no italic. JetBrains Mono's is for code comments.
 const FAMILIES = [
-  { family: 'Manrope', query: 'Manrope:wght@400..700', slug: 'manrope', role: 'sans' },
-  { family: 'JetBrains Mono', query: 'JetBrains+Mono:wght@400..700', slug: 'jetbrains-mono', role: 'mono' },
+  { family: 'Manrope', name: 'Manrope', slug: 'manrope', role: 'sans', styles: ['normal'] },
+  { family: 'JetBrains Mono', name: 'JetBrains+Mono', slug: 'jetbrains-mono', role: 'mono', styles: ['normal', 'italic'] },
 ]
 
-const SUBSETS = ['latin', 'latin-ext']
+const SUBSETS = ['cyrillic-ext', 'cyrillic', 'greek', 'latin-ext', 'latin']
+
+/** `Manrope:wght@400..700`, or `JetBrains+Mono:ital,wght@0,400..700;1,400..700` with italics. */
+function query({ name, styles }) {
+  if (!styles.includes('italic')) return `${name}:wght@400..700`
+  return `${name}:ital,wght@${styles.map((s) => `${s === 'italic' ? 1 : 0},400..700`).join(';')}`
+}
 
 // Taken from google/fonts rather than each upstream project, so the licence
 // travels with the exact binaries served from that catalogue.
@@ -45,7 +55,7 @@ async function text(url, headers = {}) {
   return res.text()
 }
 
-/** Splits the css2 response into its commented subset blocks. */
+/** Splits the css2 response into its commented subset blocks, keyed `style/subset`. */
 function parseSubsets(css) {
   const out = new Map()
   const blocks = css.split('/*').slice(1)
@@ -55,8 +65,9 @@ function parseSubsets(css) {
     const src = /src:\s*url\(([^)]+)\)/.exec(block)
     const range = /unicode-range:\s*([^;]+);/.exec(block)
     const weight = /font-weight:\s*([^;]+);/.exec(block)
+    const style = /font-style:\s*([^;]+);/.exec(block)?.[1].trim() ?? 'normal'
     if (src && range) {
-      out.set(name, { url: src[1], unicodeRange: range[1].trim(), weight: weight[1].trim() })
+      out.set(`${style}/${name}`, { url: src[1], unicodeRange: range[1].trim(), weight: weight[1].trim() })
     }
   }
 
@@ -67,30 +78,34 @@ mkdirSync(OUT, { recursive: true })
 
 const faces = []
 
-for (const { family, query, slug, role } of FAMILIES) {
-  const css = await text(`https://fonts.googleapis.com/css2?family=${query}&display=swap`, { 'User-Agent': UA })
+for (const spec of FAMILIES) {
+  const { family, slug, role, styles } = spec
+  const css = await text(`https://fonts.googleapis.com/css2?family=${query(spec)}&display=swap`, { 'User-Agent': UA })
   const subsets = parseSubsets(css)
 
-  for (const subset of SUBSETS) {
-    const face = subsets.get(subset)
-    if (!face) throw new Error(`${family} has no ${subset} subset`)
+  for (const style of styles) {
+    for (const subset of SUBSETS) {
+      const face = subsets.get(`${style}/${subset}`)
+      if (!face) throw new Error(`${family} has no ${style} ${subset} subset`)
 
-    const file = `${slug}-${subset}.woff2`
-    const res = await fetch(face.url, { headers: { 'User-Agent': UA } })
-    if (!res.ok) throw new Error(`${res.status} downloading ${face.url}`)
-    const bytes = Buffer.from(await res.arrayBuffer())
-    writeFileSync(join(OUT, file), bytes)
+      const file = `${slug}-${subset}${style === 'italic' ? '-italic' : ''}.woff2`
+      const res = await fetch(face.url, { headers: { 'User-Agent': UA } })
+      if (!res.ok) throw new Error(`${res.status} downloading ${face.url}`)
+      const bytes = Buffer.from(await res.arrayBuffer())
+      writeFileSync(join(OUT, file), bytes)
 
-    faces.push({
-      family,
-      role,
-      file,
-      subset,
-      weight: face.weight,
-      unicodeRange: face.unicodeRange,
-      bytes: bytes.length,
-    })
-    console.log(`fonts/${file}  ${(bytes.length / 1024).toFixed(1)} kB`)
+      faces.push({
+        family,
+        role,
+        file,
+        style,
+        subset,
+        weight: face.weight,
+        unicodeRange: face.unicodeRange,
+        bytes: bytes.length,
+      })
+      console.log(`fonts/${file}  ${(bytes.length / 1024).toFixed(1)} kB`)
+    }
   }
 
   const licence = await text(LICENCES[slug])

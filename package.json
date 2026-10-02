@@ -1,6 +1,6 @@
 {
   "name": "@siderolabs/talos-design-system",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "Design tokens and lint guardrails shared by every Talos product interface and the documentation site.",
   "license": "MPL-2.0",
   "repository": {
@@ -9,7 +9,8 @@
   },
   "type": "module",
   "bin": {
-    "talos-audit": "./bin/talos-audit.mjs"
+    "talos-audit": "./bin/talos-audit.mjs",
+    "talos-migrate-spacing": "./bin/migrate-spacing.mjs"
   },
   "sideEffects": [
     "*.css"
@@ -30,6 +31,7 @@
     "./tokens.scss": "./dist/tokens.scss",
     "./tailwind.css": "./dist/tailwind.css",
     "./tailwind-colour.css": "./dist/tailwind-colour.css",
+    "./tailwind-spacing.css": "./dist/tailwind-spacing.css",
     "./fonts.css": "./dist/fonts.css",
     "./type.css": "./dist/type.css",
     "./mintlify.css": "./dist/mintlify.css",

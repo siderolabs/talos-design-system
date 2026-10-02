@@ -1,0 +1,26 @@
+/*
+ * Talos Design System tokens. GENERATED FILE, DO NOT EDIT.
+ *
+ * Source: tokens/ in @siderolabs/talos-design-system. Change a value there, run
+ * `npm run build`, and every product picks it up on its next version bump.
+ */
+
+/*
+ * Spacing steps only, for a product adopting spacing before type. Import it
+ * alongside tailwind-colour.css; together they are tailwind.css without the
+ * text sizes, fonts and type roles.
+ *
+ * The named steps sit beside Tailwind's numeric multiplier rather than
+ * replacing it, so p-compact and p-4 both work while a product migrates.
+ * The no-off-menu-spacing lint is what retires the numbers.
+ */
+
+@theme inline {
+  --spacing-micro: var(--talos-space-micro);
+  --spacing-tight: var(--talos-space-tight);
+  --spacing-snug: var(--talos-space-snug);
+  --spacing-compact: var(--talos-space-compact);
+  --spacing-base: var(--talos-space-base);
+  --spacing-section: var(--talos-space-section);
+  --spacing-major: var(--talos-space-major);
+}
