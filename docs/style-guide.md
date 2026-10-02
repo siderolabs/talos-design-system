@@ -315,6 +315,8 @@ Every size is on the scale. A 13px or 10.5px value is off the scale the same way
 
 Application code picks a **type role** rather than a size. A role names what the text is (`body`, `meta`, `label`, `overline`, `annotation` and nine others) and resolves to one size, weight, line height and face. [Type roles](type-roles.md) has the full set, the decision order, and worked examples.
 
+**No italic in UI text.** Manrope has no italic, and a browser asked for one slants the upright face, which reads as a rendering fault. Emphasis is weight or colour, and a disabled or placeholder state is its colour role. The one italic is the code comment, which JetBrains Mono draws properly.
+
 Weights are 400/500/600/700. Line height is `tight` 1.25 for headings, `base` 1.5 for body and tables, `relaxed` 1.65 for prose.
 
 Both faces ship with the token package as woff2 and are served by the product, never fetched from Google at runtime. A product that loads its type from a CDN loses it in an air-gapped install, and loses it quietly: the page falls back to a system font and still works, so the report never comes.

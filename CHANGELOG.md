@@ -2,6 +2,19 @@
 
 Each release lists two kinds of change. **Act on** is a change to what a component should look like or how it behaves: a product has to change its own code to follow it, and the audit may not notice if it doesn't. **Arrives by itself** is a token value or tooling change that a product picks up by reinstalling.
 
+## 0.7.0
+
+Act on:
+
+- **No italic in UI text.** Manrope has no italic, and a browser asked for one slants the upright face. Emphasis is weight or colour, and a disabled or placeholder state is its colour role. Code comments stay italic, now in JetBrains Mono's own italic. Style guide, Typography.
+- **`fonts.css` points at `../fonts/`**, the package's own layout, so a bundler that imports it from the package serves the files with no copying. A product that copied `dist/fonts.css` somewhere and put the fonts beside it re-points its `url()`s.
+
+Arrives by itself:
+
+- **`tailwind-spacing.css`**, the spacing steps as Tailwind utilities and nothing else, for a product adopting spacing before type. Imported beside `tailwind-colour.css`. Integration guide, Tailwind v4 consumers.
+- **`talos-migrate-spacing`**, which renames Tailwind spacing utilities that are already on a step (`p-4` to `p-compact`) and lists the ones between steps. A product using `tailwind-merge` adds the step names to its config; the integration guide has the snippet.
+- **Cyrillic, Cyrillic Extended and Greek** for both typefaces, and **JetBrains Mono italic**. 15 files, 186 kB in the package; a page downloads only the subsets its characters need, so an English-only page fetches the same two files as before.
+
 ## 0.6.2
 
 Act on:

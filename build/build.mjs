@@ -400,6 +400,30 @@ function buildTailwind({ colourOnly = false } = {}) {
   return lines.join('\n')
 }
 
+function buildTailwindSpacing() {
+  const lines = [
+    HEADER,
+    '',
+    '/*',
+    ' * Spacing steps only, for a product adopting spacing before type. Import it',
+    ' * alongside tailwind-colour.css; together they are tailwind.css without the',
+    ' * text sizes, fonts and type roles.',
+    ' *',
+    ' * The named steps sit beside Tailwind\'s numeric multiplier rather than',
+    ' * replacing it, so p-compact and p-4 both work while a product migrates.',
+    ' * The no-off-menu-spacing lint is what retires the numbers.',
+    ' */',
+    '',
+    '@theme inline {',
+  ]
+  for (const [name, token] of primitives) {
+    if (token.path[0] !== 'space') continue
+    lines.push(`  --spacing-${token.path.slice(1).join('-')}: var(${PREFIX}${name});`)
+  }
+  lines.push('}', '')
+  return lines.join('\n')
+}
+
 // ---------------------------------------------------------------- fonts.css
 
 const faces = JSON.parse(readFileSync(join(ROOT, 'fonts', 'faces.json'), 'utf8')).faces
@@ -428,7 +452,7 @@ function fontFaces(base) {
     lines.push(
       '@font-face {',
       `  font-family: '${face.family}';`,
-      '  font-style: normal;',
+      `  font-style: ${face.style};`,
       `  font-weight: ${face.weight};`,
       '  font-display: swap;',
       `  src: url('${base}/${face.file}') format('woff2');`,
@@ -454,14 +478,14 @@ function buildFontsCss() {
     HEADER,
     '',
     '/*',
-    ' * Typefaces, for consumers that serve the woff2 files next to this',
-    ' * stylesheet. Copy the fonts/ directory alongside it and the relative',
-    ' * paths resolve; serve them from somewhere else and re-point the url()s.',
+    ' * Typefaces. The url()s follow the package layout, dist/ beside fonts/, so a',
+    ' * bundler importing this file from the package resolves and fingerprints',
+    ' * the woff2 files. Copy the stylesheet anywhere else and re-point them.',
     ' */',
     '',
     ...FONT_NOTE,
     '',
-    ...fontFaces('./fonts'),
+    ...fontFaces('../fonts'),
   ].join('\n')
 }
 
@@ -736,6 +760,7 @@ const artifacts = {
   'tokens.scss': buildScss(),
   'tailwind.css': buildTailwind(),
   'tailwind-colour.css': buildTailwind({ colourOnly: true }),
+  'tailwind-spacing.css': buildTailwindSpacing(),
   'fonts.css': buildFontsCss(),
   'type.css': buildTypeCss(),
   'mintlify.css': buildMintlify(),

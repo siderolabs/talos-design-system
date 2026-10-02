@@ -10,8 +10,9 @@ How each stack takes the token package. The rules are in [`style-guide.md`](styl
 | `dist/tokens.scss` | Sass consumers (Bootstrap-based UIs) | `$talos-*` compile-time variables, `talos-tokens-dark` / `talos-tokens-light` mixins, and `talos-type($role)` |
 | `dist/tailwind.css` | Tailwind v4 consumers | `@theme inline` block mapping utility names onto the custom properties, plus `type-*` role utilities |
 | `dist/tailwind-colour.css` | Tailwind v4 consumers adopting colour first | The colour and elevation part of `tailwind.css` only, leaving the host's fonts, sizes and spacing alone |
+| `dist/tailwind-spacing.css` | Tailwind v4 consumers adopting spacing before type | The spacing steps as utility names (`p-compact`, `gap-tight`) and nothing else; imported beside `tailwind-colour.css` |
 | `dist/type.css` | Consumers without Tailwind or Sass | `.talos-type-*` classes, one per type role |
-| `dist/fonts.css` | Any web product | `@font-face` rules for the two typefaces, pointing at `./fonts/` beside the stylesheet |
+| `dist/fonts.css` | Any web product | `@font-face` rules for the two typefaces, pointing at the package's `fonts/` directory |
 | `dist/mintlify.css` | The documentation site | Tokens, Mintlify's own theme variables re-pointed at them, `@font-face` rules at `/fonts/`, and the site's existing CSS with the colours tokenised |
 | `dist/tokens.json` | Figma, docs, tooling | Resolved values with references and descriptions preserved |
 
@@ -21,7 +22,7 @@ This repository is public to read and org-only to write. Consumers take it as a 
 
 ```json
 "dependencies": {
-  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.6.0"
+  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.7.0"
 }
 ```
 
@@ -43,6 +44,25 @@ Import the two stylesheets in order, in place of the locally declared theme. Uti
 Neither file imports the other, and nothing in `dist/` assumes a package path, so the same two files also work vendored as plain copies if a consumer ever needs that.
 
 `@theme inline` makes the generated utilities reference the custom property rather than copy its value, which is what lets the theme switch at runtime. Two older role names, `content-strong` and `surface-inverse`, are aliased in the same file so products already using them adopt by re-pointing rather than renaming.
+
+A product can adopt in stages instead: `tailwind-colour.css` first, then `tailwind-spacing.css` beside it, then `tailwind.css` once text has its type roles. The full file redefines `text-xs` and the other size names onto the scale (`text-xs` is 11px here, 12px in Tailwind), so switching to it early resizes every piece of text that still uses a size name.
+
+To move a Tailwind codebase onto the spacing names, run the rename against its source:
+
+```sh
+npx talos-migrate-spacing src --dry-run   # report only
+npx talos-migrate-spacing src
+```
+
+It rewrites numeric padding, margin and gap utilities that land exactly on a step (`p-4` to `p-compact`, `-mt-2` to `-mt-tight`, `md:gap-6` to `md:gap-base`) and nothing else, so the page does not move. Values between steps are listed at the end for a person to decide. If the product merges classes with `tailwind-merge`, teach it the step names, or `cn('p-compact', 'p-tight')` keeps both:
+
+```ts
+import { extendTailwindMerge } from 'tailwind-merge'
+
+const twMerge = extendTailwindMerge({
+  extend: { theme: { spacing: ['micro', 'tight', 'snug', 'compact', 'base', 'section', 'major'] } },
+})
+```
 
 ## Bootstrap and Sass consumers
 
@@ -88,9 +108,9 @@ Mintlify's `fonts` setting is deliberately left unset. It has no slot for a code
 
 The faces are vendored here rather than loaded from Google Fonts, because an air-gapped install, a self-hosted product, or a docs mirror inside a customer network cannot reach `fonts.gstatic.com`. The failure mode is silent: the type falls back to a system font and the product stops looking like itself, and nobody files that as a bug.
 
-Each consumer serves the four `woff2` files from somewhere and points the `@font-face` rules at it. `dist/fonts.css` assumes `./fonts/` beside the stylesheet; `dist/mintlify.css` uses `/fonts/` because Mintlify inlines custom CSS into the document, where a relative path resolves against the page URL and would break on nested routes.
+Each consumer serves the four `woff2` files from somewhere and points the `@font-face` rules at it. `dist/fonts.css` points at `../fonts/`, the package's own layout, so a bundler that imports it from the package (Vite, webpack) serves the files with no copying; `dist/mintlify.css` uses `/fonts/` because Mintlify inlines custom CSS into the document, where a relative path resolves against the page URL and would break on nested routes.
 
-Variable weight 400 to 700, latin and latin-ext, 81 kB for all four files. Both families are OFL 1.1, which permits redistribution, and the licences sit beside them.
+Variable weight 400 to 700, in Latin, Latin Extended, Cyrillic, Cyrillic Extended and Greek, with JetBrains Mono also in italic: 15 files, 186 kB. The unicode ranges mean a page downloads only the subsets its characters need, so an English-only page fetches the two Latin files and nothing else. Both families are OFL 1.1, which permits redistribution, and the licences sit beside them.
 
 ## Anything else
 
@@ -193,7 +213,7 @@ tokens/         Source of truth. DTCG (W3C Design Tokens) JSON, hand-edited.
   semantic.light.json Role definitions, light theme.
   type-roles.json     Type roles: what a piece of text is, resolved onto the scale.
 build/          Compiler, the contrast audit, and the font fetcher.
-fonts/          The two typefaces as woff2, with their OFL licences. 81 kB.
+fonts/          The two typefaces as woff2, with their OFL licences. 186 kB.
 dist/           Generated. Committed so consumers can use a file without building.
 lint/           ESLint rules and a stylelint config, shipped with the package.
 audit/          The rendered-page audit, run in a browser.
