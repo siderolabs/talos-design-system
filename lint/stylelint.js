@@ -1,16 +1,23 @@
 // Copyright (c) 2026 Sidero Labs, Inc.
 //
-// Stylelint config for SCSS and CSS consumers (Bootstrap-based UIs). The
+// Stylelint config for every product's stylesheets: plain CSS (a Tailwind
+// entry file included), SCSS, and the <style> blocks of Vue components. The
 // eslint preset covers class names and inline styles in components; this
-// covers the stylesheet half, where most of a Sass codebase's raw values live.
+// covers the stylesheet half, which eslint does not read.
 //
 // Usage in the host repo's stylelint config:
 //
 //   import talos from '@siderolabs/talos-design-system/stylelint'
 //   export default { extends: [talos] }
 //
+// The syntaxes for SCSS and Vue ship with the package, so the host installs
+// stylelint and nothing else.
+//
 // Point `ignoreFiles` at the generated token files: they are the one place
 // literals are correct.
+
+import postcssHtml from 'postcss-html'
+import postcssScss from 'postcss-scss'
 
 const SPACING_PROPERTIES = [
   'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'margin-block', 'margin-inline',
@@ -29,6 +36,13 @@ const OFF_MENU_SPACING =
 
 export default {
   ignoreFiles: ['**/dist/**', '**/node_modules/**', '**/*tokens*.scss', '**/*tokens*.css'],
+  overrides: [
+    { files: ['**/*.scss'], customSyntax: postcssScss },
+    // Handing over the SCSS syntax object rather than letting postcss-html
+    // look it up by name, which fails where the host cannot see this
+    // package's dependencies (pnpm).
+    { files: ['**/*.vue', '**/*.html'], customSyntax: postcssHtml({ scss: postcssScss }) },
+  ],
   rules: {
     // Colour has to come from the token layer or the theme cannot switch.
     'declaration-property-value-disallowed-list': {

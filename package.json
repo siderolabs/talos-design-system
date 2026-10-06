@@ -48,6 +48,10 @@
     "check": "npm run build && npm run contrast",
     "test": "node --test test/*.test.js"
   },
+  "dependencies": {
+    "postcss-html": "^2.0.0",
+    "postcss-scss": "^4.0.9"
+  },
   "peerDependencies": {
     "eslint": ">=9",
     "playwright": ">=1.40",

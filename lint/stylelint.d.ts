@@ -2,6 +2,9 @@
 
 import type { Config } from 'stylelint'
 
-declare const config: Config
+declare const config: Config & {
+  rules: NonNullable<Config['rules']>
+  overrides: NonNullable<Config['overrides']>
+}
 
 export default config

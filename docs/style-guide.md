@@ -387,7 +387,7 @@ Rules that live only in a document decay. Each product runs the lint preset from
 - `no-raw-font-size` catches literal font sizes in component code: style objects, chart options, inline style strings and `text-[13px]`. Applies to every codebase.
 - `no-off-menu-spacing` requires the named steps instead of numeric spacing.
 - `no-primitive-token` catches application code reaching past the semantic layer into a palette ramp.
-- The stylelint config covers the same ground for SCSS.
+- The stylelint config checks colour, spacing, font family and font size in stylesheets, which ESLint does not read: plain CSS (a Tailwind entry file included), SCSS and Vue `<style>` blocks. Applies to every codebase with a stylesheet.
 - `npm run contrast` in the token repo fails the build when a role pair drops below its threshold. Exceptions are listed in the script with a reason, not silently skipped.
 - `talos-audit` checks a rendered page: type below the floor or off the scale, spacing off the menu, typefaces that are not ours or not self-hosted, colours outside the active theme, status chips that are buttons or links, and accent text standing alone in a table cell. Run it on a migrated page, in every theme the product offers, before calling the migration done. A clean run is necessary, not sufficient: it sees colours and sizes, not whether the right role was chosen for each element, so a bold value or a proportional ID passes.
 

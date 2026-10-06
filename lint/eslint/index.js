@@ -15,9 +15,9 @@ import noRawFontSize from './no-raw-font-size.js'
  *
  * `no-raw-color` and `no-raw-font-size` apply to any codebase.
  * `no-off-menu-spacing` and `no-primitive-token` read utility class names, so
- * they are for products on Tailwind; SCSS consumers get the equivalent from
- * the stylelint config. `no-raw-font-size` also reads Tailwind's arbitrary
- * `text-[13px]` form where it appears.
+ * they are for products on Tailwind; spacing in stylesheets, Tailwind or not,
+ * is checked by the stylelint config. `no-raw-font-size` also reads
+ * Tailwind's arbitrary `text-[13px]` form where it appears.
  */
 export const designSystem = {
   rules: {

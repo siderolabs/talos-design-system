@@ -13,7 +13,11 @@ import { auditPage, configFromTokens, type AuditReport, type Tokens } from '@sid
 
 const plugin: ESLint.Plugin = designSystem
 const rule: Rule.RuleModule = designSystemDefault.rules['no-raw-color']
-const stylelintConfig: Config = talos
+const stylelintConfig: Config = {
+  ...talos,
+  rules: { ...talos.rules, 'color-no-invalid-hex': true },
+  overrides: [...talos.overrides, { files: ['**/*.svelte'], rules: {} }],
+}
 
 declare const tokens: Tokens
 const config = configFromTokens(tokens, { samples: 5 })
