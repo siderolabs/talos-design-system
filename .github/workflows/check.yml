@@ -5,7 +5,9 @@
 # read the committed artifacts, so a forgotten rebuild ships a stylesheet that
 # disagrees with its own source and the repo starts lying about what it is.
 #
-# There is no install step because the build has no dependencies.
+# The tests cover the lint rules, the page audit and the bundled types. Each
+# suite skips itself when its tool is missing, so the job installs the dev
+# dependencies and Chromium first; without them the tests pass by not running.
 
 name: check
 
@@ -23,6 +25,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+
+      - run: npm ci
 
       - name: Build and audit contrast
         run: npm run check
@@ -36,3 +41,9 @@ jobs:
             exit 1
           fi
           echo "dist/ is current."
+
+      - name: Install Chromium for the page audit
+        run: npx playwright install --with-deps chromium
+
+      - name: Test lint rules, types and audit
+        run: npm test
