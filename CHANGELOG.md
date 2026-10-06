@@ -2,6 +2,17 @@
 
 Each release lists two kinds of change. **Act on** is a change to what a component should look like or how it behaves: a product has to change its own code to follow it, and the audit may not notice if it doesn't. **Arrives by itself** is a token value or tooling change that a product picks up by reinstalling.
 
+## 0.8.0
+
+Act on:
+
+- **Stylelint covers every stylesheet**, not only SCSS: plain CSS (a Tailwind entry file included), SCSS and Vue `<style>` blocks. A product, Tailwind or not, runs it over every stylesheet kind it has, for example `stylelint "src/**/*.{css,scss,vue}"`, and records what it finds in its suppressions baseline. The SCSS and Vue syntaxes ship with the package, so a product that installed `postcss-scss` or `postcss-html` and set `customSyntax` for them can drop both. Integration guide, Enforcement.
+
+Arrives by itself:
+
+- **TypeScript declarations** for the `eslint`, `stylelint` and `audit` entry points, so an `eslint.config.ts` needs no `declare module`. A typed stylelint config spreads the shipped one rather than listing it in `extends`; the integration guide has the shape.
+- **`no-raw-color` ignores HTML character references** such as `&#8230;` and text inside comments, which it used to report as hex colours.
+
 ## 0.7.0
 
 Act on:

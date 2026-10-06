@@ -1,6 +1,6 @@
 {
   "name": "@siderolabs/talos-design-system",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Design tokens and lint guardrails shared by every Talos product interface and the documentation site.",
   "license": "MPL-2.0",
   "repository": {
