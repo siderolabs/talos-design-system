@@ -170,6 +170,8 @@ export default { extends: [talos] }
 
 Adopt with a suppressions file rather than a rewrite: record existing violations once, and the count only goes down.
 
+The `eslint`, `stylelint` and `audit` entry points ship TypeScript declarations, so an `eslint.config.ts` needs no `declare module` of its own. Stylelint's types allow only strings in `extends`, though stylelint itself accepts the config object. A typed config spreads it instead: `{ ...talos, rules: { ...talos.rules, /* own rules */ } }`.
+
 `no-raw-font-size` flags a literal size anywhere in component code: `fontSize: 12` or `fontSize: '0.8rem'` in a style object, `font-size: 13px` in a style string or template, and Tailwind's `text-[13px]`. It allows `var(--talos-type-*)` and `var(--talos-text-*)`, keywords such as `inherit`, and expressions, and its message points at the type roles. Chart options take the same `fontSize` key and cannot resolve `var()`, so read the role's size at runtime:
 
 ```js
