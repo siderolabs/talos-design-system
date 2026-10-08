@@ -1,0 +1,2 @@
+fonttools[woff]==4.60.2
+ttfautohint-py==0.6.1

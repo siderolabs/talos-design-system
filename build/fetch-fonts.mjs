@@ -9,10 +9,14 @@
 // the type falls back to a system font and the product stops looking like
 // itself. Nobody files that as a bug.
 //
-// Run `npm run fonts` to refresh. Both families are OFL 1.1, which permits
-// redistribution; the licences sit beside the files.
+// Run `npm run fonts` to refresh. Manrope goes through build/static-fonts.py,
+// so the refresh needs Python with build/requirements.txt installed; set
+// PYTHON if `python3` is not the one that has them. Both families are OFL 1.1,
+// which permits redistribution; the licences sit beside the files.
 
-import { writeFileSync, mkdirSync } from 'node:fs'
+import { writeFileSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs'
+import { spawnSync } from 'node:child_process'
+import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -29,10 +33,29 @@ const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
 
 // Manrope has no italic. JetBrains Mono's is for code comments.
+//
+// Manrope ships as static, autohinted weights cut from the variable source (see
+// build/static-fonts.py for why). JetBrains Mono stays variable: a monospace
+// font's advances are all the same width, so they round evenly, and its
+// upstream hinting made no visible difference at 1x on Linux and only a slight
+// one on Windows. That isn't worth a 35 kB latin file per weight in place of
+// one 31 kB file for all of them.
 const FAMILIES = [
-  { family: 'Manrope', name: 'Manrope', slug: 'manrope', role: 'sans', styles: ['normal'] },
+  {
+    family: 'Manrope',
+    name: 'Manrope',
+    slug: 'manrope',
+    role: 'sans',
+    styles: ['normal'],
+    static: {
+      source: 'https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf',
+      weights: [400, 500, 600, 700],
+    },
+  },
   { family: 'JetBrains Mono', name: 'JetBrains+Mono', slug: 'jetbrains-mono', role: 'mono', styles: ['normal', 'italic'] },
 ]
+
+const PYTHON = process.env.PYTHON ?? 'python3'
 
 const SUBSETS = ['cyrillic-ext', 'cyrillic', 'greek', 'latin-ext', 'latin']
 
@@ -74,14 +97,9 @@ function parseSubsets(css) {
   return out
 }
 
-mkdirSync(OUT, { recursive: true })
-
-const faces = []
-
-for (const spec of FAMILIES) {
-  const { family, slug, role, styles } = spec
-  const css = await text(`https://fonts.googleapis.com/css2?family=${query(spec)}&display=swap`, { 'User-Agent': UA })
-  const subsets = parseSubsets(css)
+/** Downloads Google's variable woff2 subsets as they are served. */
+async function variableFaces({ family, slug, role, styles }, subsets) {
+  const out = []
 
   for (const style of styles) {
     for (const subset of SUBSETS) {
@@ -94,7 +112,7 @@ for (const spec of FAMILIES) {
       const bytes = Buffer.from(await res.arrayBuffer())
       writeFileSync(join(OUT, file), bytes)
 
-      faces.push({
+      out.push({
         family,
         role,
         file,
@@ -108,6 +126,62 @@ for (const spec of FAMILIES) {
     }
   }
 
+  return out
+}
+
+/**
+ * Downloads the variable source and has build/static-fonts.py cut it into one
+ * hinted woff2 per weight and subset, latin last within each weight.
+ */
+async function staticFaces({ family, slug, role, static: { source, weights } }, subsets) {
+  const res = await fetch(source)
+  if (!res.ok) throw new Error(`${res.status} downloading ${source}`)
+  const dir = mkdtempSync(join(tmpdir(), 'talos-fonts-'))
+  const ttf = join(dir, `${slug}.ttf`)
+  writeFileSync(ttf, Buffer.from(await res.arrayBuffer()))
+
+  const job = {
+    source: ttf,
+    out: OUT,
+    slug,
+    weights,
+    subsets: SUBSETS.map((subset) => {
+      const face = subsets.get(`normal/${subset}`)
+      if (!face) throw new Error(`${family} has no normal ${subset} subset`)
+      return { subset, unicodeRange: face.unicodeRange }
+    }),
+  }
+
+  const run = spawnSync(PYTHON, [join(ROOT, 'build', 'static-fonts.py')], { input: JSON.stringify(job), encoding: 'utf8' })
+  rmSync(dir, { recursive: true, force: true })
+  if (run.error || run.status !== 0) {
+    console.error(run.stderr || run.error?.message)
+    throw new Error(`build/static-fonts.py failed. It needs ${PYTHON} with build/requirements.txt installed.`)
+  }
+
+  return JSON.parse(run.stdout).map(({ file, subset, weight, bytes }) => {
+    console.log(`fonts/${file}  ${(bytes / 1024).toFixed(1)} kB`)
+    return { family, role, file, style: 'normal', subset, weight, unicodeRange: job.subsets.find((s) => s.subset === subset).unicodeRange, bytes }
+  })
+}
+
+mkdirSync(OUT, { recursive: true })
+
+const faces = []
+
+for (const spec of FAMILIES) {
+  const { slug } = spec
+  const css = await text(`https://fonts.googleapis.com/css2?family=${query(spec)}&display=swap`, { 'User-Agent': UA })
+  const subsets = parseSubsets(css)
+
+  // A refresh can change the file names, so the family's old files go first
+  // rather than lingering in the package.
+  for (const file of readdirSync(OUT)) {
+    if (file.startsWith(`${slug}-`) && file.endsWith('.woff2')) rmSync(join(OUT, file))
+  }
+
+  faces.push(...(spec.static ? await staticFaces(spec, subsets) : await variableFaces(spec, subsets)))
+
   const licence = await text(LICENCES[slug])
   writeFileSync(join(OUT, `OFL-${slug}.txt`), licence)
   console.log(`fonts/OFL-${slug}.txt`)
@@ -118,7 +192,7 @@ writeFileSync(
   JSON.stringify(
     {
       $comment:
-        'GENERATED by build/fetch-fonts.mjs. Variable-weight woff2 subsets, with the unicode ranges the @font-face rules need so a browser only fetches the subset it uses.',
+        'GENERATED by build/fetch-fonts.mjs. Woff2 subsets (Manrope static and hinted per weight, JetBrains Mono variable), with the unicode ranges the @font-face rules need so a browser only fetches the subset it uses.',
       faces,
     },
     null,
