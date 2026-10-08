@@ -468,9 +468,10 @@ function fontFaces(base) {
 const FONT_NOTE = [
   '/* Self-hosted so the type survives an air-gapped install. A product that',
   '   loads these from Google falls back to a system font behind a customer',
-  '   firewall and stops looking like itself, silently. Variable weight 400 to',
-  '   700; the unicode ranges keep a browser from fetching a subset it will not',
-  '   use. Both families are OFL 1.1, licences in fonts/. */',
+  '   firewall and stops looking like itself, silently. Manrope is one hinted',
+  '   file per weight, so it stays sharp on a 1x screen; JetBrains Mono is',
+  '   variable, 400 to 700. The unicode ranges keep a browser from fetching a',
+  '   subset it will not use. Both families are OFL 1.1, licences in fonts/. */',
 ]
 
 function buildFontsCss() {
