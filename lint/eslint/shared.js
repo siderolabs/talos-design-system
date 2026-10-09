@@ -14,6 +14,14 @@ export const TYPE_SCALE = Object.entries(TOKENS.primitive)
   .sort((a, b) => a.px - b.px)
 
 /**
+ * A class-shaped run of characters. Whitespace, quotes, backticks and angle
+ * brackets end a class, so markup inside a string (`'<div class="gap-4">'`)
+ * yields `gap-4` rather than `class="gap-4">`. Inside `[...]` anything but
+ * `]` is kept, so arbitrary values like `content-['x']` stay whole.
+ */
+const CLASS_CANDIDATE = /(?:[^\s"'`<>[]|\[[^\]]*\])+/g
+
+/**
  * Utility classes reach the DOM from several places: a static `class` or
  * `className` attribute, a string or template literal inside a binding, and
  * `cn()`/`clsx()` calls in script. Rather than enumerate those shapes, this
@@ -28,9 +36,7 @@ export function createClassStringRule(check) {
     const inspect = (node, raw) => {
       if (!raw.includes('-')) return
 
-      for (const candidate of raw.split(/\s+/)) {
-        if (!candidate) continue
-
+      for (const [candidate] of raw.matchAll(CLASS_CANDIDATE)) {
         const message = check(candidate)
         if (message) context.report({ node, message })
       }
@@ -67,12 +73,12 @@ export function createClassStringRule(check) {
 
 /**
  * Strips Tailwind variant prefixes (`md:`, `hover:`, `dark:`), the `!`
- * important marker and any trailing opacity modifier (`/50`), so the rules
- * only have to reason about the utility itself.
+ * important marker (leading in v3, trailing in v4) and any trailing opacity
+ * modifier (`/50`), so the rules only have to reason about the utility itself.
  */
 export function bareUtility(className) {
   const withoutVariants = className.slice(className.lastIndexOf(':') + 1)
-  const withoutImportant = withoutVariants.replace(/^!/, '')
+  const withoutImportant = withoutVariants.replace(/^!|!$/g, '')
 
   return withoutImportant.replace(/\/[0-9.]+$/, '')
 }

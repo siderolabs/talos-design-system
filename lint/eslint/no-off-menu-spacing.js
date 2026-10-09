@@ -9,6 +9,13 @@ import { bareUtility, createClassStringRule } from './shared.js'
 const SPACING_UTILITY =
   /^-?(gap-x|gap-y|gap|space-x|space-y|px|py|pt|pb|pl|pr|ps|pe|p|mx|my|mt|mb|ml|mr|ms|me|m)-(.+)$/
 
+/**
+ * The values Tailwind reads as spacing: a number on its scale or an arbitrary
+ * `[...]` / `(...)` value. Anything else after a spacing prefix is a word that
+ * happens to start like one (`my-cluster`, `p-section-title`), not a utility.
+ */
+const SPACING_VALUE = /^(?:\d+(?:\.\d+)?|\[.+\]|\(.+\))$/
+
 const MENU = new Set(['micro', 'tight', 'snug', 'compact', 'base', 'section', 'major'])
 
 /**
@@ -33,6 +40,7 @@ export default {
 
     const [, utility, value] = match
     if (MENU.has(value) || OFF_SCALE_BUT_ALLOWED.has(value)) return
+    if (!SPACING_VALUE.test(value)) return
 
     return `Use a named spacing step instead of "${className}": ${utility}-micro (4px), -tight (8px), -snug (12px), -compact (16px), -base (24px), -section (32px) or -major (64px). A value that is not on the menu is a design question.`
   }),
