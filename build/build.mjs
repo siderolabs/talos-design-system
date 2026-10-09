@@ -2,19 +2,23 @@
 //
 // Compiles the token source in tokens/ into the artifacts in dist/.
 //
-// The build is deliberately dependency-free: the source files are valid DTCG
-// (W3C Design Tokens) JSON, so Style Dictionary can be dropped in later
-// without touching them, but nothing about publishing a token package should
-// require a toolchain to be healthy first. Hand-written formatters also let
-// the output carry the comments that make dist/ readable, which is the file
-// most people will actually open.
+// The build uses no build tooling: the source files are valid DTCG (W3C Design
+// Tokens) JSON, so Style Dictionary can be dropped in later without touching
+// them, but nothing about publishing a token package should require a
+// toolchain to be healthy first. It does read two packages, the
+// @fontsource-variable font packages, whose @font-face rules the Mintlify
+// build re-points at its own copy of the files, so run `npm install` first.
+// Hand-written formatters also let the output carry the comments that make
+// dist/ readable, which is the file most people will actually open.
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const PREFIX = '--talos-'
+const require = createRequire(import.meta.url)
 
 const read = (name) => JSON.parse(readFileSync(join(ROOT, 'tokens', name), 'utf8'))
 
@@ -426,51 +430,22 @@ function buildTailwindSpacing() {
 
 // ---------------------------------------------------------------- fonts.css
 
-const faces = JSON.parse(readFileSync(join(ROOT, 'fonts', 'faces.json'), 'utf8')).faces
-
-// A @font-face rule pointing at a file that is not in the tree fails silently
-// in a browser, which is the same failure this whole arrangement exists to
-// avoid, so it fails loudly here instead.
-for (const face of faces) {
-  if (!existsSync(join(ROOT, 'fonts', face.file))) {
-    console.error(`fonts/faces.json names ${face.file}, which is not in fonts/. Run \`npm run fonts\`.`)
-    process.exit(1)
-  }
-}
-
-/**
- * Emits the @font-face rules. `base` is where the consumer serves the woff2
- * files from, and it matters more than it looks: a relative path resolves
- * against the stylesheet, but Mintlify inlines its custom CSS into the
- * document, where a relative path would resolve against the page URL and break
- * on every nested route. Hence a root-absolute path for that build.
- */
-function fontFaces(base) {
-  const lines = []
-
-  for (const face of faces) {
-    lines.push(
-      '@font-face {',
-      `  font-family: '${face.family}';`,
-      `  font-style: ${face.style};`,
-      `  font-weight: ${face.weight};`,
-      '  font-display: swap;',
-      `  src: url('${base}/${face.file}') format('woff2');`,
-      `  unicode-range: ${face.unicodeRange};`,
-      '}',
-      '',
-    )
-  }
-
-  return lines
-}
+// The typefaces are Fontsource packages and dependencies of this one, so a
+// product that installs the design system has them, and a bundler resolves
+// these imports and serves the files. Variable, so one file per subset covers
+// every weight. Manrope has no italic; JetBrains Mono's is for code comments.
+const FONT_SHEETS = [
+  '@fontsource-variable/manrope/wght.css',
+  '@fontsource-variable/jetbrains-mono/wght.css',
+  '@fontsource-variable/jetbrains-mono/wght-italic.css',
+]
 
 const FONT_NOTE = [
   '/* Self-hosted so the type survives an air-gapped install. A product that',
   '   loads these from Google falls back to a system font behind a customer',
-  '   firewall and stops looking like itself, silently. Variable weight 400 to',
-  '   700; the unicode ranges keep a browser from fetching a subset it will not',
-  '   use. Both families are OFL 1.1, licences in fonts/. */',
+  '   firewall and stops looking like itself, silently. Variable weight; the',
+  '   unicode ranges keep a browser from fetching a subset it will not use.',
+  '   Both families are OFL 1.1, licences in their packages. */',
 ]
 
 function buildFontsCss() {
@@ -478,15 +453,43 @@ function buildFontsCss() {
     HEADER,
     '',
     '/*',
-    ' * Typefaces. The url()s follow the package layout, dist/ beside fonts/, so a',
-    ' * bundler importing this file from the package resolves and fingerprints',
-    ' * the woff2 files. Copy the stylesheet anywhere else and re-point them.',
+    ' * Typefaces, from the @fontsource-variable packages this one depends on.',
+    ' * A bundler resolves the imports and fingerprints the woff2 files. Without',
+    " * one, serve these stylesheets with their packages' files/ directories",
+    ' * beside them.',
     ' */',
     '',
     ...FONT_NOTE,
     '',
-    ...fontFaces('../fonts'),
+    ...FONT_SHEETS.map((sheet) => `@import '${sheet}';`),
+    '',
   ].join('\n')
+}
+
+/**
+ * The @font-face rules from the same packages, re-pointed at `base` for a host
+ * that cannot import from node_modules. Mintlify inlines its custom CSS into
+ * the document, where a relative path would resolve against the page URL and
+ * break on every nested route, hence a root-absolute path there.
+ *
+ * The url()s may be bare or quoted. Any that still doesn't point at `base`
+ * afterwards fails the build, since a broken src fails silently in a browser.
+ */
+function fontFaces(base) {
+  return FONT_SHEETS.map((sheet) => {
+    const css = readFileSync(require.resolve(sheet), 'utf8')
+      .trim()
+      .replaceAll(/url\((['"]?)\.\/files\//g, `url($1${base}/`)
+
+    for (const [, url] of css.matchAll(/url\(['"]?([^'")]+)/g)) {
+      if (!url.startsWith(`${base}/`)) {
+        console.error(`${sheet} has a url() the Mintlify build cannot re-point: ${url}`)
+        process.exit(1)
+      }
+    }
+
+    return css
+  }).concat('')
 }
 
 // ------------------------------------------------------------- mintlify.css
@@ -626,8 +629,10 @@ function buildMintlify() {
     ' *',
     ' * Two things travel with it:',
     ' *',
-    ' * 1. The fonts/ directory, copied to public/fonts/ in the docs repo. The',
-    ' *    @font-face rules below expect them at /fonts/.',
+    ' * 1. The woff2 files from the @fontsource-variable/manrope and',
+    " *    @fontsource-variable/jetbrains-mono packages (each one's files/),",
+    ' *    copied to public/fonts/ in the docs repo. The @font-face rules below',
+    ' *    expect them at /fonts/.',
     ' *',
     ' * 2. One block in public/docs.json, because Mintlify reads the accent from',
     ' *    configuration rather than from CSS:',

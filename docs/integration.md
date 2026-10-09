@@ -12,7 +12,7 @@ How each stack takes the token package. The rules are in [`style-guide.md`](styl
 | `dist/tailwind-colour.css` | Tailwind v4 consumers adopting colour first | The colour and elevation part of `tailwind.css` only, leaving the host's fonts, sizes and spacing alone |
 | `dist/tailwind-spacing.css` | Tailwind v4 consumers adopting spacing before type | The spacing steps as utility names (`p-compact`, `gap-tight`) and nothing else; imported beside `tailwind-colour.css` |
 | `dist/type.css` | Consumers without Tailwind or Sass | `.talos-type-*` classes, one per type role |
-| `dist/fonts.css` | Any web product | `@font-face` rules for the two typefaces, pointing at the package's `fonts/` directory |
+| `dist/fonts.css` | Any web product with a bundler | `@import`s of the two typefaces from their Fontsource packages |
 | `dist/mintlify.css` | The documentation site | Tokens, Mintlify's own theme variables re-pointed at them, `@font-face` rules at `/fonts/`, and the site's existing CSS with the colours tokenised |
 | `dist/tokens.json` | Figma, docs, tooling | Resolved values with references and descriptions preserved |
 
@@ -91,7 +91,9 @@ Mintlify has no build step and cannot import from `node_modules`, so this one is
 
 ```
 cp dist/mintlify.css <docs-repo>/public/talos-tokens.css
-cp fonts/*.woff2 fonts/OFL-*.txt <docs-repo>/public/fonts/
+cp node_modules/@fontsource-variable/{manrope,jetbrains-mono}/files/*.woff2 <docs-repo>/public/fonts/
+cp node_modules/@fontsource-variable/manrope/LICENSE <docs-repo>/public/fonts/OFL-manrope.txt
+cp node_modules/@fontsource-variable/jetbrains-mono/LICENSE <docs-repo>/public/fonts/OFL-jetbrains-mono.txt
 ```
 
 Do not merge it into an existing stylesheet. This file is a build artifact and gets replaced wholesale on the next version bump, so anything hand-written that shares the file gets reverted silently. Keep site-specific rules (layout repairs, table treatments, per-page overrides) in their own file and have them reference `--talos-*` rather than raw values. Page-specific rules can be scoped with Mintlify's `html[data-current-path="..."]` selector so they do not apply site-wide.
@@ -108,9 +110,11 @@ Mintlify's `fonts` setting is deliberately left unset. It has no slot for a code
 
 The faces are vendored here rather than loaded from Google Fonts, because an air-gapped install, a self-hosted product, or a docs mirror inside a customer network cannot reach `fonts.gstatic.com`. The failure mode is silent: the type falls back to a system font and the product stops looking like itself, and nobody files that as a bug.
 
-Each consumer serves the four `woff2` files from somewhere and points the `@font-face` rules at it. `dist/fonts.css` points at `../fonts/`, the package's own layout, so a bundler that imports it from the package (Vite, webpack) serves the files with no copying; `dist/mintlify.css` uses `/fonts/` because Mintlify inlines custom CSS into the document, where a relative path resolves against the page URL and would break on nested routes.
+They come from [Fontsource](https://fontsource.org): `@fontsource-variable/manrope` and `@fontsource-variable/jetbrains-mono` are dependencies of this package, so installing it installs them, at versions the lockfile pins. The families are registered as `Manrope Variable` and `JetBrains Mono Variable`, which is what `--talos-font-sans` and `--talos-font-mono` name.
 
-Variable weight 400 to 700, in Latin, Latin Extended, Cyrillic, Cyrillic Extended and Greek, with JetBrains Mono also in italic: 15 files, 186 kB. The unicode ranges mean a page downloads only the subsets its characters need, so an English-only page fetches the two Latin files and nothing else. Both families are OFL 1.1, which permits redistribution, and the licences sit beside them.
+`dist/fonts.css` imports the packages' stylesheets, so a bundler that imports it (Vite, webpack, Tailwind v4) resolves them and serves the files with no copying. Sass is not one: it passes a plain CSS `@import` through unresolved, so `fonts.css` used from a Sass file works when Vite or another bundler processes the output, and not from the Sass command line alone. Without a bundler, serve each package's `wght.css` (and JetBrains Mono's `wght-italic.css`) with its `files/` directory beside it. `dist/mintlify.css` carries the same `@font-face` rules re-pointed at `/fonts/`, because Mintlify inlines custom CSS into the document, where a relative path resolves against the page URL and would break on nested routes.
+
+Variable weight, so one file per subset covers every weight on the scale. Latin, Latin Extended, Vietnamese, Cyrillic, Cyrillic Extended and Greek, with JetBrains Mono also in italic. The unicode ranges mean a page downloads only the subsets its characters need, so an English-only page fetches the two Latin files and nothing else. Both families are OFL 1.1, which permits redistribution; each package carries its licence.
 
 ## Anything else
 
@@ -216,8 +220,7 @@ tokens/         Source of truth. DTCG (W3C Design Tokens) JSON, hand-edited.
   semantic.dark.json  Role definitions, dark theme (the default).
   semantic.light.json Role definitions, light theme.
   type-roles.json     Type roles: what a piece of text is, resolved onto the scale.
-build/          Compiler, the contrast audit, and the font fetcher.
-fonts/          The two typefaces as woff2, with their OFL licences. 186 kB.
+build/          Compiler and the contrast audit.
 dist/           Generated. Committed so consumers can use a file without building.
 lint/           ESLint rules and a stylelint config, shipped with the package.
 audit/          The rendered-page audit, run in a browser.
@@ -226,14 +229,14 @@ test/           Tests for the lint rules and the audit.
 docs/           The style guide, the type role guide, this file, and the rendered preview.
 ```
 
-Edit `tokens/`, run `npm run check`, commit `dist/`. Nothing else is hand-maintained.
+Run `npm install` once, then edit `tokens/`, run `npm run check`, commit `dist/`. Nothing else is hand-maintained.
 
 ```
+npm install        Once, before anything else. The build reads the font packages.
 npm run build      Compile tokens/ into dist/
 npm run contrast   WCAG audit over every semantic pair; exits non-zero on a failure
 npm run check      Both
-npm test           Lint rule and audit tests. Needs `npm install` first.
-npm run fonts      Re-download the typefaces. Rarely; the files are committed.
+npm test           Lint rule and audit tests.
 ```
 
-The build has no dependencies. The tests do (ESLint, the Vue parser and Playwright, all dev dependencies), which is why they sit outside `npm run check`. The source is valid DTCG, so Style Dictionary can replace the compiler later without touching the tokens, but publishing a token package should not depend on a toolchain being healthy first.
+The build uses no build tooling, but it does read two packages: `@fontsource-variable/manrope` and `@fontsource-variable/jetbrains-mono`, whose `@font-face` rules the Mintlify build re-points at `/fonts/`. Without `npm install` it fails to resolve them. The tests need tooling (ESLint, the Vue parser and Playwright, all dev dependencies), which is why they sit outside `npm run check`. The source is valid DTCG, so Style Dictionary can replace the compiler later without touching the tokens, but publishing a token package should not depend on a toolchain being healthy first.

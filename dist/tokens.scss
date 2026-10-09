@@ -158,8 +158,8 @@ $talos-border-hairline: 1px;
 $talos-border-edge: 3px;
 
 // font
-$talos-font-sans: Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;
-$talos-font-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+$talos-font-sans: 'Manrope Variable', Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;
+$talos-font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
 
 // text
 $talos-text-2xs: 10px;
@@ -944,8 +944,8 @@ $talos-dim-shadow-focus: 0 0 0 3px rgba(225, 45, 70, 0.35);
   --talos-radius-pill: 9999px;
   --talos-border-hairline: 1px;
   --talos-border-edge: 3px;
-  --talos-font-sans: Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --talos-font-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+  --talos-font-sans: 'Manrope Variable', Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --talos-font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
   --talos-text-2xs: 10px;
   --talos-text-xs: 11px;
   --talos-text-sm: 12px;

@@ -21,7 +21,6 @@
     "audit",
     "bin",
     "dist",
-    "fonts",
     "lint",
     "tokens",
     "docs"
@@ -35,7 +34,6 @@
     "./fonts.css": "./dist/fonts.css",
     "./type.css": "./dist/type.css",
     "./mintlify.css": "./dist/mintlify.css",
-    "./fonts/*": "./fonts/*",
     "./tokens.json": "./dist/tokens.json",
     "./eslint": "./lint/eslint/index.js",
     "./stylelint": "./lint/stylelint.js",
@@ -44,11 +42,12 @@
   "scripts": {
     "build": "node build/build.mjs",
     "contrast": "node build/contrast.mjs",
-    "fonts": "node build/fetch-fonts.mjs",
     "check": "npm run build && npm run contrast",
     "test": "node --test test/*.test.js"
   },
   "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
     "postcss-html": "^2.0.0",
     "postcss-scss": "^4.0.9"
   },

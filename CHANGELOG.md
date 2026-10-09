@@ -2,6 +2,12 @@
 
 Each release lists two kinds of change. **Act on** is a change to what a component should look like or how it behaves: a product has to change its own code to follow it, and the audit may not notice if it doesn't. **Arrives by itself** is a token value or tooling change that a product picks up by reinstalling.
 
+## Unreleased
+
+Act on:
+
+- **The typefaces are Fontsource dependencies**, `@fontsource-variable/manrope` and `@fontsource-variable/jetbrains-mono`, instead of files under `fonts/`, which is gone along with the `./fonts/*` export. The families are now `Manrope Variable` and `JetBrains Mono Variable`, and the font tokens name them. A product that imports `fonts.css` through a bundler needs nothing more. A product that copied `fonts/` (the docs site does) copies the packages' `files/` instead, with the new file names `mintlify.css` expects; a product that names `Manrope` or `JetBrains Mono` itself rather than using the tokens switches to the new names. Integration guide, Typefaces.
+
 ## 0.8.0
 
 Act on:

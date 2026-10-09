@@ -36,7 +36,7 @@ describe('page audit', { skip: !playwright && 'Playwright is not installed' }, (
     const config = configFromTokens(tokens)
     assert.deepEqual(config.typeScale.map(({ px }) => px), [10, 11, 12, 14, 16, 20, 24, 30])
     assert.deepEqual(config.spacing.map(({ px }) => px), [4, 8, 12, 16, 24, 32, 64])
-    assert.equal(config.stacks.sans[0], 'Manrope')
+    assert.equal(config.stacks.sans[0], 'Manrope Variable')
   })
 
   it('flags text below the floor, including 10px that is not a tracked label', () => {
