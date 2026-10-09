@@ -47,10 +47,10 @@ A product that finds it needs a value the system does not have has found a token
 Consumers take the package as a git dependency pinned to a release tag:
 
 ```json
-"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.8.0"
+"@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.9.0"
 ```
 
-Below 1.0 a caret range takes patch releases only: `^0.8.0` gets 0.8.1 but not 0.9.0. Moving to a new minor is a deliberate step, and [`CHANGELOG.md`](CHANGELOG.md) says what each release asks a product to change.
+Below 1.0 a caret range takes patch releases only: `^0.9.0` gets 0.9.1 but not 0.10.0. Moving to a new minor is a deliberate step, and [`CHANGELOG.md`](CHANGELOG.md) says what each release asks a product to change.
 
 Tags are immutable. A released version never changes; a correction is a new tag. Renovate and Dependabot understand tagged git dependencies, so bumps arrive as ordinary bot PRs, and drift between products shows up as a version number rather than as a divergent hex. Nothing is published to npm; that can happen later or never without changing how consumers import anything.
 

@@ -22,7 +22,7 @@ This repository is public to read and org-only to write. Consumers take it as a 
 
 ```json
 "dependencies": {
-  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.8.0"
+  "@siderolabs/talos-design-system": "github:siderolabs/talos-design-system#semver:^0.9.0"
 }
 ```
 
