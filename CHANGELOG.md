@@ -2,6 +2,12 @@
 
 Each release lists two kinds of change. **Act on** is a change to what a component should look like or how it behaves: a product has to change its own code to follow it, and the audit may not notice if it doesn't. **Arrives by itself** is a token value or tooling change that a product picks up by reinstalling.
 
+## 0.10.0
+
+Act on:
+
+- **The UI typeface is Inter**, in place of Manrope. The dependency is `@fontsource-variable/inter`, the family is `Inter Variable`, and `--talos-font-sans` names it. A product that imports `fonts.css` through a bundler needs nothing more. A product that copied the font files (the docs site does) copies Inter's `files/` and licence instead and deletes the Manrope files; the integration guide has the commands. A product that names `Manrope` itself rather than using the token switches to `Inter Variable`. Inter's widths and vertical metrics differ from Manrope's at the same size, so check dense layouts (table columns, chips, truncated labels) by eye, since the audit does not see overflow. The system serves Inter's upright face only, so the no-italic rule stands. Integration guide, Typefaces; style guide, Typography.
+
 ## 0.9.0
 
 Act on:
