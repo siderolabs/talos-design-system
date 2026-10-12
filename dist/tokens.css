@@ -155,7 +155,7 @@
   --talos-border-edge: 3px;  /* A colour bar, not a border: the status edge on dark callouts and tiles, and the active nav marker. */
 
   /* font */
-  --talos-font-sans: 'Manrope Variable', Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;  /* UI and headings */
+  --talos-font-sans: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;  /* UI and headings */
   --talos-font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;  /* The machine voice: code, identifiers, versions, tracked labels */
 
   /* text */

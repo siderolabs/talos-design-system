@@ -36,7 +36,7 @@ A product that finds it needs a value the system does not have has found a token
 ## What a release contains
 
 - **Tokens** in `dist/`: `tokens.css` (custom properties, dark under `:root`, light under `[data-theme="light"]`, dim under `[data-theme="dim"]`), `tokens.scss` (variables and mixins), `tailwind.css`, `tailwind-colour.css` and `tailwind-spacing.css` (Tailwind v4 `@theme` blocks, whole or by stage), `type.css` (type role classes), `fonts.css`, `mintlify.css` for the documentation site, and `tokens.json` with references and descriptions preserved.
-- **Typefaces**: Manrope and JetBrains Mono, as dependencies on their Fontsource packages, so a self-hosted or air-gapped install serves them itself and never reaches for a CDN.
+- **Typefaces**: Inter and JetBrains Mono, as dependencies on their Fontsource packages, so a self-hosted or air-gapped install serves them itself and never reaches for a CDN.
 - **Migration**: `talos-migrate-spacing`, which renames Tailwind spacing utilities that are already on a step and lists the ones that are not.
 - **Lint**: ESLint rules (`no-raw-color`, `no-raw-font-size`, `no-off-menu-spacing`, `no-primitive-token`) and a stylelint config.
 - **Audit**: `talos-audit`, a Playwright runner that checks a rendered page against the scale, the menu, the typeface stacks and the active theme's roles, and flags status chips used as buttons and accent links standing alone in tables.

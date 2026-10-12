@@ -433,9 +433,9 @@ function buildTailwindSpacing() {
 // The typefaces are Fontsource packages and dependencies of this one, so a
 // product that installs the design system has them, and a bundler resolves
 // these imports and serves the files. Variable, so one file per subset covers
-// every weight. Manrope has no italic; JetBrains Mono's is for code comments.
+// every weight. Inter has no italic; JetBrains Mono's is for code comments.
 const FONT_SHEETS = [
-  '@fontsource-variable/manrope/wght.css',
+  '@fontsource-variable/inter/wght.css',
   '@fontsource-variable/jetbrains-mono/wght.css',
   '@fontsource-variable/jetbrains-mono/wght-italic.css',
 ]
@@ -629,7 +629,7 @@ function buildMintlify() {
     ' *',
     ' * Two things travel with it:',
     ' *',
-    ' * 1. The woff2 files from the @fontsource-variable/manrope and',
+    ' * 1. The woff2 files from the @fontsource-variable/inter and',
     " *    @fontsource-variable/jetbrains-mono packages (each one's files/),",
     ' *    copied to public/fonts/ in the docs repo. The @font-face rules below',
     ' *    expect them at /fonts/.',

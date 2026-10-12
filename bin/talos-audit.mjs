@@ -27,7 +27,7 @@ Options:
 const LABELS = {
   'type-floor': 'Text below the floor',
   'type-scale': 'Font sizes off the scale',
-  'font-family': 'Typefaces outside the Manrope and JetBrains Mono stacks',
+  'font-family': 'Typefaces outside the Inter and JetBrains Mono stacks',
   'font-unserved': 'Our typefaces requested but not served by the page',
   'font-external': 'Fonts loaded from another origin',
   spacing: 'Spacing off the menu',

@@ -196,7 +196,7 @@
 
   "font": {
     "$type": "fontFamily",
-    "sans": { "$value": "'Manrope Variable', Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif", "$description": "UI and headings" },
+    "sans": { "$value": "'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif", "$description": "UI and headings" },
     "mono": { "$value": "'JetBrains Mono Variable', 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace", "$description": "The machine voice: code, identifiers, versions, tracked labels" }
   },
 

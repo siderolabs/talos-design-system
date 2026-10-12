@@ -131,7 +131,7 @@ The end stops live in the palette as `gradient-display-1..3`, the one place the 
 
 ### Our relationship to the marketing site
 
-The marketing site is the same family with two deliberate divergences. It still carries the older red (`--red: #E04B45` and its derived steps) where the product accent is the crimson `#E12D46`, and its status green `#57C28A` is 2.2:1 on a white card, so the product status palette is refitted for contrast (below). The proposal to bring the marketing site along is with marketing. Everything else matches: the four-step content ramp, the three-step surface ramp, `#E2D2A8`, Manrope and JetBrains Mono. Outside the accent and status ramps, when the two disagree on a colour, that is a bug in one of them.
+The marketing site is the same family with two deliberate divergences. It still carries the older red (`--red: #E04B45` and its derived steps) where the product accent is the crimson `#E12D46`, and its status green `#57C28A` is 2.2:1 on a white card, so the product status palette is refitted for contrast (below). The proposal to bring the marketing site along is with marketing. Everything else matches: the four-step content ramp, the three-step surface ramp, `#E2D2A8`, Inter and JetBrains Mono. Outside the accent and status ramps, when the two disagree on a colour, that is a bug in one of them.
 
 Product surfaces should be recognisably the same family as the marketing site without copying its composition. Marketing rebuilds its site on a cadence product cannot follow, and it optimises for a first impression rather than for someone reading the same page every day. So we take the palette, the typefaces and the vocabulary, and we decide layout, density and how much saturated area a page carries on our own terms. "Marketing does it this way" is evidence, not an argument.
 
@@ -294,7 +294,7 @@ A value that is not on this menu is a design question, not a CSS decision. Bring
 
 ## Typography
 
-Manrope for UI and headings. JetBrains Mono as the machine voice: code, identifiers, versions, node names, and uppercase tracked labels.
+Inter for UI and headings. JetBrains Mono as the machine voice: code, identifiers, versions, node names, and uppercase tracked labels.
 
 The scale is dense on purpose. Base is 14px, not 16px, because these are operator consoles where a table row matters more than reading comfort at arm's length.
 
@@ -315,7 +315,7 @@ Every size is on the scale. A 13px or 10.5px value is off the scale the same way
 
 Application code picks a **type role** rather than a size. A role names what the text is (`body`, `meta`, `label`, `overline`, `annotation` and nine others) and resolves to one size, weight, line height and face. [Type roles](type-roles.md) has the full set, the decision order, and worked examples.
 
-**No italic in UI text.** Manrope has no italic, and a browser asked for one slants the upright face, which reads as a rendering fault. Emphasis is weight or colour, and a disabled or placeholder state is its colour role. The one italic is the code comment, which JetBrains Mono draws properly.
+**No italic in UI text.** Inter has no italic, and a browser asked for one slants the upright face, which reads as a rendering fault. Emphasis is weight or colour, and a disabled or placeholder state is its colour role. The one italic is the code comment, which JetBrains Mono draws properly.
 
 Weights are 400/500/600/700. Line height is `tight` 1.25 for headings, `base` 1.5 for body and tables, `relaxed` 1.65 for prose.
 

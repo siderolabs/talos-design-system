@@ -18,6 +18,6 @@
    unicode ranges keep a browser from fetching a subset it will not use.
    Both families are OFL 1.1, licences in their packages. */
 
-@import '@fontsource-variable/manrope/wght.css';
+@import '@fontsource-variable/inter/wght.css';
 @import '@fontsource-variable/jetbrains-mono/wght.css';
 @import '@fontsource-variable/jetbrains-mono/wght-italic.css';

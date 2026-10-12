@@ -91,8 +91,8 @@ Mintlify has no build step and cannot import from `node_modules`, so this one is
 
 ```
 cp dist/mintlify.css <docs-repo>/public/talos-tokens.css
-cp node_modules/@fontsource-variable/{manrope,jetbrains-mono}/files/*.woff2 <docs-repo>/public/fonts/
-cp node_modules/@fontsource-variable/manrope/LICENSE <docs-repo>/public/fonts/OFL-manrope.txt
+cp node_modules/@fontsource-variable/{inter,jetbrains-mono}/files/*.woff2 <docs-repo>/public/fonts/
+cp node_modules/@fontsource-variable/inter/LICENSE <docs-repo>/public/fonts/OFL-inter.txt
 cp node_modules/@fontsource-variable/jetbrains-mono/LICENSE <docs-repo>/public/fonts/OFL-jetbrains-mono.txt
 ```
 
@@ -110,7 +110,7 @@ Mintlify's `fonts` setting is deliberately left unset. It has no slot for a code
 
 The faces are vendored here rather than loaded from Google Fonts, because an air-gapped install, a self-hosted product, or a docs mirror inside a customer network cannot reach `fonts.gstatic.com`. The failure mode is silent: the type falls back to a system font and the product stops looking like itself, and nobody files that as a bug.
 
-They come from [Fontsource](https://fontsource.org): `@fontsource-variable/manrope` and `@fontsource-variable/jetbrains-mono` are dependencies of this package, so installing it installs them, at versions the lockfile pins. The families are registered as `Manrope Variable` and `JetBrains Mono Variable`, which is what `--talos-font-sans` and `--talos-font-mono` name.
+They come from [Fontsource](https://fontsource.org): `@fontsource-variable/inter` and `@fontsource-variable/jetbrains-mono` are dependencies of this package, so installing it installs them, at versions the lockfile pins. The families are registered as `Inter Variable` and `JetBrains Mono Variable`, which is what `--talos-font-sans` and `--talos-font-mono` name.
 
 `dist/fonts.css` imports the packages' stylesheets, so a bundler that imports it (Vite, webpack, Tailwind v4) resolves them and serves the files with no copying. Sass is not one: it passes a plain CSS `@import` through unresolved, so `fonts.css` used from a Sass file works when Vite or another bundler processes the output, and not from the Sass command line alone. Without a bundler, serve each package's `wght.css` (and JetBrains Mono's `wght-italic.css`) with its `files/` directory beside it. `dist/mintlify.css` carries the same `@font-face` rules re-pointed at `/fonts/`, because Mintlify inlines custom CSS into the document, where a relative path resolves against the page URL and would break on nested routes.
 
@@ -200,7 +200,7 @@ It reports, grouped by value with a count and example elements:
 - Text below the 11px floor. 10px passes only on uppercase text with letter-spacing.
 - Font sizes off the scale.
 - Padding, margin and gap off the spacing menu. `0`, `auto`, percentages and 1px hairlines pass.
-- Typefaces outside the Manrope and JetBrains Mono stacks, and our faces requested but not served by the page, with the face that renders instead.
+- Typefaces outside the Inter and JetBrains Mono stacks, and our faces requested but not served by the page, with the face that renders instead.
 - Fonts loaded from another origin.
 - Colours that match no role in the active theme. Skipped, with a note, on a page that defines no `--talos-*` properties.
 - Status chips that are buttons or links. A chip is recognised by its pair, a `status-*-subtle` background under the same state's `status-*-text`, and flagged when a button or link holds nothing but the chip. A chip inside a larger clickable card passes.
@@ -239,4 +239,4 @@ npm run check      Both
 npm test           Lint rule and audit tests.
 ```
 
-The build uses no build tooling, but it does read two packages: `@fontsource-variable/manrope` and `@fontsource-variable/jetbrains-mono`, whose `@font-face` rules the Mintlify build re-points at `/fonts/`. Without `npm install` it fails to resolve them. The tests need tooling (ESLint, the Vue parser and Playwright, all dev dependencies), which is why they sit outside `npm run check`. The source is valid DTCG, so Style Dictionary can replace the compiler later without touching the tokens, but publishing a token package should not depend on a toolchain being healthy first.
+The build uses no build tooling, but it does read two packages: `@fontsource-variable/inter` and `@fontsource-variable/jetbrains-mono`, whose `@font-face` rules the Mintlify build re-points at `/fonts/`. Without `npm install` it fails to resolve them. The tests need tooling (ESLint, the Vue parser and Playwright, all dev dependencies), which is why they sit outside `npm run check`. The source is valid DTCG, so Style Dictionary can replace the compiler later without touching the tokens, but publishing a token package should not depend on a toolchain being healthy first.
